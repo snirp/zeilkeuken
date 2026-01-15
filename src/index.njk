@@ -3,9 +3,164 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zeilkeuken</title>
+  <title>De Zeilkeuken - Wind. Smaak. Contact.</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <h1>Hello World</h1>
+  
+  <!-- 1. Header -->
+  <header class="header">
+    <span class="section-label">1. Header</span>
+    <div class="header-container">
+      <div class="logo">De Zeilkeuken</div>
+      <div class="header-actions">
+        <button class="cta-button-small">Offerte</button>
+        <i data-feather="menu"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. Hero Section -->
+  <section class="hero-section">
+    <span class="section-label">2. Hero</span>
+    <div class="hero-content">
+      <h1 class="hero-title" data-content-id="hero-title">Wind. Smaak. Contact.</h1>
+      <p class="hero-subtitle" data-content-id="hero-subtitle">Vers eten en de elementen: even helemaal out of office met De Zeilkeuken</p>
+    </div>
+    <button class="cta-button hero-cta" data-content-id="hero-cta">Ontdek De Zeilkeuken</button>
+  </section>
+
+  <!-- 3. Value Proposition -->
+  <section class="section value-proposition">
+    <span class="section-label">3. Value proposition</span>
+    <h2 data-content-id="proposition-title">Eten dat de tijd krijgt</h2>
+    <p data-content-id="proposition-content">Een half uur van Amsterdam, maar het voelt als een andere wereld. Zodra we afvaren vanaf Muiden, begint de reis. De wind pakt de zeilen, de motor gaat uit, en de drukte van de stad verdwijnt achter de horizon. Hier draait alles om het moment: het gezoem van de wind, het klotsen van het water, en de geur van verse vis die we onderweg bereiden.</p>
+  </section>
+
+  <!-- 4. Destinations -->
+  <section class="section destinations">
+    <span class="section-label">4. Destinations</span>
+    <h2 data-content-id="destinations-title">Onze Vaarroutes</h2>
+    <p data-content-id="destinations-intro">Van Muiden naar de mooiste plekken op het IJsselmeer en Markermeer. Elke route heeft zijn eigen karakter.</p>
+    
+    <div class="map-container">
+      <div class="destination-cards">
+        <div class="destination-card" data-content-id="destinations-card-1">
+          <h3>PAMPUS</h3>
+          <p class="destination-meta">45 min | Historisch fort</p>
+          <p class="destination-description">Lunch op een voormalig defensie-eiland met skyline-uitzicht</p>
+        </div>
+        
+        <div class="destination-card" data-content-id="destinations-card-2">
+          <h3>MARKER WADDEN</h3>
+          <p class="destination-meta">1.5 uur | Nieuw natuurgebied</p>
+          <p class="destination-description">Onbewoonde eilanden waar de natuur nog vol in ontwikkeling is. Laarzen mee!</p>
+        </div>
+        
+        <div class="destination-card" data-content-id="destinations-card-3">
+          <h3>MARKEN</h3>
+          <p class="destination-meta">1 uur | Authentiek vissersdorp</p>
+          <p class="destination-description">Aanleggen in de haven, wandelen tussen de houten huisjes</p>
+        </div>
+      </div>
+    </div>
+    
+    <a href="#" class="text-link" data-content-id="destinations-read-more">Ontdek meer routes →</a>
+  </section>
+
+  <!-- 5. Food Experience -->
+  <section class="section food-experience">
+    <span class="section-label">5. Food experience</span>
+    <h2 data-content-id="food-title">Live koken op het water</h2>
+    <div class="image-placeholder">[Image: Cooking on deck]</div>
+    <p data-content-id="food-content">We bereiden vis van lokale vissers en groenten van Waterlandse boeren. Alles wordt vers aan boord klaargemaakt, met het ritme van de golven als achtergrondmuziek. Geen haast, geen voorgerechten uit de koeling. Gewoon eerlijk eten, met aandacht gemaakt.</p>
+    <a href="#" class="text-link" data-content-id="food-read-more">Meer over onze keuken →</a>
+  </section>
+
+  <!-- 6. Packages -->
+  <section class="section packages">
+    <span class="section-label">6. Packages</span>
+    <h2 data-content-id="packages-title">Onze arrangementen</h2>
+    
+    <div class="package-cards">
+      <div class="package-card" data-content-id="packages-card-1">
+        <h3>Halve Dag</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+      
+      <div class="package-card" data-content-id="packages-card-2">
+        <h3>Hele Dag</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+      
+      <div class="package-card" data-content-id="packages-card-3">
+        <h3>Avondtocht</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Differentiation -->
+  <section class="section differentiation">
+    <span class="section-label">7. Differentiation</span>
+    <h2 data-content-id="differentiation-title">Waarom De Zeilkeuken</h2>
+    <div data-content-id="differentiation-content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+  </section>
+
+  <!-- 8. Testimonials -->
+  <section class="section testimonials">
+    <span class="section-label">8. Testimonials</span>
+    
+    <div class="testimonial-cards">
+      <div class="testimonial-card" data-content-id="testimonials-card-1">
+        <div class="testimonial-avatar"></div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+      
+      <div class="testimonial-card" data-content-id="testimonials-card-2">
+        <div class="testimonial-avatar"></div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Final CTA -->
+  <section class="section final-cta">
+    <span class="section-label">9. Final CTA</span>
+    <button class="cta-button" data-content-id="cta-button">Vraag nu een offerte aan</button>
+  </section>
+
+  <!-- 10. Footer -->
+  <footer class="footer">
+    <span class="section-label">10. Footer</span>
+    
+    <div class="footer-social">
+      <i data-feather="twitter"></i>
+      <i data-feather="facebook"></i>
+      <i data-feather="linkedin"></i>
+      <i data-feather="youtube"></i>
+    </div>
+    
+    <div class="footer-contact">
+      <div class="contact-item">
+        <i data-feather="phone"></i>
+        <span>+31 6 1234 5678</span>
+      </div>
+      <div class="contact-item">
+        <i data-feather="mail"></i>
+        <span>info@dezeilkeuken.nl</span>
+      </div>
+      <div class="contact-item">
+        <i data-feather="map-pin"></i>
+        <span>Muiden, Nederland</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script>feather.replace()</script>
 </body>
 </html>
