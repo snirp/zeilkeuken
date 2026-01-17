@@ -3,22 +3,22 @@ layout: layouts/main.njk
 ---
 
 <!-- Hero Section -->
-<section class="hero-section">
+<section id="hero" class="hero-section">
   <div class="hero-content">
     <h1 class="hero-title" data-content-id="hero-title">Wind. Smaak. Contact.</h1>
     <p class="hero-subtitle" data-content-id="hero-subtitle">Vers eten en de elementen: dat is waar het om draait met De Zeilkeuken</p>
   </div>
-  <button class="cta-button hero-cta" data-content-id="hero-cta">Ontdek De Zeilkeuken</button>
+  <a href="#packages" class="cta-button hero-cta" data-content-id="hero-cta">Ontdek De Zeilkeuken</a>
 </section>
 
 <!-- Value Proposition -->
-<section class="section value-proposition">
+<section id="proposition" class="section value-proposition">
   <h2 data-content-id="proposition-title">Eten dat de tijd krijgt</h2>
     <p data-content-id="proposition-content">Een half uur van Amsterdam, maar het voelt als een andere wereld. Zodra we afvaren vanaf Muiden, begint de reis. De wind pakt de zeilen, de motor gaat uit, en de drukte van de stad verdwijnt achter de horizon. Hier draait alles om het moment: het gezoem van de wind, het klotsen van het water, en de geur van <strong>verse vis</strong> die we onderweg bereiden.</p>
   </section>
 
 <!-- Destinations -->
-<section class="section destinations">
+<section id="destinations" class="section destinations">
   <h2 data-content-id="destinations-title">Onze Vaarroutes</h2>
     <p data-content-id="destinations-intro">Van Muiden naar de mooiste plekken op het IJsselmeer en Markermeer. Elke route heeft zijn eigen karakter.</p>
     
@@ -57,7 +57,7 @@ layout: layouts/main.njk
   </section>
 
 <!-- Food Experience -->
-<section class="section food-experience">
+<section id="food" class="section food-experience">
   <h2 data-content-id="food-title">Live koken op het water</h2>
     <div class="image-placeholder">[Foto van chef die vers eten bereid op de barbecue]</div>
     <p data-content-id="food-content">We bereiden vis van lokale vissers en groenten van Waterlandse boeren. Alles wordt vers aan boord klaargemaakt, met het ritme van de golven als achtergrondmuziek. Geen haast, geen voorgerechten uit de koeling. Gewoon eerlijk eten, met aandacht gemaakt.</p>
@@ -65,10 +65,11 @@ layout: layouts/main.njk
   </section>
 
 <!-- Packages -->
-<section class="section packages">
+<section id="packages" class="section packages">
   <h2 data-content-id="packages-title">Onze arrangementen, voor een vaste prijs per persoon:</h2>
-    
-    <div class="package-cards">
+  <p data-content-id="packages-intro">Perfect voor bedrijfsevents, teambuilding en familie uitjes met 25-40 personen. Eenvoudig plannen met een vaste prijs per persoon—alles inbegrepen, geen verrassingen achteraf.</p>
+  
+  <div class="package-cards">
       <div class="package-card" data-content-id="packages-card-day">
         <div class="package-header">
           <h3>Dagvaart</h3>
@@ -129,7 +130,7 @@ layout: layouts/main.njk
   </section>
 
 <!-- Differentiation -->
-<section class="section differentiation">
+<section id="why" class="section differentiation">
   <h2 data-content-id="differentiation-title">Waarom De Zeilkeuken</h2>
     <div data-content-id="differentiation-content">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -138,7 +139,7 @@ layout: layouts/main.njk
   </section>
 
 <!-- Testimonials -->
-<section class="section testimonials">
+<section id="testimonials" class="section testimonials">
   <div class="testimonial-cards">
       <div class="testimonial-card" data-content-id="testimonials-card-1">
         <div class="testimonial-avatar"></div>
@@ -153,6 +154,6 @@ layout: layouts/main.njk
   </section>
 
 <!-- Final CTA -->
-<section class="section final-cta">
+<section id="cta" class="section final-cta">
   <button class="cta-button" data-content-id="cta-button">Vraag nu een offerte aan</button>
 </section>
