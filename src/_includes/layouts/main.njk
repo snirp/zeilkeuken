@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="nl-NL">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}De Zeilkeuken - Wind. Smaak. Contact.{% endblock %}</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <a href="/" class="logo">De Zeilkeuken</a>
+      
+      <!-- Desktop Navigation -->
+      <nav class="nav-desktop">
+        <a href="/ervaar/" class="nav-link{% if page.url == '/ervaar/' %} active{% endif %}">Ervaar</a>
+        <a href="/keuken/" class="nav-link{% if page.url == '/keuken/' %} active{% endif %}">De Keuken</a>
+        <a href="/arrangementen/" class="nav-link{% if page.url == '/arrangementen/' %} active{% endif %}">Arrangementen</a>
+        <a href="/schip/" class="nav-link{% if page.url == '/schip/' %} active{% endif %}">Het Schip</a>
+        <a href="/contact/" class="nav-link{% if page.url == '/contact/' %} active{% endif %}">Contact</a>
+      </nav>
+      
+      <div class="header-actions">
+        <a href="/offerte/" class="cta-button-small">Offerte</a>
+        <button class="menu-toggle" aria-label="Menu openen">
+          <i data-feather="menu"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="menu-overlay"></div>
+  
+  <!-- Mobile Menu -->
+  <nav class="nav-mobile">
+    <button class="menu-close" aria-label="Menu sluiten">
+      <i data-feather="x"></i>
+    </button>
+    
+    <a href="/offerte/" class="nav-mobile-cta">Vraag een offerte aan</a>
+    
+    <div class="nav-mobile-links">
+      <a href="/" class="nav-mobile-link{% if page.url == '/' %} active{% endif %}">Home</a>
+      <a href="/ervaar/" class="nav-mobile-link{% if page.url == '/ervaar/' %} active{% endif %}">Ervaar</a>
+      <a href="/keuken/" class="nav-mobile-link{% if page.url == '/keuken/' %} active{% endif %}">De Keuken</a>
+      <a href="/arrangementen/" class="nav-mobile-link{% if page.url == '/arrangementen/' %} active{% endif %}">Arrangementen</a>
+      <a href="/schip/" class="nav-mobile-link{% if page.url == '/schip/' %} active{% endif %}">Het Schip</a>
+      <a href="/faciliteiten/" class="nav-mobile-link{% if page.url == '/faciliteiten/' %} active{% endif %}">Faciliteiten</a>
+      <a href="/contact/" class="nav-mobile-link{% if page.url == '/contact/' %} active{% endif %}">Contact</a>
+      <a href="/voorwaarden/" class="nav-mobile-link{% if page.url == '/voorwaarden/' %} active{% endif %}">Algemene voorwaarden</a>
+      <a href="/privacy/" class="nav-mobile-link{% if page.url == '/privacy/' %} active{% endif %}">Privacy</a>
+      <a href="/toegankelijkheid/" class="nav-mobile-link{% if page.url == '/toegankelijkheid/' %} active{% endif %}">Toegankelijkheid</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    {{ content | safe }}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-social">
+      <i data-feather="twitter"></i>
+      <i data-feather="facebook"></i>
+      <i data-feather="linkedin"></i>
+      <i data-feather="youtube"></i>
+    </div>
+    
+    <div class="footer-contact">
+      <div class="contact-item">
+        <i data-feather="phone"></i>
+        <span>+31 6 1234 5678</span>
+      </div>
+      <div class="contact-item">
+        <i data-feather="mail"></i>
+        <span>info@dezeilkeuken.nl</span>
+      </div>
+      <div class="contact-item">
+        <i data-feather="map-pin"></i>
+        <span>Muiden, Nederland</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script src="/js/menu.js"></script>
+  <script>feather.replace()</script>
+</body>
+</html>
