@@ -46,7 +46,7 @@ body {
 .section,
 .footer,
 .hero-section {
-  max-width: 28rem;
+  max-width: 100%;
   margin: 0 auto;
   background-color: var(--color-white);
   position: relative;
@@ -54,6 +54,25 @@ body {
 
 .section {
   padding: var(--spacing-lg) var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .header,
+  .section,
+  .footer,
+  .hero-section {
+    max-width: 1200px;
+  }
+  
+  .section {
+    padding: var(--spacing-xl) var(--spacing-xl);
+  }
 }
 
 .section h2 {
@@ -508,6 +527,27 @@ body {
 
 .contact-item span {
   font-size: var(--font-size-sm);
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-gray-300);
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: var(--color-gray-600);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+}
+
+.footer-links a:hover {
+  color: var(--color-gray-800);
+  text-decoration: underline;
 }
 
 /* Links */
