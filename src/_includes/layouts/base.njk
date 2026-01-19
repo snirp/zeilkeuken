@@ -24,7 +24,9 @@
       </nav>
       
       <div class="header-actions">
+        {% if page.url != '/offerte/' %}
         <a href="/offerte/" class="cta-button-small">Offerte</a>
+        {% endif %}
         <button class="menu-toggle" aria-label="Menu openen">
           <i data-feather="menu"></i>
         </button>
@@ -51,7 +53,9 @@
       <a href="/contact/" class="nav-mobile-link{% if page.url == '/contact/' %} active{% endif %}">Contact</a>
     </div>
     
+    {% if page.url != '/offerte/' %}
     <a href="/offerte/" class="nav-mobile-cta">Vraag een offerte aan</a>
+    {% endif %}
   </nav>
 
   <!-- Main Content -->

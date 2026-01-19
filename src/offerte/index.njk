@@ -3,7 +3,660 @@ layout: layouts/base.njk
 title: De Zeilkeuken - Vraag een offerte aan
 ---
 
-<section class="section">
-  <h1>Vraag een offerte aan</h1>
-  <p>Content volgt...</p>
+<!-- Hero Section -->
+<section class="section quote-hero">
+  <h1 data-content-id="quote-hero-title">Vraag een offerte aan</h1>
+  <p data-content-id="quote-hero-intro">Vul onderstaand formulier in en ontvang binnen 24 uur een vrijblijvende offerte op maat. Geen betaling nu, geen verplichtingen—wij denken graag met je mee.</p>
+  <div class="quote-reassurance" data-content-id="quote-reassurance">
+    <span>✓ Vrijblijvend</span>
+    <span>✓ Geen betaling nu</span>
+    <span>✓ Binnen 24u reactie</span>
+  </div>
 </section>
+
+<!-- Quote Form -->
+<section class="section quote-form-section">
+  <form class="quote-form" action="/.netlify/functions/quote-request" method="POST">
+    
+    <!-- Package Selection -->
+    <div class="form-section" data-content-id="quote-section-packages">
+      <h2 data-content-id="quote-packages-title">Kies je arrangement *</h2>
+      <p data-content-id="quote-packages-subtitle">Selecteer het arrangement dat het beste bij je past. Je kunt later nog aanpassingen aangeven.</p>
+      
+      <div class="package-selection">
+        
+        <!-- Dagvaart Package -->
+        <label class="package-option">
+          <input type="radio" name="package" value="dagvaart" required>
+          <div class="package-card-radio">
+            <div class="package-header-radio">
+              <div>
+                <h3 data-content-id="quote-package-dag-name">Dagvaart <span class="package-time" data-content-id="quote-package-dag-time">10:00 - 17:00</span></h3>
+              </div>
+              <span class="package-price-badge" data-content-id="quote-package-dag-price">€115 pp</span>
+            </div>
+            <p class="package-summary" data-content-id="quote-package-dag-summary">Een volledige dag zeilen, met lunch en borrel. <button type="button" class="inline-details-link" data-modal="dagvaart-modal">ⓘ Bekijk details</button></p>
+          </div>
+        </label>
+        
+        <!-- Dinervaart Package -->
+        <label class="package-option">
+          <input type="radio" name="package" value="dinervaart" required>
+          <div class="package-card-radio">
+            <div class="package-header-radio">
+              <div>
+                <h3 data-content-id="quote-package-diner-name">Dinervaart <span class="package-time" data-content-id="quote-package-diner-time">18:00 - 21:30</span></h3>
+              </div>
+              <span class="package-price-badge" data-content-id="quote-package-diner-price">€110 pp</span>
+            </div>
+            <p class="package-summary" data-content-id="quote-package-diner-summary">Avondzeilen met driegangendiner. <button type="button" class="inline-details-link" data-modal="dinervaart-modal">ⓘ Bekijk details</button></p>
+          </div>
+        </label>
+        
+        <!-- Verre vaart Package -->
+        <label class="package-option">
+          <input type="radio" name="package" value="verrevaart" required>
+          <div class="package-card-radio">
+            <div class="package-header-radio">
+              <div>
+                <h3 data-content-id="quote-package-verre-name">Verre vaart <span class="package-time" data-content-id="quote-package-verre-time">11:00 - 20:00</span></h3>
+              </div>
+              <span class="package-price-badge" data-content-id="quote-package-verre-price">€140 pp</span>
+            </div>
+            <p class="package-summary" data-content-id="quote-package-verre-summary">Lange dag zeilen met lunch én diner. <button type="button" class="inline-details-link" data-modal="verrevaart-modal">ⓘ Bekijk details</button></p>
+          </div>
+        </label>
+        
+        <!-- Maatwerk Package -->
+        <label class="package-option">
+          <input type="radio" name="package" value="maatwerk" required>
+          <div class="package-card-radio">
+            <div class="package-header-radio">
+              <div>
+                <h3 data-content-id="quote-package-maatwerk-name">Maatwerk <span class="package-time" data-content-id="quote-package-maatwerk-time">Op aanvraag</span></h3>
+              </div>
+              <span class="package-price-badge" data-content-id="quote-package-maatwerk-price">Op maat</span>
+            </div>
+            <p class="package-summary" data-content-id="quote-package-maatwerk-summary">Volledig afgestemd op jouw wensen. <button type="button" class="inline-details-link" data-modal="maatwerk-modal">ⓘ Bekijk details</button></p>
+          </div>
+        </label>
+        
+      </div>
+    </div>
+    
+    <!-- Basic Information -->
+    <div class="form-section" data-content-id="quote-section-contact">
+      <h2 data-content-id="quote-contact-title">Jouw gegevens</h2>
+      
+      <div class="form-group">
+        <label for="name" data-content-id="quote-label-name">Naam *</label>
+        <input type="text" id="name" name="name" required placeholder="Voor- en achternaam">
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email" data-content-id="quote-label-email">E-mailadres *</label>
+          <input type="email" id="email" name="email" required placeholder="naam@voorbeeld.nl">
+        </div>
+        
+        <div class="form-group">
+          <label for="phone" data-content-id="quote-label-phone">Telefoonnummer <span style="color: var(--color-gray-600);">(optioneel)</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="06 12345678">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="organization" data-content-id="quote-label-organization">Bedrijf/organisatie (optioneel)</label>
+        <input type="text" id="organization" name="organization" placeholder="Bedrijfsnaam">
+      </div>
+    </div>
+    
+    <!-- Event Details -->
+    <div class="form-section" data-content-id="quote-section-event">
+      <h2 data-content-id="quote-event-title">Details van je uitje</h2>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="date" data-content-id="quote-label-date">Gewenste datum *</label>
+          <input type="date" id="date" name="date" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="guests" data-content-id="quote-label-guests">Aantal personen *</label>
+          <input type="number" id="guests" name="guests" min="15" max="40" required placeholder="25-40">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="alternate-date" data-content-id="quote-label-alternate">Alternatieve datum (optioneel)</label>
+        <input type="date" id="alternate-date" name="alternate-date">
+      </div>
+    </div>
+    
+    <!-- Upgrades & Extras -->
+    <div class="form-section" data-content-id="quote-section-upgrade">
+      <h2 data-content-id="quote-upgrade-title">Extra's (optioneel)</h2>
+      <p data-content-id="quote-upgrade-intro">Maak je dag extra bijzonder met één of meerdere van deze opties.</p>
+      
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="luxury-upgrade" name="luxury-upgrade" value="yes">
+          <span id="upgrade-label">Luxe upgrade <strong id="upgrade-price-display">(+€25 pp)</strong></span>
+        </label>
+        <p class="checkbox-description" id="upgrade-description">Premium wijnen, craft bieren, exclusieve kazen en extra gang</p>
+      </div>
+      
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" name="extra-dj" value="yes">
+          <span>DJ <strong>(€350)</strong></span>
+        </label>
+        <p class="checkbox-description">Live muziek en entertainment aan boord</p>
+      </div>
+      
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" name="extra-fotograaf" value="yes">
+          <span>Fotograaf <strong>(€450)</strong></span>
+        </label>
+        <p class="checkbox-description">Professionele reportage van je dag, alle foto's digitaal</p>
+      </div>
+      
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" name="extra-oesters" value="yes">
+          <span>Oestermeisje <strong>(€15 pp)</strong></span>
+        </label>
+        <p class="checkbox-description">Verse oesters gekraakt aan boord met champagne</p>
+      </div>
+      
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" name="extra-accordeon" value="yes">
+          <span>Accordeonist <strong>(€300)</strong></span>
+        </label>
+        <p class="checkbox-description">Sfeervolle live muziek met zeemansliederen</p>
+      </div>
+    </div>
+    
+    <!-- Dietary Requirements -->
+    <div class="form-section" data-content-id="quote-section-dietary">
+      <h2 data-content-id="quote-dietary-title">Dieetwensen</h2>
+      
+      <div class="form-group">
+        <label for="dietary" data-content-id="quote-label-dietary">Vegetarisch, veganistisch, allergieën of andere dieetwensen?</label>
+        <textarea id="dietary" name="dietary" rows="3" placeholder="Bijv: 3 vegetarisch, 1 veganistisch, 2 glutenvrij"></textarea>
+      </div>
+    </div>
+    
+    <!-- Additional Requests -->
+    <div class="form-section" data-content-id="quote-section-requests">
+      <h2 data-content-id="quote-requests-title">Wensen of vragen</h2>
+      
+      <div class="form-group">
+        <label for="requests" data-content-id="quote-label-requests">Heb je specifieke wensen of vragen?</label>
+        <textarea id="requests" name="requests" rows="5" placeholder="Bijv: specifieke route-wensen, muziek aan boord, activiteiten, tijdstip aanpassen..."></textarea>
+      </div>
+    </div>
+    
+    <!-- Price Calculator -->
+    <div class="form-section price-calculator" data-content-id="quote-section-calculator">
+      <h2 data-content-id="quote-calculator-title">Indicatieve prijs</h2>
+      <div class="price-breakdown">
+        <div class="price-line">
+          <span data-content-id="quote-price-base-label">Basisprijs</span>
+          <span class="price-value" id="base-price">—</span>
+        </div>
+        <div class="price-line" id="extras-line" style="display: none;">
+          <span data-content-id="quote-price-extras-label">Extra's</span>
+          <span class="price-value" id="extras-price">€0</span>
+        </div>
+        <div class="price-line price-total">
+          <span data-content-id="quote-price-total-label">Totaal (indicatief)</span>
+          <span class="price-value" id="total-price">—</span>
+        </div>
+      </div>
+      <p class="price-note" data-content-id="quote-price-note">Dit is een indicatie. Je ontvangt de definitieve offerte binnen 24 uur.</p>
+    </div>
+    
+    <!-- Submit Button -->
+    <div class="form-actions">
+      <button type="submit" class="cta-button submit-button" data-content-id="quote-submit-button">Vrijblijvende offerte ontvangen</button>
+      <p class="form-reassurance" data-content-id="quote-submit-reassurance">Geen betaling nu • Binnen 24u reactie • Direct in je inbox</p>
+    </div>
+    
+  </form>
+</section>
+
+<!-- What Happens Next Timeline -->
+<section class="section next-steps" data-content-id="quote-section-next">
+  <h2 data-content-id="quote-next-title">Wat gebeurt er nu?</h2>
+  
+  <div class="timeline">
+    <div class="timeline-item">
+      <span class="timeline-number">1</span>
+      <div class="timeline-content">
+        <h3 data-content-id="quote-next-step1-title">Je aanvraag komt binnen</h3>
+        <p data-content-id="quote-next-step1-text">We bekijken je wensen en controleren de beschikbaarheid voor je gewenste datum.</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <span class="timeline-number">2</span>
+      <div class="timeline-content">
+        <h3 data-content-id="quote-next-step2-title">Offerte binnen 24 uur</h3>
+        <p data-content-id="quote-next-step2-text">Je ontvangt een gedetailleerde offerte met prijs, programma en alle details per e-mail.</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <span class="timeline-number">3</span>
+      <div class="timeline-content">
+        <h3 data-content-id="quote-next-step3-title">Samen verfijnen</h3>
+        <p data-content-id="quote-next-step3-text">We bellen of mailen om eventuele vragen te bespreken en het programma verder af te stemmen.</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <span class="timeline-number">4</span>
+      <div class="timeline-content">
+        <h3 data-content-id="quote-next-step4-title">Bevestiging & planning</h3>
+        <p data-content-id="quote-next-step4-text">Bij akkoord bevestigen we de boeking en sturen we alle praktische informatie.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="section faq-section" data-content-id="quote-section-faq">
+  <h2 data-content-id="quote-faq-title">Veelgestelde vragen</h2>
+  
+  <details class="faq-item">
+    <summary data-content-id="quote-faq-q1">Wanneer moet ik betalen?</summary>
+    <div data-content-id="quote-faq-a1">
+      <p>Na bevestiging van de boeking ontvang je een factuur. We vragen een aanbetaling van 30% om de datum definitief vast te leggen. Het restant betaal je uiterlijk 2 weken voor vertrek.</p>
+    </div>
+  </details>
+  
+  <details class="faq-item">
+    <summary data-content-id="quote-faq-q2">Wat als het slecht weer is?</summary>
+    <div data-content-id="quote-faq-a2">
+      <p>Bij extreem weer kunnen we gezamenlijk besluiten om te verplaatsen naar een andere datum (zonder kosten). Een beetje regen of wind maakt deel uit van het zeilen - we hebben voldoende overdekte ruimte aan boord.</p>
+    </div>
+  </details>
+  
+  <details class="faq-item">
+    <summary data-content-id="quote-faq-q3">Kunnen we het aantal gasten nog aanpassen?</summary>
+    <div data-content-id="quote-faq-a3">
+      <p>Tot 2 weken voor vertrek kun je het aantal gasten kosteloos aanpassen (binnen min. 25 en max. 40 personen). Daarna rekenen we op basis van het opgegeven aantal.</p>
+    </div>
+  </details>
+  
+  <details class="faq-item">
+    <summary data-content-id="quote-faq-q4">Kunnen we zelf muziek afspelen aan boord?</summary>
+    <div data-content-id="quote-faq-a4">
+      <p>Ja! We hebben een Bluetooth-speaker aan boord waar je je eigen muziek op kunt streamen. Houd wel rekening met andere vaarders in de buurt bij aangemeerd liggen.</p>
+    </div>
+  </details>
+  
+  <details class="faq-item">
+    <summary data-content-id="quote-faq-q5">Is het schip toegankelijk voor rolstoelgebruikers?</summary>
+    <div data-content-id="quote-faq-a5">
+      <p>Het schip heeft een toegankelijk dek en toilet, maar vanwege de aard van zeilen is volledige toegankelijkheid beperkt. Neem contact met ons op om te bespreken wat wel en niet mogelijk is voor jouw situatie.</p>
+    </div>
+  </details>
+  
+  <details class="faq-item">
+    <summary data-content-id="quote-faq-q6">Kunnen we zelf alcohol meenemen?</summary>
+    <div data-content-id="quote-faq-a6">
+      <p>Nee, alle dranken zijn inclusief in het arrangement. We serveren ruim voldoende bier, wijn, frisdrank en koffie/thee. Voor speciale wensen (bijv. specifieke whiskies) kunnen we soms uitzonderingen maken - vraag dit na bij je offerte.</p>
+    </div>
+  </details>
+  
+  <details class="faq-item">
+    <summary data-content-id="quote-faq-q7">Hoeveel ervaring moet je hebben om mee te zeilen?</summary>
+    <div data-content-id="quote-faq-a7">
+      <p>Geen enkele! Je mag zo actief meehelpen als je wilt, maar het is geen vereiste. De schipper en crew zorgen voor de veiligheid en navigatie.</p>
+    </div>
+  </details>
+  
+  <details class="faq-item">
+    <summary data-content-id="quote-faq-q8">Kunnen we eerder of later vertrekken?</summary>
+    <div data-content-id="quote-faq-a8">
+      <p>Ja, dat is mogelijk in overleg. We kunnen de tijden aanpassen aan jouw schema. Neem dit op in je offerteaanvraag of bespreek het tijdens het afstemmen.</p>
+    </div>
+  </details>
+</section>
+
+<!-- Alternative Contact Footer -->
+<section class="section contact-alternatives" data-content-id="quote-section-contact-alt">
+  <h2 data-content-id="quote-alt-title">Liever direct contact?</h2>
+  <p data-content-id="quote-alt-intro">Geen probleem! We staan ook graag telefonisch of per e-mail voor je klaar.</p>
+  
+  <div class="contact-options">
+    <div class="contact-option">
+      <span class="contact-icon">�</span>
+      <div>
+        <strong data-content-id="quote-alt-form-label">Contactformulier</strong>
+        <a href="/contact/" data-content-id="quote-alt-form-link">Stel je vraag</a>
+        <p data-content-id="quote-alt-form-response">Voor algemene vragen</p>
+      </div>
+    </div>
+    
+    <div class="contact-option">
+      <span class="contact-icon">📞</span>
+      <div>
+        <strong data-content-id="quote-alt-phone-label">Bel ons</strong>
+        <a href="tel:+31612345678" data-content-id="quote-alt-phone">+31 6 12 34 56 78</a>
+        <p data-content-id="quote-alt-phone-hours">Ma-vr 9:00-18:00</p>
+      </div>
+    </div>
+    
+    <div class="contact-option">
+      <span class="contact-icon">✉️</span>
+      <div>
+        <strong data-content-id="quote-alt-email-label">Mail ons</strong>
+        <a href="mailto:info@dezeilkeuken.nl" data-content-id="quote-alt-email">info@dezeilkeuken.nl</a>
+        <p data-content-id="quote-alt-email-response">Binnen 24u reactie</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Package Detail Modals -->
+<div id="dagvaart-modal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Sluiten">&times;</button>
+    <h2>Dagvaart</h2>
+    <p class="modal-meta">10:00 - 17:00 • €115 pp</p>
+    
+    <h3>Wat is inbegrepen</h3>
+    <ul>
+      <li>Zeiltocht van 7 uur</li>
+      <li>Lunch met verse ingrediënten</li>
+      <li>Borrelplank met lokale kazen en charcuterie</li>
+      <li>Onbeperkt koffie, thee en frisdrank</li>
+      <li>Bier en wijn bij de borrel</li>
+      <li>Ervaren schipper en bemanning</li>
+    </ul>
+  </div>
+</div>
+
+<div id="dinervaart-modal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Sluiten">&times;</button>
+    <h2>Dinervaart</h2>
+    <p class="modal-meta">18:00 - 21:30 • €110 pp</p>
+    
+    <h3>Wat is inbegrepen</h3>
+    <ul>
+      <li>Avondzeiltocht van 3,5 uur</li>
+      <li>Driegangendiner aan boord</li>
+      <li>Aperitief met amuses</li>
+      <li>Wijn- of bierpakket bij het diner</li>
+      <li>Koffie/thee met petit fours</li>
+      <li>Sfeervol verlichte avondstemming</li>
+    </ul>
+  </div>
+</div>
+
+<div id="verrevaart-modal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Sluiten">&times;</button>
+    <h2>Verre vaart</h2>
+    <p class="modal-meta">11:00 - 20:00 • €140 pp</p>
+    
+    <h3>Wat is inbegrepen</h3>
+    <ul>
+      <li>Volledige dag zeilen (9 uur)</li>
+      <li>Uitgebreide lunch met meerdere gangen</li>
+      <li>Borrel met luxe hapjes</li>
+      <li>Driegangendiner</li>
+      <li>Onbeperkt drinken (non-alcoholisch)</li>
+      <li>Wijn- en bierpakket bij lunch en diner</li>
+      <li>Koffie/thee en gebak</li>
+    </ul>
+  </div>
+</div>
+
+<div id="maatwerk-modal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Sluiten">&times;</button>
+    <h2>Maatwerk</h2>
+    <p class="modal-meta">Op aanvraag • Prijs op maat</p>
+    
+    <h3>Volledig naar jouw wensen</h3>
+    <p>Bij maatwerk stellen we het arrangement volledig samen volgens jouw wensen:</p>
+    <ul>
+      <li>Vrije keuze in vaartijd en duur</li>
+      <li>Menu afgestemd op voorkeuren en budget</li>
+      <li>Speciale routes of bestemmingen</li>
+      <li>Thematische arrangementen</li>
+      <li>Zakelijke events met presentatiemogelijkheden</li>
+      <li>Combinatie met externe leveranciers</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  // Handle dynamic luxury upgrade and price calculation
+  (function() {
+    // Get all form elements
+    const packageRadios = document.querySelectorAll('input[name="package"]');
+    const luxuryCheckbox = document.getElementById('luxury-upgrade');
+    const upgradePrice = document.getElementById('upgrade-price-display');
+    const upgradeDescription = document.getElementById('upgrade-description');
+    const upgradeLabel = document.getElementById('upgrade-label');
+    const guestsInput = document.getElementById('guests');
+    
+    // Get all extra checkboxes
+    const djCheckbox = document.querySelector('input[name="extra-dj"]');
+    const photoCheckbox = document.querySelector('input[name="extra-fotograaf"]');
+    const oysterCheckbox = document.querySelector('input[name="extra-oester"]');
+    const accordionCheckbox = document.querySelector('input[name="extra-accordeon"]');
+    
+    // Get price display elements
+    const basePriceEl = document.getElementById('base-price');
+    const extrasPriceEl = document.getElementById('extras-price');
+    const extrasLineEl = document.getElementById('extras-line');
+    const totalPriceEl = document.getElementById('total-price');
+    
+    // Package prices per person
+    const packagePrices = {
+      dagvaart: 115,
+      dinervaart: 110,
+      verrevaart: 140
+    };
+    
+    // Luxury upgrade prices per person
+    const upgradeData = {
+      dagvaart: {
+        price: 25,
+        text: '(+€25 pp)',
+        description: 'Premium wijnen, craft bieren, exclusieve kazen en extra gang'
+      },
+      dinervaart: {
+        price: 30,
+        text: '(+€30 pp)',
+        description: 'Premium wijnarrangement, amuse & pre-dessert, specialty cocktails'
+      },
+      verrevaart: {
+        price: 35,
+        text: '(+€35 pp)',
+        description: 'Premium wijnen, extra\'s en specialty ingrediënten'
+      }
+    };
+    
+    // Fixed-price extras
+    const fixedExtras = {
+      dj: 350,
+      fotograaf: 450,
+      accordeon: 300
+    };
+    
+    // Per-person extras
+    const perPersonExtras = {
+      oester: 15
+    };
+    
+    function updateUpgrade() {
+      const selectedPackage = document.querySelector('input[name="package"]:checked');
+      
+      if (!selectedPackage) return;
+      
+      const packageValue = selectedPackage.value;
+      
+      if (packageValue === 'maatwerk') {
+        // Disable for maatwerk
+        luxuryCheckbox.disabled = true;
+        luxuryCheckbox.checked = false;
+        upgradeLabel.parentElement.style.opacity = '0.5';
+        upgradeLabel.parentElement.style.cursor = 'not-allowed';
+        upgradeDescription.style.opacity = '0.5';
+      } else {
+        // Enable and update price/description
+        luxuryCheckbox.disabled = false;
+        upgradeLabel.parentElement.style.opacity = '1';
+        upgradeLabel.parentElement.style.cursor = 'pointer';
+        upgradeDescription.style.opacity = '1';
+        
+        const data = upgradeData[packageValue];
+        if (data) {
+          upgradePrice.textContent = data.text;
+          upgradeDescription.textContent = data.description;
+        }
+      }
+      
+      // Recalculate price
+      calculatePrice();
+    }
+    
+    function calculatePrice() {
+      const selectedPackage = document.querySelector('input[name="package"]:checked');
+      const guests = parseInt(guestsInput.value) || 0;
+      
+      // If no package selected or maatwerk, show dashes
+      if (!selectedPackage || selectedPackage.value === 'maatwerk' || guests === 0) {
+        basePriceEl.textContent = '—';
+        totalPriceEl.textContent = '—';
+        extrasLineEl.style.display = 'none';
+        return;
+      }
+      
+      const packageValue = selectedPackage.value;
+      const packagePrice = packagePrices[packageValue] || 0;
+      
+      // Calculate base price (package + luxury upgrade if checked)
+      let basePrice = packagePrice * guests;
+      
+      if (luxuryCheckbox.checked && upgradeData[packageValue]) {
+        basePrice += upgradeData[packageValue].price * guests;
+      }
+      
+      // Calculate extras
+      let extrasTotal = 0;
+      
+      if (djCheckbox && djCheckbox.checked) {
+        extrasTotal += fixedExtras.dj;
+      }
+      if (photoCheckbox && photoCheckbox.checked) {
+        extrasTotal += fixedExtras.fotograaf;
+      }
+      if (accordionCheckbox && accordionCheckbox.checked) {
+        extrasTotal += fixedExtras.accordeon;
+      }
+      if (oysterCheckbox && oysterCheckbox.checked) {
+        extrasTotal += perPersonExtras.oester * guests;
+      }
+      
+      // Update display
+      basePriceEl.textContent = '€' + basePrice.toLocaleString('nl-NL');
+      
+      if (extrasTotal > 0) {
+        extrasPriceEl.textContent = '€' + extrasTotal.toLocaleString('nl-NL');
+        extrasLineEl.style.display = 'flex';
+      } else {
+        extrasLineEl.style.display = 'none';
+      }
+      
+      const total = basePrice + extrasTotal;
+      totalPriceEl.textContent = '€' + total.toLocaleString('nl-NL');
+    }
+    
+    // Listen for package selection changes
+    packageRadios.forEach(radio => {
+      radio.addEventListener('change', updateUpgrade);
+    });
+    
+    // Listen for guest count changes
+    if (guestsInput) {
+      guestsInput.addEventListener('input', calculatePrice);
+    }
+    
+    // Listen for checkbox changes
+    [luxuryCheckbox, djCheckbox, photoCheckbox, oysterCheckbox, accordionCheckbox].forEach(checkbox => {
+      if (checkbox) {
+        checkbox.addEventListener('change', calculatePrice);
+      }
+    });
+    
+    // Initialize on page load
+    updateUpgrade();
+  })();
+  
+  // Modal handling
+  (function() {
+    // Get all modal triggers and modals
+    const modalTriggers = document.querySelectorAll('[data-modal]');
+    const modals = document.querySelectorAll('.modal');
+    const modalCloses = document.querySelectorAll('.modal-close');
+    
+    // Open modal
+    modalTriggers.forEach(trigger => {
+      trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation(); // Prevent label click
+        const modalId = this.getAttribute('data-modal');
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.add('modal-open');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+    
+    // Close modal
+    function closeModal(modal) {
+      modal.classList.remove('modal-open');
+      document.body.style.overflow = '';
+    }
+    
+    // Close buttons
+    modalCloses.forEach(closeBtn => {
+      closeBtn.addEventListener('click', function() {
+        const modal = this.closest('.modal');
+        closeModal(modal);
+      });
+    });
+    
+    // Click outside modal content
+    modals.forEach(modal => {
+      modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeModal(this);
+        }
+      });
+    });
+    
+    // Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        modals.forEach(modal => {
+          if (modal.classList.contains('modal-open')) {
+            closeModal(modal);
+          }
+        });
+      }
+    });
+  })();
+</script>
