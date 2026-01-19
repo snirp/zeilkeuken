@@ -45,38 +45,3 @@
     }
   });
 })();
-
-// Destinations map scroll animations
-(function() {
-  const destinationWrappers = document.querySelectorAll('.destination-card-wrapper');
-  
-  if (destinationWrappers.length > 0) {
-    const observerOptions = {
-      root: null,
-      rootMargin: '-20% 0px -20% 0px',
-      threshold: 0.5
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const destination = entry.target.dataset.destination;
-        const route = document.querySelector(`.route-${destination}`);
-        const marker = document.querySelector(`.marker-${destination}`);
-        
-        if (entry.isIntersecting) {
-          // Activate card and route
-          entry.target.classList.add('in-view');
-          if (route) route.classList.add('active');
-          if (marker) marker.classList.add('active');
-        } else {
-          // Deactivate when scrolled away
-          entry.target.classList.remove('in-view');
-          if (route) route.classList.remove('active');
-          if (marker) marker.classList.remove('active');
-        }
-      });
-    }, observerOptions);
-    
-    destinationWrappers.forEach(wrapper => observer.observe(wrapper));
-  }
-})();
