@@ -20,10 +20,36 @@ layout: layouts/base.njk
 <!-- Destinations -->
 <section id="destinations" class="section destinations">
   <h2 data-content-id="destinations-title">Onze Vaarroutes</h2>
-    <p data-content-id="destinations-intro">Van Muiden naar de mooiste plekken op het IJsselmeer en Markermeer. Elke route heeft zijn eigen karakter.</p>
+  <p class="destinations-intro" data-content-id="destinations-intro">Van Muiden naar de mooiste plekken op het IJsselmeer en Markermeer. Elke route heeft zijn eigen karakter.</p>
+  
+  <!-- Map background container -->
+  <div class="destinations-map-wrapper">
+    <!-- Static map background -->
+    <div class="map-background">
+      <div class="map-placeholder">[Markermeer kaart]</div>
+      
+      <!-- SVG overlay for routes -->
+      <svg class="routes-overlay" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
+        <!-- Starting point: Muiden -->
+        <circle class="marker marker-start" cx="400" cy="500" r="8" />
+        
+        <!-- Route to Pampus -->
+        <path class="route route-pampus" d="M 400 500 Q 450 400 500 300" />
+        <circle class="marker marker-pampus" cx="500" cy="300" r="6" />
+        
+        <!-- Route to Marker Wadden -->
+        <path class="route route-marker-wadden" d="M 400 500 Q 350 350 300 200" />
+        <circle class="marker marker-marker-wadden" cx="300" cy="200" r="6" />
+        
+        <!-- Route to Marken -->
+        <path class="route route-marken" d="M 400 500 Q 550 450 600 350" />
+        <circle class="marker marker-marken" cx="600" cy="350" r="6" />
+      </svg>
+    </div>
     
-    <div class="map-container">
-      <div class="destination-cards">
+    <!-- Scrollable destination cards -->
+    <div class="destinations-scroll-container">
+      <div class="destination-card-wrapper" data-destination="pampus">
         <div class="destination-card" data-content-id="destinations-card-1">
           <h3>Pampus</h3>
           <div class="destination-badges">
@@ -32,7 +58,9 @@ layout: layouts/base.njk
           </div>
           <p class="destination-description">Lunch op een voormalig defensie-eiland met skyline-uitzicht</p>
         </div>
-        
+      </div>
+      
+      <div class="destination-card-wrapper" data-destination="marker-wadden">
         <div class="destination-card" data-content-id="destinations-card-2">
           <h3>Marker wadden</h3>
           <div class="destination-badges">
@@ -41,7 +69,9 @@ layout: layouts/base.njk
           </div>
           <p class="destination-description">Onbewoonde eilanden waar de natuur nog vol in ontwikkeling is. Laarzen mee!</p>
         </div>
-        
+      </div>
+      
+      <div class="destination-card-wrapper" data-destination="marken">
         <div class="destination-card" data-content-id="destinations-card-3">
           <h3>Marken</h3>
           <div class="destination-badges">
@@ -52,9 +82,10 @@ layout: layouts/base.njk
         </div>
       </div>
     </div>
-    
-    <a href="#" class="text-link" data-content-id="destinations-read-more">Ontdek meer routes →</a>
-  </section>
+  </div>
+  
+  <a href="#" class="text-link" data-content-id="destinations-read-more">Ontdek meer routes →</a>
+</section>
 
 <!-- Food Experience -->
 <section id="food" class="section food-experience">
