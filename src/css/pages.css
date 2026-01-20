@@ -4,7 +4,7 @@
 
 /* Hero */
 .hero-section {
-  height: 800px;
+  height: 700px;
   background-color: var(--color-gray-200);
   border: 2px dashed var(--color-gray-400);
   display: flex;
@@ -138,13 +138,14 @@
 
 /* Package Hero */
 .package-detail,
-#maatwerk {
+#maatwerk,
+#packages {
   scroll-margin-top: 80px;
 }
 
 .package-hero {
   position: relative;
-  height: 350px;
+  height: 250px;
   overflow: hidden;
   background-color: #808080;
   margin-left: calc(-1 * var(--spacing-md));

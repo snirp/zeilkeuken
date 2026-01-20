@@ -126,11 +126,6 @@ title: De Zeilkeuken - Vraag een offerte aan
           <input type="number" id="guests" name="guests" min="15" max="40" required placeholder="25-40">
         </div>
       </div>
-      
-      <div class="form-group">
-        <label for="alternate-date" data-content-id="quote-label-alternate">Alternatieve datum (optioneel)</label>
-        <input type="date" id="alternate-date" name="alternate-date">
-      </div>
     </div>
     
     <!-- Upgrades & Extras -->
@@ -214,6 +209,10 @@ title: De Zeilkeuken - Vraag een offerte aan
         <div class="price-line price-total">
           <span data-content-id="quote-price-total-label">Totaal (indicatief)</span>
           <span class="price-value" id="total-price">—</span>
+        </div>
+        <div class="price-line price-ex-vat">
+          <span data-content-id="quote-price-exvat-label">Excl. 21% BTW</span>
+          <span class="price-value" id="exvat-price">—</span>
         </div>
       </div>
       <p class="price-note" data-content-id="quote-price-note">Dit is een indicatie. Je ontvangt de definitieve offerte binnen 24 uur.</p>
@@ -460,6 +459,7 @@ title: De Zeilkeuken - Vraag een offerte aan
     const extrasPriceEl = document.getElementById('extras-price');
     const extrasLineEl = document.getElementById('extras-line');
     const totalPriceEl = document.getElementById('total-price');
+    const exvatPriceEl = document.getElementById('exvat-price');
     
     // Package prices per person
     const packagePrices = {
@@ -539,6 +539,7 @@ title: De Zeilkeuken - Vraag een offerte aan
       if (!selectedPackage || selectedPackage.value === 'maatwerk' || guests === 0) {
         basePriceEl.textContent = '—';
         totalPriceEl.textContent = '—';
+        exvatPriceEl.textContent = '—';
         extrasLineEl.style.display = 'none';
         return;
       }
@@ -581,6 +582,10 @@ title: De Zeilkeuken - Vraag een offerte aan
       
       const total = basePrice + extrasTotal;
       totalPriceEl.textContent = '€' + total.toLocaleString('nl-NL');
+      
+      // Calculate price excluding 21% VAT
+      const exVat = total / 1.21;
+      exvatPriceEl.textContent = '€' + Math.round(exVat).toLocaleString('nl-NL');
     }
     
     // Listen for package selection changes

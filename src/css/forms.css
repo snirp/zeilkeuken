@@ -63,6 +63,18 @@
 }
 
 /* Package Selection Cards */
+.package-selection {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .package-selection {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .package-option {
   display: block;
   cursor: pointer;
@@ -77,6 +89,9 @@
 .package-card-radio {
   padding: var(--spacing-sm);
   background-color: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 4px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .package-option:hover .package-card-radio {
@@ -118,6 +133,22 @@
   font-weight: 700;
   color: var(--color-gray-800);
   white-space: nowrap;
+}
+
+.inline-details-link {
+  background: none;
+  border: none;
+  color: var(--color-purple);
+  font-size: var(--font-size-sm);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.inline-details-link:hover {
+  opacity: 0.8;
 }
 
 .package-summary {
