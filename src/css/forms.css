@@ -1,0 +1,343 @@
+/* ==========================================================================
+   FORMS.CSS - Form Elements and Quote System
+   ========================================================================== */
+
+/* Quote Hero */
+.quote-hero {
+  text-align: center;
+  padding: var(--spacing-xl) var(--spacing-md);
+}
+
+.quote-hero h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: var(--spacing-md);
+}
+
+.quote-hero p {
+  max-width: 700px;
+  margin: 0 auto var(--spacing-lg);
+  color: var(--color-gray-600);
+}
+
+.quote-reassurance {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+}
+
+@media (min-width: 768px) {
+  .quote-hero h1 {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+/* Form Sections */
+.quote-form-section {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.form-section {
+  padding: var(--spacing-md) 0;
+}
+
+.form-section:first-of-type {
+  padding-top: 0;
+}
+
+.form-section h2 {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: var(--spacing-sm);
+}
+
+.form-section > p {
+  color: var(--color-gray-600);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Package Selection Cards */
+.package-option {
+  display: block;
+  cursor: pointer;
+}
+
+.package-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.package-card-radio {
+  padding: var(--spacing-sm);
+  background-color: var(--color-white);
+}
+
+.package-option:hover .package-card-radio {
+  border-color: var(--color-gray-400);
+}
+
+.package-option input[type="radio"]:checked + .package-card-radio {
+  border-color: var(--color-purple);
+  box-shadow: 0 0 0 1px var(--color-purple);
+  background-color: var(--color-white);
+}
+
+.package-header-radio {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+.package-header-radio > div {
+  flex: 1;
+}
+
+.package-header-radio h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-black);
+  margin: 0 0 2px 0;
+}
+
+.package-header-radio h3 .package-time {
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  color: var(--color-gray-600);
+}
+
+.package-price-badge {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-gray-800);
+  white-space: nowrap;
+}
+
+.package-summary {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-sm);
+  margin-bottom: 0;
+}
+
+/* Form Elements */
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: var(--color-gray-800);
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-base);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 4px;
+  font-size: var(--font-size-base);
+  font-family: inherit;
+  color: var(--color-gray-800);
+  background-color: var(--color-white);
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-purple);
+}
+
+.form-group textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.form-help {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+  margin-top: 4px;
+  margin-bottom: calc(-1 * var(--spacing-sm));
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.form-row .form-group {
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .form-row {
+    flex-direction: row;
+  }
+  
+  .form-row .form-group {
+    flex: 1;
+  }
+}
+
+/* Checkboxes */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  color: var(--color-gray-800);
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+}
+
+.checkbox-description {
+  margin-left: 28px;
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+  margin-top: var(--spacing-xs);
+  margin-bottom: 0;
+}
+
+/* Upgrade Options */
+.upgrade-option {
+  display: block;
+  cursor: pointer;
+}
+
+.upgrade-option input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.upgrade-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+}
+
+.upgrade-option:hover .upgrade-card {
+  border-color: var(--color-gray-400);
+}
+
+.upgrade-option input[type="checkbox"]:checked + .upgrade-card {
+  border-color: var(--color-purple);
+  background-color: rgba(147, 51, 234, 0.05);
+}
+
+.upgrade-card strong {
+  display: block;
+  font-weight: 600;
+  color: var(--color-gray-800);
+  margin-bottom: 4px;
+}
+
+.upgrade-card p {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+  margin: 0;
+}
+
+.upgrade-price {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-purple);
+  white-space: nowrap;
+}
+
+/* Price Calculator */
+.price-calculator {
+  background-color: var(--color-gray-100);
+  border: 2px solid var(--color-gray-300);
+  border-radius: 8px;
+  padding: var(--spacing-lg);
+}
+
+.price-calculator h2 {
+  margin-bottom: var(--spacing-md);
+}
+
+.price-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.price-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xs) 0;
+  color: var(--color-gray-700);
+}
+
+.price-total {
+  padding-top: var(--spacing-sm);
+  border-top: 2px solid var(--color-gray-300);
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+  color: var(--color-black);
+}
+
+.price-value {
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+  color: var(--color-gray-800);
+}
+
+.price-total .price-value {
+  color: var(--color-purple);
+  font-size: var(--font-size-xl);
+}
+
+.price-note {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+  margin: 0;
+}
+
+/* Form Actions */
+.form-actions {
+  text-align: center;
+  padding: var(--spacing-lg) 0;
+}
+
+.form-reassurance {
+  margin-top: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+}

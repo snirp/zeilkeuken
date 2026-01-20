@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}De Zeilkeuken - Wind. Smaak. Contact.{% endblock %}</title>
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/pages.css">
 </head>
 <body>
   
@@ -25,7 +28,7 @@
       
       <div class="header-actions">
         {% if page.url != '/offerte/' %}
-        <a href="/offerte/" class="cta-button-small">Offerte</a>
+        <a href="/offerte/" class="btn btn-sm">Offerte</a>
         {% endif %}
         <button class="menu-toggle" aria-label="Menu openen">
           <i data-feather="menu"></i>

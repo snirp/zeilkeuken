@@ -109,14 +109,90 @@ title: Page Title
 - Define custom filters in `.eleventy.js`
 - Use for date formatting (Dutch locale), URL manipulation, content transformation
 
-## CSS Conventions
+## CSS Architecture
+
+### File Organization
+CSS is split into 4 focused files with clear separation of concerns:
+- **style.css** - Design tokens (CSS custom properties), reset, base layout, utility classes
+- **components.css** - Reusable UI components (header, nav, footer, cards, modal)
+- **forms.css** - Form-specific styles (quote forms, inputs, price calculator)
+- **pages.css** - Page-specific layouts (hero, packages, timeline, FAQ)
+
+Load order in base.njk: style → components → forms → pages
+
+### Design System
+**CSS Custom Properties:**
+- Colors: Gray scale (100-800), white, black, purple
+- Spacing: Five-scale system (xs, sm, md, lg, xl)
+- Typography: Six font sizes (sm, base, md, lg, xl, 3xl)
+
+**Responsive Strategy:**
+- Mobile-first with two breakpoints: 768px (tablet), 1024px (desktop)
+- Container max-width: 1200px
+
+### Utility-First Approach
+**Key principle:** Use utility classes for common patterns, component classes for unique UI
+
+**Utilities available:**
+- Buttons: Base class with size modifiers (sm, md, lg, full)
+- Cards: Base card with interactive variant
+- Layouts: Grid utilities (grid-2, grid-3, grid-4) and flex containers
+- Badges: Badge component with badge-group wrapper
+- Links: Styled links for text and standalone links
+
+**When to add new CSS:**
+1. Check if utility classes can solve the need
+2. For unique components, add to components.css (if reusable) or pages.css (if page-specific)
+3. Always reference CSS custom properties for values
+4. Keep selectors flat, avoid nesting
+
+### Styling Conventions
 - **Modern idiomatic CSS** - no BEM, no preprocessors
 - **Mobile-first approach** - use `min-width` media queries
 - **Avoid deep nesting** - keep specificity low, use flat selectors
 - **Semantic naming** - descriptive class names that reflect purpose/content
-- Use CSS custom properties (variables) for colors, spacing, typography
-- Organize by component or page as project grows
-- Passthrough copy for assets: configured in `.eleventy.js`
+- **Consistency** - all spacing, colors, and typography reference design tokens
+
+## Component Patterns
+
+### UI Component Strategy
+**Use utility classes for:**
+- Buttons (never create custom button styles)
+- Card layouts (extend base card utilities)
+- Badge groups (use badge-group wrapper with badge children)
+- Grid layouts (use grid-2, grid-3, grid-4 utilities)
+
+**Create component classes for:**
+- Navigation (desktop and mobile menu)
+- Header and footer
+- Modal system
+- Form-specific layouts (quote forms, price calculator)
+- Page-specific sections (hero, timeline, FAQ)
+
+### Card Pattern
+Cards follow a consistent structure: header with title/price, badge group for tags, description text, and action button using utility classes.
+
+### Button Pattern
+Always use button utility classes with size modifiers. Never create custom button classes.
+
+### Badge Pattern
+Use badge-group as wrapper with badge children for all tag/label groups.
+```
+
+**Links:**
+```html
+<a href="#" class="link">Styled link</a>
+<a href="#" class="text-link">Inline text link</a>
+```
+
+### CSS Conventions
+- **Modern idiomatic CSS** - no BEM, no preprocessors
+- **Mobile-first approach** - use `min-width` media queries
+- **Avoid deep nesting** - keep specificity low, use flat selectors
+- **Semantic naming** - descriptive class names that reflect purpose/content
+- **Utility-first for layouts** - use grid/flex utilities instead of custom CSS
+- **Component classes for unique UI** - header, nav, footer, modal
+- All values reference CSS custom properties for consistency
 
 **Responsive breakpoints:**
 - Mobile: default (base styles)
@@ -138,19 +214,28 @@ title: Page Title
 
 ## Component Patterns
 
-### Badge Component
-```html
-<div class="destination-badges">
-  <span class="badge">Badge text</span>
-  <span class="badge">Another badge</span>
-</div>
-```
+### UI Component Strategy
+**Use utility classes for:**
+- Buttons (never create custom button styles)
+- Card layouts (extend base card utilities)
+- Badge groups (use badge-group wrapper with badge children)
+- Grid layouts (use grid-2, grid-3, grid-4 utilities)
 
-### Card Structure
-- Header: title + optional price/meta
-- Badges: `<div class="[type]-badges">` with badge spans
-- Description: content paragraph(s)
-- CTA: button or link for action
+**Create component classes for:**
+- Navigation (desktop and mobile menu)
+- Header and footer
+- Modal system
+- Form-specific layouts (quote forms, price calculator)
+- Page-specific sections (hero, timeline, FAQ)
+
+### Card Pattern
+Cards follow a consistent structure: header with title/price, badge group for tags, description text, and action button using utility classes.
+
+### Button Pattern
+Always use button utility classes with size modifiers. Never create custom button classes.
+
+### Badge Pattern
+Use badge-group as wrapper with badge children for all tag/label groups.
 
 ### Navigation
 - Desktop: horizontal menu in header
@@ -196,11 +281,6 @@ module.exports = function(eleventyConfig) {
 - Use `netlify-lambda` or Netlify CLI for local testing
 - Forms submit to `/.netlify/functions/[function-name]`
 
-**Example form action:**
-```html
-<form action="/.netlify/functions/contact" method="POST">
-```
-
 ## Deployment (Netlify)
 - Configure build in `netlify.toml`
 - Build command: `npm run build`
@@ -208,10 +288,13 @@ module.exports = function(eleventyConfig) {
 - Functions directory: `netlify/functions`
 - Environment variables in Netlify dashboard
 
-## Iterative Development Notes
-- **Wireframe phase:** Focus on semantic HTML, Dutch content, accessibility
-- **Styling phase:** Apply mobile-first CSS, refine visual hierarchy
-- **Production phase:** Optimize images, configure Netlify, test forms, add meta tags/SEO (Dutch)
+## Architecture Evolution
+**January 2026** - CSS consolidation and utility system
+- Consolidated CSS from monolithic file into 4-file architecture
+- Implemented utility-first approach for common patterns
+- Established design token system with CSS custom properties
+- Removed duplicate styles across components
+- Result: Maintainable hybrid architecture balancing utilities and components
 
 ---
-*Update as project patterns emerge*
+*Updated: January 2026*
