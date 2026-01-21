@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/css/forms.css">
   <link rel="stylesheet" href="/css/pages.css">
 </head>
-<body>
+<body{% if page.url == '/' or page.url == '/keuken/' %} class="has-hero"{% endif %}>
   
   <!-- Header -->
   <header class="header">
@@ -146,5 +146,20 @@
   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   <script src="/js/menu.js"></script>
   <script>feather.replace()</script>
+  
+  <script>
+    // Header scroll state for hero pages
+    if (document.body.classList.contains('has-hero')) {
+      const header = document.querySelector('.header');
+      
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+    }
+  </script>
 </body>
 </html>

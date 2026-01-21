@@ -9,6 +9,20 @@
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-gray-300);
   z-index: 100;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Transparent header overlay for hero pages */
+.has-hero .header {
+  position: fixed;
+  width: 100%;
+  background-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.has-hero .header.scrolled {
+  background-color: var(--color-white);
+  border-bottom-color: var(--color-gray-300);
 }
 
 .header-container {

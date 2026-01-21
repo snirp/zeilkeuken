@@ -199,6 +199,27 @@ body {
 @media (min-width: 768px) {
   .grid-2 {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+}
+
+.grid-2 > .image-placeholder {
+  margin-left: 0;
+  margin-right: calc(-1 * var(--spacing-md));
+  width: calc(100% + var(--spacing-md));
+}
+
+@media (min-width: 768px) {
+  .grid-2 > .image-placeholder {
+    margin-right: calc(-1 * var(--spacing-lg));
+    width: calc(100% + var(--spacing-lg));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-2 > .image-placeholder {
+    margin-right: calc(-1 * var(--spacing-xl));
+    width: calc(100% + var(--spacing-xl));
   }
 }
 
