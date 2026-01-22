@@ -767,6 +767,7 @@
   }
 }
 
+/* Crew member layout uses the split-layout utility */
 .crew-member {
   display: grid;
   grid-template-columns: 1fr;
