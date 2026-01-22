@@ -16,6 +16,8 @@
 .has-hero .header {
   position: fixed;
   width: 100%;
+  left: 0;
+  right: 0;
   background-color: transparent;
   border-bottom-color: transparent;
 }
@@ -176,8 +178,26 @@
 }
 
 @media (min-width: 768px) {
+  .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: center;
+    gap: var(--spacing-xl);
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+
+  .logo {
+    order: -1;
+  }
+
   .nav-desktop {
     display: flex;
+    order: 0;
+  }
+
+  .header-actions {
+    order: 1;
   }
   
   .menu-toggle,
