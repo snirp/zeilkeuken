@@ -78,7 +78,7 @@
   };
 
   // DOM elements
-  let form, progressBar, progressSteps, stepContainers, btnBack, btnNext, btnSubmit;
+  let form, progressBar, progressBoat, progressSteps, stepContainers, btnBack, btnNext, btnSubmit;
 
   /**
    * Initialize the stepped form
@@ -89,6 +89,7 @@
     if (!form) return;
 
     progressBar = form.querySelector('.progress-fill');
+    progressBoat = form.querySelector('.progress-boat');
     progressSteps = form.querySelectorAll('.progress-step');
     stepContainers = form.querySelectorAll('.form-step');
     btnBack = form.querySelector('.btn-back');
@@ -551,10 +552,15 @@
    * Render current step
    */
   function renderStep() {
-    // Update progress bar
-    const progressPercent = (state.currentStep / state.totalSteps) * 100;
+    // Update progress bar (0% at step 1, 100% at step 4)
+    const progressPercent = ((state.currentStep - 1) / (state.totalSteps - 1)) * 100;
     if (progressBar) {
       progressBar.style.width = progressPercent + '%';
+    }
+
+    // Update sailboat position (moves within the 75% width bar)
+    if (progressBoat) {
+      progressBoat.style.left = progressPercent + '%';
     }
 
     // Update progress steps

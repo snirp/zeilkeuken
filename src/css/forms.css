@@ -15,22 +15,34 @@
 /* Progress Indicator */
 .form-progress {
   margin-bottom: var(--spacing-xl);
+  margin-top: var(--spacing-lg); /* Extra space for sailboat */
 }
 
 .progress-bar {
-  width: 100%;
+  position: relative;
+  width: 75%; /* Shortened to match step centers */
   height: 4px;
   background-color: var(--color-gray-200);
   border-radius: 2px;
-  overflow: hidden;
-  margin-bottom: var(--spacing-md);
+  overflow: visible;
+  margin: 0 auto var(--spacing-md); /* Center the bar */
 }
 
 .progress-fill {
   height: 100%;
   background-color: var(--color-purple);
   transition: width 0.3s ease;
-  width: 25%; /* Default step 1 */
+  width: 0%; /* Default step 1 - no progress */
+}
+
+.progress-boat {
+  position: absolute;
+  top: -32px; /* Positioned to rest on top of bar */
+  left: 0%; /* Default: start position */
+  transform: translateX(-50%) scaleX(-1); /* Center on progress and flip horizontally */
+  font-size: 24px;
+  transition: left 0.3s ease;
+  pointer-events: none;
 }
 
 .progress-steps {
