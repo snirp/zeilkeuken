@@ -5,23 +5,30 @@ title: De Zeilkeuken - Vraag een offerte aan
 
 <!-- Hero Section -->
 <section class="section quote-hero">
-  <h1 data-content-id="quote-hero-title">Vraag een offerte aan</h1>
-  <p data-content-id="quote-hero-intro">Vul onderstaand formulier in en ontvang binnen 24 uur een vrijblijvende offerte op maat. Geen betaling nu, geen verplichtingen—wij denken graag met je mee.</p>
-  <div class="quote-reassurance" data-content-id="quote-reassurance">
-    <span>✓ Vrijblijvend</span>
-    <span>✓ Geen betaling nu</span>
-    <span>✓ Binnen 24u reactie</span>
-  </div>
+  <h1 data-content-id="quote-hero-title">Binnen 24 uur een vrijblijvende offerte op maat</h1>
 </section>
 
 <!-- Quote Form -->
 <section class="section quote-form-section">
-  <form class="quote-form" action="/.netlify/functions/quote-request" method="POST">
+  <form class="stepped-form" action="/.netlify/functions/quote-request" method="POST">
     
-    <!-- Package Selection -->
-    <div class="form-section" data-content-id="quote-section-packages">
-      <h2 data-content-id="quote-packages-title">Kies je arrangement *</h2>
-      <p data-content-id="quote-packages-subtitle">Selecteer het arrangement dat het beste bij je past. Je kunt later nog aanpassingen aangeven.</p>
+    <!-- Progress Indicator -->
+    <div class="form-progress">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <div class="progress-steps">
+        <span class="progress-step active" data-step="1">1. Arrangement</span>
+        <span class="progress-step" data-step="2">2. Datum & gasten</span>
+        <span class="progress-step" data-step="3">3. Extra's</span>
+        <span class="progress-step" data-step="4">4. Gegevens</span>
+      </div>
+    </div>
+    
+    <!-- Step 1: Package Selection -->
+    <div class="form-step packages-step" data-step="1" aria-hidden="false">
+      <div class="form-section" data-content-id="quote-section-packages">
+        <p data-content-id="quote-packages-subtitle">Selecteer het arrangement dat het beste bij je past. Je kunt later nog aanpassingen aangeven.</p>
       
       <div class="package-selection">
         
@@ -83,184 +90,172 @@ title: De Zeilkeuken - Vraag een offerte aan
         
       </div>
     </div>
+    </div>
     
-    <!-- Basic Information -->
-    <div class="form-section" data-content-id="quote-section-contact">
-      <h2 data-content-id="quote-contact-title">Jouw gegevens</h2>
-      
-      <div class="form-group">
-        <label for="name" data-content-id="quote-label-name">Naam *</label>
-        <input type="text" id="name" name="name" required placeholder="Voor- en achternaam">
+    <!-- Step 2: Date & Guests -->
+    <div class="form-step event-step" data-step="2" aria-hidden="true">
+      <div class="form-section" data-content-id="quote-section-event">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="date" data-content-id="quote-label-date">Gewenste datum *</label>
+            <input type="date" id="date" name="date" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="guests" data-content-id="quote-label-guests">Aantal personen *</label>
+            <input type="number" id="guests" name="guests" min="25" max="40" required placeholder="25-40">
+          </div>
+        </div>
       </div>
-      
-      <div class="form-row">
+    </div>
+    
+    <!-- Step 3: Extras -->
+    <div class="form-step extras-step" data-step="3" aria-hidden="true">
+      <div class="form-section" data-content-id="quote-section-upgrade">
+        <p data-content-id="quote-upgrade-intro">Maak je dag extra bijzonder met één of meerdere van deze opties.</p>
+        
+        <div class="form-group extra-option">
+          <label class="checkbox-label">
+            <input type="checkbox" id="luxury-upgrade" name="luxury-upgrade" value="yes">
+            <span id="upgrade-label">Luxe upgrade <strong id="upgrade-price-display">(+€25 pp)</strong></span>
+          </label>
+          <p class="checkbox-description" id="upgrade-description">Premium wijnen, craft bieren, exclusieve kazen en extra gang</p>
+        </div>
+        
+        <div class="form-group extra-option">
+          <label class="checkbox-label">
+            <input type="checkbox" name="dj" value="yes">
+            <span>DJ <strong>(€350)</strong></span>
+          </label>
+          <p class="checkbox-description">Live muziek en entertainment aan boord</p>
+        </div>
+        
+        <div class="form-group extra-option">
+          <label class="checkbox-label">
+            <input type="checkbox" name="fotograaf" value="yes">
+            <span>Fotograaf <strong>(€450)</strong></span>
+          </label>
+          <p class="checkbox-description">Professionele reportage van je dag, alle foto's digitaal</p>
+        </div>
+        
+        <div class="form-group extra-option">
+          <label class="checkbox-label">
+            <input type="checkbox" name="oesters" value="yes">
+            <span>Oestermeisje <strong>(€15 pp)</strong></span>
+          </label>
+          <p class="checkbox-description">Verse oesters gekraakt aan boord met champagne</p>
+        </div>
+        
+        <div class="form-group extra-option">
+          <label class="checkbox-label">
+            <input type="checkbox" name="accordeon" value="yes">
+            <span>Accordeonist <strong>(€300)</strong></span>
+          </label>
+          <p class="checkbox-description">Sfeervolle live muziek met zeemansliederen</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Step 4: Personal Details & Preferences -->
+    <div class="form-step details-step" data-step="4" aria-hidden="true">
+      <div class="form-section" data-content-id="quote-section-contact">
         <div class="form-group">
-          <label for="email" data-content-id="quote-label-email">E-mailadres *</label>
-          <input type="email" id="email" name="email" required placeholder="naam@voorbeeld.nl">
+          <label for="organization" data-content-id="quote-label-organization">Bedrijf/organisatie (optioneel)</label>
+          <input type="text" id="organization" name="organization" placeholder="Bedrijfsnaam">
         </div>
         
         <div class="form-group">
-          <label for="phone" data-content-id="quote-label-phone">Telefoonnummer <span style="color: var(--color-gray-600);">(optioneel)</span></label>
-          <input type="tel" id="phone" name="phone" placeholder="06 12345678">
+          <label for="name" data-content-id="quote-label-name">Naam *</label>
+          <input type="text" id="name" name="name" required placeholder="Voor- en achternaam">
         </div>
-      </div>
-      
-      <div class="form-group">
-        <label for="organization" data-content-id="quote-label-organization">Bedrijf/organisatie (optioneel)</label>
-        <input type="text" id="organization" name="organization" placeholder="Bedrijfsnaam">
-      </div>
-    </div>
-    
-    <!-- Event Details -->
-    <div class="form-section" data-content-id="quote-section-event">
-      <h2 data-content-id="quote-event-title">Details van je uitje</h2>
-      
-      <div class="form-row">
-        <div class="form-group">
-          <label for="date" data-content-id="quote-label-date">Gewenste datum *</label>
-          <input type="date" id="date" name="date" required>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email" data-content-id="quote-label-email">E-mailadres *</label>
+            <input type="email" id="email" name="email" required placeholder="naam@voorbeeld.nl">
+          </div>
+          
+          <div class="form-group">
+            <label for="phone" data-content-id="quote-label-phone">Telefoonnummer <span style="color: var(--color-gray-600);">(optioneel)</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="06 12345678">
+          </div>
         </div>
         
         <div class="form-group">
-          <label for="guests" data-content-id="quote-label-guests">Aantal personen *</label>
-          <input type="number" id="guests" name="guests" min="15" max="40" required placeholder="25-40">
+          <label for="requests" data-content-id="quote-label-requests">Heb je specifieke wensen of vragen?</label>
+          <textarea id="requests" name="requests" rows="5" placeholder="Bijv: specifieke route-wensen, muziek aan boord, activiteiten, dieetwensen, tijdstip aanpassen..."></textarea>
         </div>
       </div>
-    </div>
-    
-    <!-- Upgrades & Extras -->
-    <div class="form-section" data-content-id="quote-section-upgrade">
-      <h2 data-content-id="quote-upgrade-title">Extra's (optioneel)</h2>
-      <p data-content-id="quote-upgrade-intro">Maak je dag extra bijzonder met één of meerdere van deze opties.</p>
       
-      <div class="form-group">
-        <label class="checkbox-label">
-          <input type="checkbox" id="luxury-upgrade" name="luxury-upgrade" value="yes">
-          <span id="upgrade-label">Luxe upgrade <strong id="upgrade-price-display">(+€25 pp)</strong></span>
-        </label>
-        <p class="checkbox-description" id="upgrade-description">Premium wijnen, craft bieren, exclusieve kazen en extra gang</p>
-      </div>
-      
-      <div class="form-group">
-        <label class="checkbox-label">
-          <input type="checkbox" name="extra-dj" value="yes">
-          <span>DJ <strong>(€350)</strong></span>
-        </label>
-        <p class="checkbox-description">Live muziek en entertainment aan boord</p>
-      </div>
-      
-      <div class="form-group">
-        <label class="checkbox-label">
-          <input type="checkbox" name="extra-fotograaf" value="yes">
-          <span>Fotograaf <strong>(€450)</strong></span>
-        </label>
-        <p class="checkbox-description">Professionele reportage van je dag, alle foto's digitaal</p>
-      </div>
-      
-      <div class="form-group">
-        <label class="checkbox-label">
-          <input type="checkbox" name="extra-oesters" value="yes">
-          <span>Oestermeisje <strong>(€15 pp)</strong></span>
-        </label>
-        <p class="checkbox-description">Verse oesters gekraakt aan boord met champagne</p>
-      </div>
-      
-      <div class="form-group">
-        <label class="checkbox-label">
-          <input type="checkbox" name="extra-accordeon" value="yes">
-          <span>Accordeonist <strong>(€300)</strong></span>
-        </label>
-        <p class="checkbox-description">Sfeervolle live muziek met zeemansliederen</p>
-      </div>
-    </div>
-    
-    <!-- Dietary Requirements -->
-    <div class="form-section" data-content-id="quote-section-dietary">
-      <h2 data-content-id="quote-dietary-title">Dieetwensen</h2>
-      
-      <div class="form-group">
-        <label for="dietary" data-content-id="quote-label-dietary">Vegetarisch, veganistisch, allergieën of andere dieetwensen?</label>
-        <textarea id="dietary" name="dietary" rows="3" placeholder="Bijv: 3 vegetarisch, 1 veganistisch, 2 glutenvrij"></textarea>
-      </div>
-    </div>
-    
-    <!-- Additional Requests -->
-    <div class="form-section" data-content-id="quote-section-requests">
-      <h2 data-content-id="quote-requests-title">Wensen of vragen</h2>
-      
-      <div class="form-group">
-        <label for="requests" data-content-id="quote-label-requests">Heb je specifieke wensen of vragen?</label>
-        <textarea id="requests" name="requests" rows="5" placeholder="Bijv: specifieke route-wensen, muziek aan boord, activiteiten, tijdstip aanpassen..."></textarea>
-      </div>
-    </div>
-    
-    <!-- Price Calculator -->
-    <div class="form-section price-calculator" data-content-id="quote-section-calculator">
-      <h2 data-content-id="quote-calculator-title">Indicatieve prijs</h2>
-      <div class="price-breakdown">
-        <div class="price-line">
-          <span data-content-id="quote-price-base-label">Basisprijs</span>
-          <span class="price-value" id="base-price">—</span>
+      <!-- Price Calculator -->
+      <div class="form-section price-calculator" data-content-id="quote-section-calculator">
+        <h2 data-content-id="quote-calculator-title">Indicatieve prijs</h2>
+        <div class="price-breakdown">
+          <div class="price-line">
+            <span data-content-id="quote-price-base-label">Basisprijs</span>
+            <span class="price-value" id="base-price">—</span>
+          </div>
+          <div class="price-line" id="extras-line" style="display: none;">
+            <span data-content-id="quote-price-extras-label">Extra's</span>
+            <span class="price-value" id="extras-price">€0</span>
+          </div>
+          <div class="price-line price-total">
+            <span data-content-id="quote-price-total-label">Totaal (indicatief)</span>
+            <span class="price-value" id="total-price">—</span>
+          </div>
+          <div class="price-line price-ex-vat">
+            <span data-content-id="quote-price-exvat-label">Excl. 21% BTW</span>
+            <span class="price-value" id="exvat-price">—</span>
+          </div>
         </div>
-        <div class="price-line" id="extras-line" style="display: none;">
-          <span data-content-id="quote-price-extras-label">Extra's</span>
-          <span class="price-value" id="extras-price">€0</span>
-        </div>
-        <div class="price-line price-total">
-          <span data-content-id="quote-price-total-label">Totaal (indicatief)</span>
-          <span class="price-value" id="total-price">—</span>
-        </div>
-        <div class="price-line price-ex-vat">
-          <span data-content-id="quote-price-exvat-label">Excl. 21% BTW</span>
-          <span class="price-value" id="exvat-price">—</span>
-        </div>
+        <p class="price-note" data-content-id="quote-price-note">Dit is een indicatie. Je ontvangt de definitieve offerte binnen 24 uur.</p>
       </div>
-      <p class="price-note" data-content-id="quote-price-note">Dit is een indicatie. Je ontvangt de definitieve offerte binnen 24 uur.</p>
     </div>
     
-    <!-- Submit Button -->
-    <div class="form-actions">
-      <button type="submit" class="btn btn-lg submit-button" data-content-id="quote-submit-button">Vrijblijvende offerte ontvangen</button>
-      <p class="form-reassurance" data-content-id="quote-submit-reassurance">Geen betaling nu • Binnen 24u reactie • Direct in je inbox</p>
+    <!-- Navigation -->
+    <div class="form-navigation">
+      <button type="button" class="btn btn-back">Vorige</button>
+      <button type="button" class="btn btn-next">Volgende</button>
+      <button type="submit" class="btn btn-lg btn-submit" style="display: none;" data-content-id="quote-submit-button">Vrijblijvende offerte ontvangen</button>
     </div>
-    
-  </form>
-</section>
-
-<!-- What Happens Next Timeline -->
-<section class="section next-steps" data-content-id="quote-section-next">
-  <h2 data-content-id="quote-next-title">Wat gebeurt er nu?</h2>
   
-  <div class="timeline">
-    <div class="timeline-item">
-      <span class="timeline-number">1</span>
-      <div class="timeline-content">
-        <h3 data-content-id="quote-next-step1-title">Je aanvraag komt binnen</h3>
-        <p data-content-id="quote-next-step1-text">We bekijken je wensen en controleren de beschikbaarheid voor je gewenste datum.</p>
-      </div>
-    </div>
+  </form>
+  
+  <!-- What Happens Next Timeline - Only visible on Step 4 -->
+  <div class="next-steps-container" style="display: none;" data-show-on-step="4">
+    <h2 data-content-id="quote-next-title">Wat gebeurt er nu?</h2>
     
-    <div class="timeline-item">
-      <span class="timeline-number">2</span>
-      <div class="timeline-content">
-        <h3 data-content-id="quote-next-step2-title">Offerte binnen 24 uur</h3>
-        <p data-content-id="quote-next-step2-text">Je ontvangt een gedetailleerde offerte met prijs, programma en alle details per e-mail.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="timeline-number">1</span>
+        <div class="timeline-content">
+          <h3 data-content-id="quote-next-step1-title">Je aanvraag komt binnen</h3>
+          <p data-content-id="quote-next-step1-text">We bekijken je wensen en controleren de beschikbaarheid voor je gewenste datum.</p>
+        </div>
       </div>
-    </div>
-    
-    <div class="timeline-item">
-      <span class="timeline-number">3</span>
-      <div class="timeline-content">
-        <h3 data-content-id="quote-next-step3-title">Samen verfijnen</h3>
-        <p data-content-id="quote-next-step3-text">We bellen of mailen om eventuele vragen te bespreken en het programma verder af te stemmen.</p>
+      
+      <div class="timeline-item">
+        <span class="timeline-number">2</span>
+        <div class="timeline-content">
+          <h3 data-content-id="quote-next-step2-title">Offerte binnen 24 uur</h3>
+          <p data-content-id="quote-next-step2-text">Je ontvangt een gedetailleerde offerte met prijs, programma en alle details per e-mail.</p>
+        </div>
       </div>
-    </div>
-    
-    <div class="timeline-item">
-      <span class="timeline-number">4</span>
-      <div class="timeline-content">
-        <h3 data-content-id="quote-next-step4-title">Bevestiging & planning</h3>
-        <p data-content-id="quote-next-step4-text">Bij akkoord bevestigen we de boeking en sturen we alle praktische informatie.</p>
+      
+      <div class="timeline-item">
+        <span class="timeline-number">3</span>
+        <div class="timeline-content">
+          <h3 data-content-id="quote-next-step3-title">Samen verfijnen</h3>
+          <p data-content-id="quote-next-step3-text">We bellen of mailen om eventuele vragen te bespreken en het programma verder af te stemmen.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item">
+        <span class="timeline-number">4</span>
+        <div class="timeline-content">
+          <h3 data-content-id="quote-next-step4-title">Bevestiging & planning</h3>
+          <p data-content-id="quote-next-step4-text">Bij akkoord bevestigen we de boeking en sturen we alle praktische informatie.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -438,189 +433,16 @@ title: De Zeilkeuken - Vraag een offerte aan
 </div>
 
 <script>
-  // Handle dynamic luxury upgrade and price calculation
+  // Modal handling for package details
   (function() {
-    // Get all form elements
-    const packageRadios = document.querySelectorAll('input[name="package"]');
-    const luxuryCheckbox = document.getElementById('luxury-upgrade');
-    const upgradePrice = document.getElementById('upgrade-price-display');
-    const upgradeDescription = document.getElementById('upgrade-description');
-    const upgradeLabel = document.getElementById('upgrade-label');
-    const guestsInput = document.getElementById('guests');
-    
-    // Get all extra checkboxes
-    const djCheckbox = document.querySelector('input[name="extra-dj"]');
-    const photoCheckbox = document.querySelector('input[name="extra-fotograaf"]');
-    const oysterCheckbox = document.querySelector('input[name="extra-oester"]');
-    const accordionCheckbox = document.querySelector('input[name="extra-accordeon"]');
-    
-    // Get price display elements
-    const basePriceEl = document.getElementById('base-price');
-    const extrasPriceEl = document.getElementById('extras-price');
-    const extrasLineEl = document.getElementById('extras-line');
-    const totalPriceEl = document.getElementById('total-price');
-    const exvatPriceEl = document.getElementById('exvat-price');
-    
-    // Package prices per person
-    const packagePrices = {
-      dagvaart: 115,
-      dinervaart: 110,
-      verrevaart: 140
-    };
-    
-    // Luxury upgrade prices per person
-    const upgradeData = {
-      dagvaart: {
-        price: 25,
-        text: '(+€25 pp)',
-        description: 'Premium wijnen, craft bieren, exclusieve kazen en extra gang'
-      },
-      dinervaart: {
-        price: 30,
-        text: '(+€30 pp)',
-        description: 'Premium wijnarrangement, amuse & pre-dessert, specialty cocktails'
-      },
-      verrevaart: {
-        price: 35,
-        text: '(+€35 pp)',
-        description: 'Premium wijnen, extra\'s en specialty ingrediënten'
-      }
-    };
-    
-    // Fixed-price extras
-    const fixedExtras = {
-      dj: 350,
-      fotograaf: 450,
-      accordeon: 300
-    };
-    
-    // Per-person extras
-    const perPersonExtras = {
-      oester: 15
-    };
-    
-    function updateUpgrade() {
-      const selectedPackage = document.querySelector('input[name="package"]:checked');
-      
-      if (!selectedPackage) return;
-      
-      const packageValue = selectedPackage.value;
-      
-      if (packageValue === 'maatwerk') {
-        // Disable for maatwerk
-        luxuryCheckbox.disabled = true;
-        luxuryCheckbox.checked = false;
-        upgradeLabel.parentElement.style.opacity = '0.5';
-        upgradeLabel.parentElement.style.cursor = 'not-allowed';
-        upgradeDescription.style.opacity = '0.5';
-      } else {
-        // Enable and update price/description
-        luxuryCheckbox.disabled = false;
-        upgradeLabel.parentElement.style.opacity = '1';
-        upgradeLabel.parentElement.style.cursor = 'pointer';
-        upgradeDescription.style.opacity = '1';
-        
-        const data = upgradeData[packageValue];
-        if (data) {
-          upgradePrice.textContent = data.text;
-          upgradeDescription.textContent = data.description;
-        }
-      }
-      
-      // Recalculate price
-      calculatePrice();
-    }
-    
-    function calculatePrice() {
-      const selectedPackage = document.querySelector('input[name="package"]:checked');
-      const guests = parseInt(guestsInput.value) || 0;
-      
-      // If no package selected or maatwerk, show dashes
-      if (!selectedPackage || selectedPackage.value === 'maatwerk' || guests === 0) {
-        basePriceEl.textContent = '—';
-        totalPriceEl.textContent = '—';
-        exvatPriceEl.textContent = '—';
-        extrasLineEl.style.display = 'none';
-        return;
-      }
-      
-      const packageValue = selectedPackage.value;
-      const packagePrice = packagePrices[packageValue] || 0;
-      
-      // Calculate base price (package + luxury upgrade if checked)
-      let basePrice = packagePrice * guests;
-      
-      if (luxuryCheckbox.checked && upgradeData[packageValue]) {
-        basePrice += upgradeData[packageValue].price * guests;
-      }
-      
-      // Calculate extras
-      let extrasTotal = 0;
-      
-      if (djCheckbox && djCheckbox.checked) {
-        extrasTotal += fixedExtras.dj;
-      }
-      if (photoCheckbox && photoCheckbox.checked) {
-        extrasTotal += fixedExtras.fotograaf;
-      }
-      if (accordionCheckbox && accordionCheckbox.checked) {
-        extrasTotal += fixedExtras.accordeon;
-      }
-      if (oysterCheckbox && oysterCheckbox.checked) {
-        extrasTotal += perPersonExtras.oester * guests;
-      }
-      
-      // Update display
-      basePriceEl.textContent = '€' + basePrice.toLocaleString('nl-NL');
-      
-      if (extrasTotal > 0) {
-        extrasPriceEl.textContent = '€' + extrasTotal.toLocaleString('nl-NL');
-        extrasLineEl.style.display = 'flex';
-      } else {
-        extrasLineEl.style.display = 'none';
-      }
-      
-      const total = basePrice + extrasTotal;
-      totalPriceEl.textContent = '€' + total.toLocaleString('nl-NL');
-      
-      // Calculate price excluding 21% VAT
-      const exVat = total / 1.21;
-      exvatPriceEl.textContent = '€' + Math.round(exVat).toLocaleString('nl-NL');
-    }
-    
-    // Listen for package selection changes
-    packageRadios.forEach(radio => {
-      radio.addEventListener('change', updateUpgrade);
-    });
-    
-    // Listen for guest count changes
-    if (guestsInput) {
-      guestsInput.addEventListener('input', calculatePrice);
-    }
-    
-    // Listen for checkbox changes
-    [luxuryCheckbox, djCheckbox, photoCheckbox, oysterCheckbox, accordionCheckbox].forEach(checkbox => {
-      if (checkbox) {
-        checkbox.addEventListener('change', calculatePrice);
-      }
-    });
-    
-    // Initialize on page load
-    updateUpgrade();
-  })();
-  
-  // Modal handling
-  (function() {
-    // Get all modal triggers and modals
     const modalTriggers = document.querySelectorAll('[data-modal]');
     const modals = document.querySelectorAll('.modal');
     const modalCloses = document.querySelectorAll('.modal-close');
     
-    // Open modal
     modalTriggers.forEach(trigger => {
       trigger.addEventListener('click', function(e) {
         e.preventDefault();
-        e.stopPropagation(); // Prevent label click
+        e.stopPropagation();
         const modalId = this.getAttribute('data-modal');
         const modal = document.getElementById(modalId);
         if (modal) {
@@ -630,36 +452,27 @@ title: De Zeilkeuken - Vraag een offerte aan
       });
     });
     
-    // Close modal
     function closeModal(modal) {
       modal.classList.remove('modal-open');
       document.body.style.overflow = '';
     }
     
-    // Close buttons
     modalCloses.forEach(closeBtn => {
       closeBtn.addEventListener('click', function() {
-        const modal = this.closest('.modal');
-        closeModal(modal);
+        closeModal(this.closest('.modal'));
       });
     });
     
-    // Click outside modal content
     modals.forEach(modal => {
       modal.addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeModal(this);
-        }
+        if (e.target === this) closeModal(this);
       });
     });
     
-    // Escape key
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         modals.forEach(modal => {
-          if (modal.classList.contains('modal-open')) {
-            closeModal(modal);
-          }
+          if (modal.classList.contains('modal-open')) closeModal(modal);
         });
       }
     });

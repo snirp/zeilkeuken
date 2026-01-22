@@ -2,17 +2,177 @@
    FORMS.CSS - Form Elements and Quote System
    ========================================================================== */
 
+/* Stepped Form Structure */
+.stepped-form {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--spacing-md);
+  background-color: var(--color-gray-100);
+  border-radius: 8px;
+  scroll-margin-top: 100px; /* Keep header visible when scrolling */
+}
+
+/* Progress Indicator */
+.form-progress {
+  margin-bottom: var(--spacing-xl);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background-color: var(--color-gray-200);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: var(--spacing-md);
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--color-purple);
+  transition: width 0.3s ease;
+  width: 25%; /* Default step 1 */
+}
+
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+}
+
+.progress-step {
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.progress-step.clickable {
+  cursor: pointer;
+}
+
+.progress-step.clickable:hover {
+  background-color: rgba(128, 0, 128, 0.05);
+}
+
+.progress-step.active {
+  color: var(--color-purple);
+  font-weight: 600;
+  background-color: rgba(128, 0, 128, 0.1);
+}
+
+.progress-step.active.clickable:hover {
+  background-color: rgba(128, 0, 128, 0.15);
+}
+
+.progress-step.completed {
+  color: var(--color-gray-700);
+}
+
+@media (min-width: 768px) {
+  .progress-steps {
+    flex-wrap: nowrap;
+  }
+  
+  .progress-step {
+    min-width: auto;
+  }
+}
+
+/* Form Steps */
+.form-step {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.form-step[aria-hidden="false"] {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Form Navigation */
+.form-navigation {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: space-between;
+  margin-top: var(--spacing-xl);
+}
+
+.btn-back,
+.btn-next,
+.btn-submit {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: var(--font-size-base);
+  border-radius: 4px;
+  min-width: 120px;
+}
+
+.btn-next:disabled,
+.btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--color-gray-400);
+}
+
+.btn-next:disabled:hover,
+.btn-submit:disabled:hover {
+  background-color: var(--color-gray-400);
+}
+
+.btn-back {
+  background-color: var(--color-white);
+  color: var(--color-gray-700);
+  border: 1px solid var(--color-gray-300);
+}
+
+.btn-back:hover {
+  background-color: var(--color-gray-100);
+  color: var(--color-black);
+}
+
+.btn-next,
+.btn-submit {
+  margin-left: auto;
+}
+
+/* Form Error Message */
+.form-error {
+  display: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 4px;
+  color: #c33;
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-sm);
+}
+
 /* Quote Hero */
 .quote-hero {
   text-align: center;
-  padding: var(--spacing-xl) var(--spacing-md);
+  padding: var(--spacing-xl) var(--spacing-md) var(--spacing-md);
 }
 
 .quote-hero h1 {
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-xl);
   font-weight: 700;
   color: var(--color-black);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 0;
 }
 
 .quote-hero p {
@@ -32,7 +192,7 @@
 
 @media (min-width: 768px) {
   .quote-hero h1 {
-    font-size: var(--font-size-3xl);
+    font-size: var(--font-size-2xl);
   }
 }
 
@@ -240,6 +400,18 @@
   cursor: pointer;
   font-size: var(--font-size-base);
   color: var(--color-gray-800);
+}
+
+.extra-option {
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.extra-option:hover {
+  border-color: var(--color-gray-400);
+  background-color: var(--color-gray-50);
 }
 
 .checkbox-label input[type="checkbox"] {
