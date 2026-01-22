@@ -37,12 +37,47 @@
 
 .progress-boat {
   position: absolute;
-  top: -32px; /* Positioned to rest on top of bar */
+  top: -58px; /* Positioned to rest on top of bar */
   left: 0%; /* Default: start position */
   transform: translateX(-50%) scaleX(-1); /* Center on progress and flip horizontally */
-  font-size: 24px;
+  font-size: 48px;
   transition: left 0.3s ease;
   pointer-events: none;
+  animation: boat-bob 2s ease-in-out infinite; /* Gentle bobbing at rest */
+}
+
+.progress-boat.wobble {
+  animation: boat-wobble 0.6s ease-in-out;
+}
+
+@keyframes boat-bob {
+  0%, 100% {
+    transform: translateX(-50%) scaleX(-1) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) scaleX(-1) translateY(-2px); /* Bob up 2px */
+  }
+}
+
+@keyframes boat-wobble {
+  0% {
+    transform: translateX(-50%) scaleX(-1) rotate(0deg);
+  }
+  15% {
+    transform: translateX(-50%) scaleX(-1) rotate(-8deg); /* Tilt back at start */
+  }
+  50% {
+    transform: translateX(-50%) scaleX(-1) rotate(0deg); /* Neutral during motion */
+  }
+  70% {
+    transform: translateX(-50%) scaleX(-1) rotate(5deg); /* Rock forward */
+  }
+  85% {
+    transform: translateX(-50%) scaleX(-1) rotate(-2deg); /* Slight back */
+  }
+  100% {
+    transform: translateX(-50%) scaleX(-1) rotate(0deg); /* Back to neutral */
+  }
 }
 
 .progress-steps {

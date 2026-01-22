@@ -561,6 +561,17 @@
     // Update sailboat position (moves within the 75% width bar)
     if (progressBoat) {
       progressBoat.style.left = progressPercent + '%';
+      
+      // Trigger wobble animation
+      progressBoat.classList.remove('wobble');
+      // Force reflow to restart animation
+      void progressBoat.offsetWidth;
+      progressBoat.classList.add('wobble');
+      
+      // Remove wobble class after animation completes to return to bobbing
+      setTimeout(() => {
+        progressBoat.classList.remove('wobble');
+      }, 600); // Match animation duration
     }
 
     // Update progress steps
