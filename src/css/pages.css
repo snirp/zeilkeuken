@@ -5,6 +5,7 @@
 /* Hero */
 .hero-section {
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile browsers */
   background-color: var(--color-gray-200);
   border: 2px dashed var(--color-gray-400);
   display: flex;
