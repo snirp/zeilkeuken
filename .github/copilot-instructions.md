@@ -88,14 +88,39 @@ title: Page Title
 
 ### Content Management System
 - **data-content-id attributes:** All editable content marked with `data-content-id="unique-id"`
-- **Content source:** `src/_data/content.md` - markdown file with content mapped to IDs
-- **Format:** `## data-content-id` headers followed by content
 - Enables future CMS integration (planned: Decap CMS)
-- LLM-friendly format for content updates and synchronization
+- HTML templates are the source of truth
 
 **Example:**
 ```html
 <h1 data-content-id="hero-title">Maak van jouw zeiltocht een culinaire belevenis</h1>
+```
+
+#### Content Synchronization Process
+
+**Trigger command:** `Update content:` followed by pasted markdown
+
+**Process:**
+1. Parse markdown with `## data-content-id` headers and content
+2. Find matching HTML elements with `data-content-id` attributes across all template files
+3. Update text content while preserving HTML structure, tags, and all attributes
+4. Report results:
+   - ✅ Successfully updated content IDs
+   - ❌ Content IDs from markdown without matching HTML elements
+
+**Rules:**
+- HTML templates are the source of truth (version controlled)
+- Preserve: HTML structure, all attributes, element types
+- Update: Text content only
+
+**Input markdown format:**
+```markdown
+## data-content-id
+Content text here
+Can span multiple lines
+
+## another-content-id
+More content here
 ```
 
 ### Includes & Partials
