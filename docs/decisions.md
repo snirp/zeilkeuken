@@ -19,3 +19,9 @@
 
 ## i18n
 - **Dutch-first** (nl-NL) with architecture ready for future English version
+
+# Future implementations
+
+- Create Resend account
+- Handle quotation form submission with Netlify (quotation-handling.md)
+- Implement analytics (analytics.md)
