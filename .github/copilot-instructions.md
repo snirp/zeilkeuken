@@ -268,17 +268,6 @@ Use badge-group as wrapper with badge children for all tag/label groups.
 - JavaScript: `src/js/menu.js` handles toggle, overlay, escape key, click-outside
 - Smooth scroll: `html { scroll-behavior: smooth; }` for anchor links
 
-### Section IDs
-Homepage sections have single-word IDs for anchor navigation:
-- `#hero` - Hero section with main CTA
-- `#proposition` - Value proposition
-- `#destinations` - Sailing destinations
-- `#food` - Food/kitchen offering
-- `#packages` - Package options
-- `#why` - Why choose us
-- `#testimonials` - Customer reviews
-- `#cta` - Call to action
-
 ## Key Configuration (.eleventy.js)
 ```js
 module.exports = function(eleventyConfig) {
