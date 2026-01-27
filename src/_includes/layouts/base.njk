@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/forms.css">
   <link rel="stylesheet" href="/css/pages.css">
+  <!-- Preload critical JavaScript for faster execution -->
+  <link rel="modulepreload" href="/js/menu.js" as="script">
 </head>
 <body{% if page.url == '/' or page.url == '/keuken/' %} class="has-hero"{% endif %}>
   
@@ -161,14 +163,21 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-  <script src="/js/menu.js"></script>
+  <!-- Non-blocking async scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" defer></script>
+  <script src="/js/menu.js" defer></script>
   {% if page.url == '/offerte/' %}
-  <script src="/js/stepped-form.js"></script>
+  <script src="/js/stepped-form.js" defer></script>
   {% endif %}
-  <script>feather.replace()</script>
   
   <script>
+    // Initialize feather icons when loaded (runs after defer)
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof feather !== 'undefined') {
+        feather.replace();
+      }
+    });
+    
     // Header scroll state for hero pages
     if (document.body.classList.contains('has-hero')) {
       const header = document.querySelector('.header');

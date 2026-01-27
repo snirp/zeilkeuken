@@ -25,3 +25,4 @@
 - Create Resend account
 - Handle quotation form submission with Netlify (quotation-handling.md)
 - Implement analytics (analytics.md)
+- Spam protection
