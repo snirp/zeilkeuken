@@ -30,17 +30,6 @@
       upgradeText: '(+€30 pp)',
       upgradeDescription: 'Premium wijnarrangement, amuse & pre-dessert, specialty cocktails'
     },
-    verrevaart: {
-      name: 'Verre vaart',
-      price: 140,
-      minGuests: 25,
-      maxGuests: 40,
-      dateRange: { start: '2026-04-01', end: '2026-10-31' },
-      availableExtras: ['luxury-upgrade', 'dj', 'fotograaf', 'oesters', 'accordeon'],
-      upgradePrice: 35,
-      upgradeText: '(+€35 pp)',
-      upgradeDescription: 'Premium wijnen, extra\'s en specialty ingrediënten'
-    },
     maatwerk: {
       name: 'Maatwerk',
       price: null,
