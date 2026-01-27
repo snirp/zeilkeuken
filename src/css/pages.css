@@ -7,18 +7,25 @@
   height: 100vh;
   height: 100dvh; /* Dynamic viewport height for mobile browsers */
   background-color: var(--color-gray-200);
-  border: 2px dashed var(--color-gray-400);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: var(--spacing-md);
+  padding: var(--spacing-md) 0;
   text-align: center;
   position: relative;
   overflow: hidden;
+  max-width: 100% !important; /* Override container max-width for full-width hero */
 }
 
-.hero-image {
+@media (min-width: 768px) {
+  .hero-section {
+    padding: var(--spacing-lg) 0;
+  }
+}
+
+.hero-image,
+.hero-video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -30,6 +37,13 @@
 .hero-section .hero-content {
   position: relative;
   z-index: 1;
+  padding: 0 var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .hero-section .hero-content {
+    padding: 0 var(--spacing-lg);
+  }
 }
 
 .hero-content {
@@ -42,21 +56,31 @@
 }
 
 .hero-title {
-  font-size: var(--font-size-3xl);
+  font-size: 3.75rem;
   font-weight: 700;
-  color: var(--color-black);
+  color: var(--color-white);
   margin-bottom: var(--spacing-sm);
   line-height: 1.2;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .hero-subtitle {
-  font-size: var(--font-size-lg);
-  color: var(--color-gray-600);
+  font-size: 1.7rem;
+  color: var(--color-white);
   margin-bottom: var(--spacing-lg);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .hero-cta {
   margin-top: auto;
+  position: relative;
+  z-index: 1;
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+.hero-cta:hover {
+  background-color: var(--color-gray-100);
 }
 
 .hero-cta-icon {
@@ -70,11 +94,38 @@
   transform: translateY(4px);
 }
 
+/* Food Experience */
+.food-image {
+  margin: 0 calc(-1 * var(--spacing-md)) var(--spacing-md);
+  width: calc(100% + 2 * var(--spacing-md));
+}
+
+.food-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  max-height: 500px;
+}
+
+@media (min-width: 768px) {
+  .food-image {
+    margin: 0 calc(-1 * var(--spacing-lg)) var(--spacing-md);
+    width: calc(100% + 2 * var(--spacing-lg));
+  }
+}
+
+@media (min-width: 1024px) {
+  .food-image {
+    margin: 0 calc(-1 * var(--spacing-xl)) var(--spacing-md);
+    width: calc(100% + 2 * var(--spacing-xl));
+  }
+}
+
 /* Placeholders */
 .image-placeholder,
 .destinations .map-container {
   background-color: var(--color-gray-200);
-  border: 2px dashed var(--color-gray-400);
   display: flex;
   align-items: center;
   justify-content: center;

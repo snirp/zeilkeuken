@@ -165,20 +165,17 @@
   </footer>
 
   <!-- Non-blocking async scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script>
+    // Initialize feather icons immediately
+    feather.replace();
+  </script>
   <script src="/js/menu.js" defer></script>
   {% if page.url == '/offerte/' %}
   <script src="/js/stepped-form.js" defer></script>
   {% endif %}
   
   <script>
-    // Initialize feather icons when loaded (runs after defer)
-    document.addEventListener('DOMContentLoaded', () => {
-      if (typeof feather !== 'undefined') {
-        feather.replace();
-      }
-    });
-    
     // Header scroll state for hero pages
     if (document.body.classList.contains('has-hero')) {
       const header = document.querySelector('.header');
