@@ -69,7 +69,7 @@
     {{ content | safe }}
   </main>
 
-  {% if page.url != '/offerte/' %}
+  {% if page.url != '/offerte/' and not hideFooterCta %}
   <!-- Footer CTA -->
   <section class="footer-cta">
     <h3 class="footer-cta-title" data-content-id="footer-cta-title">Hoe kunnen we jouw dag of evenement optimaal verzorgen? Vertel het ons.</h3>

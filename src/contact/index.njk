@@ -1,9 +1,89 @@
 ---
 layout: layouts/base.njk
-title: De Zeilkeuken - Contact en informatie
+title: De Zeilkeuken - Contact
+hideFooterCta: true
 ---
 
+<!-- Contact Info & Form -->
 <section class="section">
-  <h1>Contact en informatie</h1>
-  <p>Content volgt...</p>
+  <div class="grid-2">
+    
+    <!-- Left Column: Contact Info + Location -->
+    <div>
+      <h2 data-content-id="contact-info-title">Contactgegevens</h2>
+      
+      <div class="contact-info">
+        <div class="contact-item">
+          <h3 data-content-id="contact-email-label">E-mail</h3>
+          <p><a href="mailto:info@dezeilkeuken.nl" data-content-id="contact-email">info@dezeilkeuken.nl</a></p>
+        </div>
+        
+        <div class="contact-item">
+          <h3 data-content-id="contact-phone-label">Telefoon</h3>
+          <p><a href="tel:+31612345678" data-content-id="contact-phone">+31 6 12 34 56 78</a></p>
+        </div>
+        
+        <div class="contact-item">
+          <h3 data-content-id="contact-response-label">Reactietijd</h3>
+          <p data-content-id="contact-response">Je ontvangt binnen 24 uur onze reactie</p>
+        </div>
+      </div>
+      
+      <h2 data-content-id="contact-location-title" style="margin-top: var(--spacing-xl);">Locatie</h2>
+      
+      <div class="contact-info">
+        <div class="contact-item">
+          <h3 data-content-id="contact-location-address-label">Adres</h3>
+          <p data-content-id="contact-location-address">Haven Muiden<br>1398 AE Muiden<br>Nederland</p>
+        </div>
+        <div class="contact-item">
+          <h3 data-content-id="contact-location-directions-label">Routebeschrijving</h3>
+          <p data-content-id="contact-location-directions">De haven van Muiden is gemakkelijk bereikbaar per auto en openbaar vervoer. Gratis parkeren is beschikbaar nabij de haven.</p>
+        </div>
+        <div class="contact-item">
+          <h3 data-content-id="contact-location-meeting-label">Ontmoetingspunt</h3>
+          <p data-content-id="contact-location-meeting">We vertrekken vanaf de haven van Muiden. Het exacte ontmoetingspunt ontvang je bij de boekingsbevestiging.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Column: Contact Form -->
+    <div>
+      <h2 data-content-id="contact-form-title">Stel een vraag</h2>
+      
+      <form class="contact-form">
+        <div class="form-group">
+          <label for="name" data-content-id="contact-form-name-label">Naam *</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email" data-content-id="contact-form-email-label">E-mailadres *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone" data-content-id="contact-form-phone-label">Telefoonnummer</label>
+          <input type="tel" id="phone" name="phone">
+        </div>
+        
+        <div class="form-group">
+          <label for="message" data-content-id="contact-form-message-label">Bericht *</label>
+          <textarea id="message" name="message" rows="6" required></textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-lg btn-full" data-content-id="contact-form-submit">Verstuur bericht</button>
+      </form>
+    </div>
+    
+  </div>
+</section>
+
+<!-- Additional Info -->
+<section class="section" style="background-color: var(--color-gray-100);">
+  <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+    <h2 data-content-id="contact-booking-title">Liever direct een offerte aanvragen?</h2>
+    <p data-content-id="contact-booking-text">Voor offerteaanvragen kun je gebruik maken van ons uitgebreide offerteformulier.</p>
+    <a href="/offerte/" class="btn btn-lg" data-content-id="contact-booking-link">Vraag een offerte aan</a>
+  </div>
 </section>

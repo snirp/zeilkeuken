@@ -591,3 +591,41 @@
   font-size: var(--font-size-sm);
   color: var(--color-gray-600);
 }
+
+/* ==========================================================================
+   Contact Form
+   ========================================================================== */
+
+.contact-form {
+  background-color: var(--color-gray-100);
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.contact-item h3 {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-gray-800);
+  margin-bottom: var(--spacing-xs);
+}
+
+.contact-item p {
+  margin: 0;
+  color: var(--color-gray-700);
+}
+
+.contact-item a {
+  color: var(--color-purple);
+  text-decoration: none;
+}
+
+.contact-item a:hover {
+  text-decoration: underline;
+}
+
