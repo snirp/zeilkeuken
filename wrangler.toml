@@ -1,0 +1,11 @@
+# Cloudflare Pages configuration (optional)
+# Most settings are configured in Cloudflare Pages dashboard
+
+name = "zeilkeuken"
+compatibility_date = "2024-01-01"
+
+# Pages projects are configured via dashboard, but this file can be used
+# for local development with wrangler pages dev
+
+# [env.production]
+# Workers configuration would go here if needed

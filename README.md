@@ -34,8 +34,8 @@ Outputs to `_site/` directory.
 
 ## Deployment
 
-Automatically deployed to Netlify on push to `master` branch.
+Automatically deployed to Cloudflare on push to `master` branch.
 
 ---
 
-**Stack:** 11ty • Nunjucks • Custom CSS • Netlify Functions
+**Stack:** 11ty • Nunjucks • Custom CSS • Cloudflare worker

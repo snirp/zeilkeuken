@@ -6,7 +6,7 @@ Client website built with 11ty (Eleventy) static site generator. Project follows
 2. Progressively enhance with custom CSS for styling
 3. Refine into production-ready website
 
-**Tech Stack:** 11ty, Custom CSS, Nunjucks templating, Netlify (hosting + serverless functions)
+**Tech Stack:** 11ty, Custom CSS, Nunjucks templating, Cloudflare Pages (hosting + Workers for serverless functions)
 **Language:** Dutch (nl-NL) - English support planned for future
 
 ## Project Structure (11ty conventions)
@@ -24,10 +24,9 @@ src/               # Source files
     index.njk      # Experience page
   keuken/          # Kitchen page
   # ... other pages follow same pattern
-netlify/
-  functions/       # Serverless functions for form handling
+functions/         # Cloudflare Workers for form handling
 .eleventy.js       # 11ty configuration
-netlify.toml       # Netlify deployment config
+wrangler.toml      # Cloudflare Pages configuration (optional)
 package.json       # Dependencies and scripts
 _site/             # Generated output (git-ignored)
 ```
@@ -289,18 +288,19 @@ module.exports = function(eleventyConfig) {
 
 ## Forms & Serverless Functions
 - Forms: contact form, quote request
-- Handle submissions via **Netlify Functions** (serverless)
+- Handle submissions via **Cloudflare Workers** (serverless)
 - Form files in `src/_includes/forms/`
-- Functions in `netlify/functions/`
-- Use `netlify-lambda` or Netlify CLI for local testing
-- Forms submit to `/.netlify/functions/[function-name]`
+- Workers in `functions/` directory (Cloudflare Pages convention)
+- Use Wrangler CLI for local testing (`wrangler pages dev`)
+- Forms submit to `/api/[function-name]` (Cloudflare Pages routing)
 
-## Deployment (Netlify)
-- Configure build in `netlify.toml`
+## Deployment (Cloudflare Pages)
+- Automatic deployment from Git integration
 - Build command: `npm run build`
-- Publish directory: `_site`
-- Functions directory: `netlify/functions`
-- Environment variables in Netlify dashboard
+- Build output directory: `_site`
+- Functions directory: `functions/` (optional, auto-detected)
+- Environment variables in Cloudflare Pages dashboard
+- Custom domains and DNS managed in Cloudflare
 
 ## Architecture Evolution
 **January 2026** - CSS consolidation and utility system

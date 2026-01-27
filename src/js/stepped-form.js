@@ -719,7 +719,7 @@
       console.warn('Could not clear form state:', e);
     }
     
-    // Form will submit normally to Netlify function
+    // Form will submit normally to Cloudflare Worker
   }
 
   // Initialize on DOM ready

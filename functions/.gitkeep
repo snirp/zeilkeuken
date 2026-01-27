@@ -1,0 +1,3 @@
+# Cloudflare Workers for form handling
+# Place serverless functions here
+# They will be available at /api/[function-name]

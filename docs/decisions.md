@@ -2,7 +2,7 @@
 
 ## Tech Stack
 - **11ty (Eleventy)** static site generator
-- **Netlify** for hosting + serverless functions
+- **Cloudflare Pages** for hosting + Workers for serverless functions
 - **Nunjucks** templating
 - **Modern CSS** (no preprocessors, no BEM)
 
@@ -23,6 +23,6 @@
 # Future implementations
 
 - Create Resend account
-- Handle quotation form submission with Netlify (quotation-handling.md)
-- Implement analytics (analytics.md)
-- Spam protection
+- Handle quotation form submission with Cloudflare Workers (see quotation-handling.md)
+- Implement analytics (see analytics.md)
+- Spam protection 
