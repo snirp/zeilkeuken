@@ -9,7 +9,7 @@
   // Package configuration - defines rules for each package
   const PACKAGE_CONFIG = {
     dagvaart: {
-      name: 'Dagvaart',
+      name: 'Dagtocht',
       price: 115,
       minGuests: 25,
       maxGuests: 40,
@@ -19,8 +19,19 @@
       upgradeText: '(+€25 pp)',
       upgradeDescription: 'Premium wijnen, craft bieren, exclusieve kazen en extra gang'
     },
+    langevaart: {
+      name: 'Lange vaart',
+      price: 145,
+      minGuests: 25,
+      maxGuests: 40,
+      dateRange: { start: '2026-05-01', end: '2026-09-30' },
+      availableExtras: ['luxury-upgrade', 'dj', 'fotograaf', 'oesters', 'accordeon'],
+      upgradePrice: 35,
+      upgradeText: '(+€35 pp)',
+      upgradeDescription: 'Premium wijnselectie hele dag, extra gangen, luxe aperitief'
+    },
     dinervaart: {
-      name: 'Dinervaart',
+      name: 'Diner & sunset',
       price: 110,
       minGuests: 25,
       maxGuests: 40,

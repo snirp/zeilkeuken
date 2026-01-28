@@ -39,11 +39,25 @@ title: De Zeilkeuken - Vraag een offerte aan
           <div class="package-card-radio">
             <div class="package-header-radio">
               <div>
-                <h3 data-content-id="quote-package-dag-name">Dagvaart <span class="package-time" data-content-id="quote-package-dag-time">10:00 - 17:00</span></h3>
+                <h3 data-content-id="quote-package-dag-name">Dagtocht <span class="package-time" data-content-id="quote-package-dag-time">10:00 - 17:00</span></h3>
               </div>
               <span class="package-price-badge" data-content-id="quote-package-dag-price">€115 pp</span>
             </div>
             <p class="package-summary" data-content-id="quote-package-dag-summary">Een volledige dag zeilen, met lunch en borrel. <button type="button" class="inline-details-link" data-modal="dagvaart-modal">ⓘ Bekijk details</button></p>
+          </div>
+        </label>
+        
+        <!-- Lange vaart Package -->
+        <label class="package-option">
+          <input type="radio" name="package" value="langevaart" required>
+          <div class="package-card-radio">
+            <div class="package-header-radio">
+              <div>
+                <h3 data-content-id="quote-package-long-name">Lange vaart <span class="package-time" data-content-id="quote-package-long-time">08:00 - 18:00</span></h3>
+              </div>
+              <span class="package-price-badge" data-content-id="quote-package-long-price">€145 pp</span>
+            </div>
+            <p class="package-summary" data-content-id="quote-package-long-summary">Volledige zeildag met ontbijt, lunch en diner. <button type="button" class="inline-details-link" data-modal="langevaart-modal">ⓘ Bekijk details</button></p>
           </div>
         </label>
         
@@ -53,7 +67,7 @@ title: De Zeilkeuken - Vraag een offerte aan
           <div class="package-card-radio">
             <div class="package-header-radio">
               <div>
-                <h3 data-content-id="quote-package-diner-name">Dinervaart <span class="package-time" data-content-id="quote-package-diner-time">18:00 - 21:30</span></h3>
+                <h3 data-content-id="quote-package-diner-name">Diner & sunset <span class="package-time" data-content-id="quote-package-diner-time">18:00 - 21:30</span></h3>
               </div>
               <span class="package-price-badge" data-content-id="quote-package-diner-price">€110 pp</span>
             </div>
@@ -348,7 +362,7 @@ title: De Zeilkeuken - Vraag een offerte aan
 <div id="dagvaart-modal" class="modal">
   <div class="modal-content">
     <button class="modal-close" aria-label="Sluiten">&times;</button>
-    <h2>Dagvaart</h2>
+    <h2>Dagtocht</h2>
     <p class="modal-meta">10:00 - 17:00 • €115 pp</p>
     
     <h3>Wat is inbegrepen</h3>
@@ -363,10 +377,30 @@ title: De Zeilkeuken - Vraag een offerte aan
   </div>
 </div>
 
+<div id="langevaart-modal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Sluiten">&times;</button>
+    <h2>Lange vaart</h2>
+    <p class="modal-meta">08:00 - 18:00 • €145 pp</p>
+    
+    <h3>Wat is inbegrepen</h3>
+    <ul>
+      <li>Zeiltocht van 10 uur</li>
+      <li>Ontbijt met vers brood en streekproducten</li>
+      <li>Uitgebreide lunch aan boord</li>
+      <li>Borrelmoment met lokale specialiteiten</li>
+      <li>Driegangendiner bij zonsondergang</li>
+      <li>Premium bier- en wijnpakket de hele dag</li>
+      <li>Meerdere aanlegmogelijkheden</li>
+      <li>Ervaren bemanning en live kokkerij</li>
+    </ul>
+  </div>
+</div>
+
 <div id="dinervaart-modal" class="modal">
   <div class="modal-content">
     <button class="modal-close" aria-label="Sluiten">&times;</button>
-    <h2>Dinervaart</h2>
+    <h2>Diner & sunset</h2>
     <p class="modal-meta">18:00 - 21:30 • €110 pp</p>
     
     <h3>Wat is inbegrepen</h3>

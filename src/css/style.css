@@ -186,7 +186,7 @@ body {
   display: flex;
   gap: var(--spacing-xs);
   flex-wrap: wrap;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
 }
 
 /* Grid Layouts */
