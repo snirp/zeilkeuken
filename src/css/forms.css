@@ -385,6 +385,7 @@
 .form-group input[type="email"],
 .form-group input[type="tel"],
 .form-group input[type="date"],
+.form-group input[type="time"],
 .form-group input[type="number"],
 .form-group select,
 .form-group textarea {
@@ -416,6 +417,23 @@
   color: var(--color-gray-500);
   margin-top: 4px;
   margin-bottom: calc(-1 * var(--spacing-sm));
+}
+
+.duration-input {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.duration-input input {
+  flex: 1;
+  width: auto;
+}
+
+.duration-input span {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-base);
+  white-space: nowrap;
 }
 
 .form-row {

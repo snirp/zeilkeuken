@@ -13,6 +13,8 @@
       price: 115,
       minGuests: 25,
       maxGuests: 40,
+      defaultDeparture: '10:00',
+      defaultDuration: 7,
       dateRange: { start: '2026-04-01', end: '2026-10-31' },
       availableExtras: ['luxury-upgrade', 'dj', 'fotograaf', 'oesters', 'accordeon'],
       upgradePrice: 25,
@@ -24,6 +26,8 @@
       price: 145,
       minGuests: 25,
       maxGuests: 40,
+      defaultDeparture: '10:00',
+      defaultDuration: 10,
       dateRange: { start: '2026-05-01', end: '2026-09-30' },
       availableExtras: ['luxury-upgrade', 'dj', 'fotograaf', 'oesters', 'accordeon'],
       upgradePrice: 35,
@@ -35,6 +39,8 @@
       price: 110,
       minGuests: 25,
       maxGuests: 40,
+      defaultDeparture: '18:00',
+      defaultDuration: 3.5,
       dateRange: { start: '2026-04-01', end: '2026-10-31' },
       availableExtras: ['luxury-upgrade', 'dj', 'fotograaf', 'oesters'],
       upgradePrice: 30,
@@ -46,6 +52,8 @@
       price: null,
       minGuests: 15,
       maxGuests: 40,
+      defaultDeparture: null,
+      defaultDuration: null,
       dateRange: null,
       availableExtras: ['dj', 'fotograaf', 'oesters', 'accordeon'],
       upgradePrice: null
@@ -64,6 +72,14 @@
     oesters: 15
   };
 
+  // Pricing calculation constants
+  const PRICING = {
+    pvrt: 620, 
+    pu: 163.96,
+    pppu: 7.44,
+    dnr: 37.2
+  };
+
   // Form state
   const state = {
     currentStep: 1,
@@ -72,6 +88,8 @@
       package: null,
       date: null,
       guests: null,
+      departure: null,
+      duration: null,
       extras: [],
       personalDetails: {}
     }
@@ -131,6 +149,8 @@
     // Date and guests inputs
     const dateInput = form.querySelector('#date');
     const guestsInput = form.querySelector('#guests');
+    const departureInput = form.querySelector('#departure');
+    const durationInput = form.querySelector('#duration');
     
     if (dateInput) {
       dateInput.addEventListener('change', handleDateChange);
@@ -138,6 +158,15 @@
     
     if (guestsInput) {
       guestsInput.addEventListener('input', handleGuestsChange);
+    }
+    
+    // Departure time select
+    if (departureInput) {
+      departureInput.addEventListener('change', handleDepartureChange);
+    }
+    
+    if (durationInput) {
+      durationInput.addEventListener('input', handleDurationChange);
     }
 
     // Extras checkboxes
@@ -167,6 +196,7 @@
     state.formData.package = e.target.value;
     updateDateConstraints();
     updateGuestsConstraints();
+    updatePackageDefaults();
     updateAvailableExtras();
     updatePriceCalculator();
     updateNavigationState();
@@ -188,7 +218,48 @@
    */
   function handleGuestsChange(e) {
     state.formData.guests = parseInt(e.target.value) || null;
+    updatePriceEstimate();
     updatePriceCalculator();
+    updateNavigationState();
+    saveState();
+  }
+
+  /**
+   * Handle departure time change
+   */
+  function handleDepartureChange(e) {
+    state.formData.departure = e.target.value || null;
+    updateNavigationState();
+    saveState();
+  }
+
+  /**
+   * Handle duration change
+   */
+  function handleDurationChange(e) {
+    const input = e.target;
+    let value = parseFloat(input.value);
+    
+    if (isNaN(value)) {
+      state.formData.duration = null;
+      updatePriceEstimate();
+      updateNavigationState();
+      return;
+    }
+    
+    // Enforce min/max
+    if (value < 2) value = 2;
+    if (value > 12) value = 12;
+    
+    // Round to nearest 0.5
+    value = Math.round(value * 2) / 2;
+    
+    if (parseFloat(input.value) !== value) {
+      input.value = value;
+    }
+    
+    state.formData.duration = value;
+    updatePriceEstimate();
     updateNavigationState();
     saveState();
   }
@@ -253,6 +324,40 @@
   }
 
   /**
+   * Update departure and duration inputs with package defaults
+   */
+  function updatePackageDefaults() {
+    if (!state.formData.package) return;
+
+    const config = PACKAGE_CONFIG[state.formData.package];
+    const departureInput = form.querySelector('#departure');
+    const durationInput = form.querySelector('#duration');
+
+    // Set departure time default
+    if (departureInput && config.defaultDeparture) {
+      departureInput.value = config.defaultDeparture;
+      state.formData.departure = config.defaultDeparture;
+    } else if (departureInput && !config.defaultDeparture) {
+      // Clear for packages without defaults (maatwerk)
+      departureInput.value = '';
+      state.formData.departure = null;
+    }
+
+    // Set duration default
+    if (durationInput && config.defaultDuration) {
+      durationInput.value = config.defaultDuration;
+      state.formData.duration = config.defaultDuration;
+    } else if (durationInput && !config.defaultDuration) {
+      // Clear for packages without defaults (maatwerk)
+      durationInput.value = '';
+      state.formData.duration = null;
+    }
+    
+    // Update price estimate with new defaults
+    updatePriceEstimate();
+  }
+
+  /**
    * Update available extras based on selected package
    */
   function updateAvailableExtras() {
@@ -290,6 +395,27 @@
         upgradeDescription.textContent = config.upgradeDescription;
       }
     }
+  }
+
+  /**
+   * Calculate and update price estimate
+   */
+  function updatePriceEstimate() {
+    const estimateEl = form.querySelector('#price-estimate');
+    if (!estimateEl) return;
+
+    // Check if all required fields are present
+    if (!state.formData.duration || !state.formData.guests) {
+      estimateEl.textContent = '—';
+      return;
+    }
+
+    // Calculate: pvrt + duration * pu + guests * pppu * duration
+    const estimate = PRICING.pvrt + 
+                     state.formData.duration * PRICING.pu + 
+                     state.formData.guests * PRICING.pppu * state.formData.duration;
+
+    estimateEl.textContent = '€' + Math.round(estimate).toLocaleString('nl-NL');
   }
 
   /**
@@ -375,8 +501,9 @@
       case 1: // Package selection
         return state.formData.package !== null;
       
-      case 2: // Date and guests
-        if (!state.formData.date || !state.formData.guests) return false;
+      case 2: // Date, guests, departure, duration
+        if (!state.formData.date || !state.formData.guests || 
+            !state.formData.departure || !state.formData.duration) return false;
         
         const config = PACKAGE_CONFIG[state.formData.package];
         if (config.dateRange) {
@@ -419,8 +546,12 @@
       case 1: // Package selection
         return state.formData.package !== null;
       
-      case 2: // Date and guests
-        if (!state.formData.date || !state.formData.guests) return false;
+      case 2: // Date, guests, departure, duration
+        if (!state.formData.date || !state.formData.guests || 
+            !state.formData.departure || !state.formData.duration) {
+          showError('Vul alle verplichte velden in');
+          return false;
+        }
         
         // Validate date range if applicable
         const config = PACKAGE_CONFIG[state.formData.package];
