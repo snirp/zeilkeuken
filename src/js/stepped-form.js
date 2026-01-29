@@ -6,79 +6,20 @@
 (function() {
   'use strict';
 
-  // Package configuration - defines rules for each package
-  const PACKAGE_CONFIG = {
-    dagvaart: {
-      name: 'Dagtocht',
-      price: 115,
-      minGuests: 25,
-      maxGuests: 40,
-      defaultDeparture: '10:00',
-      defaultDuration: 7,
-      dateRange: { start: '2026-04-01', end: '2026-10-31' },
-      availableExtras: ['luxury-upgrade', 'dj', 'fotograaf', 'oesters', 'accordeon'],
-      upgradePrice: 25,
-      upgradeText: '(+€25 pp)',
-      upgradeDescription: 'Premium wijnen, craft bieren, exclusieve kazen en extra gang'
-    },
-    langevaart: {
-      name: 'Lange vaart',
-      price: 145,
-      minGuests: 25,
-      maxGuests: 40,
-      defaultDeparture: '10:00',
-      defaultDuration: 10,
-      dateRange: { start: '2026-05-01', end: '2026-09-30' },
-      availableExtras: ['luxury-upgrade', 'dj', 'fotograaf', 'oesters', 'accordeon'],
-      upgradePrice: 35,
-      upgradeText: '(+€35 pp)',
-      upgradeDescription: 'Premium wijnselectie hele dag, extra gangen, luxe aperitief'
-    },
-    dinervaart: {
-      name: 'Diner & sunset',
-      price: 110,
-      minGuests: 25,
-      maxGuests: 40,
-      defaultDeparture: '18:00',
-      defaultDuration: 3.5,
-      dateRange: { start: '2026-04-01', end: '2026-10-31' },
-      availableExtras: ['luxury-upgrade', 'dj', 'fotograaf', 'oesters'],
-      upgradePrice: 30,
-      upgradeText: '(+€30 pp)',
-      upgradeDescription: 'Premium wijnarrangement, amuse & pre-dessert, specialty cocktails'
-    },
-    maatwerk: {
-      name: 'Maatwerk',
-      price: null,
-      minGuests: 15,
-      maxGuests: 40,
-      defaultDeparture: null,
-      defaultDuration: null,
-      dateRange: null,
-      availableExtras: ['dj', 'fotograaf', 'oesters', 'accordeon'],
-      upgradePrice: null
-    }
-  };
+  // Load pricing data from global variable (injected by 11ty)
+  const pricingData = window.PRICING_DATA || {};
+  
+  // Package configuration - loaded from data file
+  const PACKAGE_CONFIG = pricingData.packages || {};
 
-  // Fixed-price extras
-  const FIXED_EXTRAS = {
-    dj: 350,
-    fotograaf: 450,
-    accordeon: 300
-  };
+  // Fixed-price extras - loaded from data file
+  const FIXED_EXTRAS = pricingData.fixedExtras || {};
 
-  // Per-person extras
-  const PER_PERSON_EXTRAS = {
-    oesters: 15
-  };
+  // Per-person extras - loaded from data file
+  const PER_PERSON_EXTRAS = pricingData.perPersonExtras || {};
 
-  // Pricing calculation constants
-  const PRICING = {
-    pvrt: 620, 
-    pu: 163.96,
-    pppu: 7.44,
-    dnr: 37.2
-  };
+  // Pricing calculation constants - loaded from data file
+  const PRICING = pricingData.baseRates || {};
 
   // Form state
   const state = {
@@ -410,12 +351,22 @@
       return;
     }
 
-    // Calculate: pvrt + duration * pu + guests * pppu * duration
-    const estimate = PRICING.pvrt + 
-                     state.formData.duration * PRICING.pu + 
-                     state.formData.guests * PRICING.pppu * state.formData.duration;
+    // Calculate base: pvrt + duration * pu + guests * pppu * duration
+    let total = PRICING.pvrt + 
+                state.formData.duration * PRICING.pu + 
+                state.formData.guests * PRICING.pppu * state.formData.duration;
+    
+    // Add dinner extra if dinervaart package is selected
+    if (state.formData.package === 'dinervaart') {
+      total += PRICING.dnr * state.formData.guests;
+    }
+    
+    const perPerson = total / state.formData.guests;
+    
+    // Round to nearest 0.5
+    const rounded = Math.round(perPerson * 2) / 2;
 
-    estimateEl.textContent = '€' + Math.round(estimate).toLocaleString('nl-NL');
+    estimateEl.textContent = '€' + rounded.toFixed(2).replace('.', ',') + ' pp';
   }
 
   /**

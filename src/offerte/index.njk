@@ -484,6 +484,11 @@ title: De Zeilkeuken - Vraag een offerte aan
 </div>
 
 <script>
+  // Inject pricing data from 11ty build
+  window.PRICING_DATA = {{ pricing | dump | safe }};
+</script>
+
+<script>
   // Modal handling for package details
   (function() {
     const modalTriggers = document.querySelectorAll('[data-modal]');
