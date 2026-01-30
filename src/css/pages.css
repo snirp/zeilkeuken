@@ -275,7 +275,7 @@
 
 /* Package Hero */
 .package-detail,
-#maatwerk,
+#flexibel,
 #packages,
 #proposition {
   scroll-margin-top: 80px;
@@ -695,29 +695,6 @@
   left: 0;
   color: var(--color-gray-500);
   font-weight: 700;
-}
-
-.pricing-table {
-  border: 1px solid var(--color-gray-300);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.pricing-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--spacing-md);
-  border-bottom: 1px solid var(--color-gray-300);
-}
-
-.pricing-row:last-child {
-  border-bottom: none;
-}
-
-.pricing-row strong {
-  font-size: var(--font-size-lg);
-  color: var(--color-gray-800);
 }
 
 /* Extras & Facilities */

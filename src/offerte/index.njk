@@ -33,9 +33,9 @@ title: De Zeilkeuken - Vraag een offerte aan
       
       <div class="package-selection">
         
-        <!-- Dagvaart Package -->
+        <!-- Dagtocht Package -->
         <label class="package-option">
-          <input type="radio" name="package" value="dagvaart" required>
+          <input type="radio" name="package" value="dagtocht" required>
           <div class="package-card-radio">
             <div class="package-header-radio">
               <div>
@@ -43,7 +43,7 @@ title: De Zeilkeuken - Vraag een offerte aan
               </div>
               <span class="package-price-badge" data-content-id="quote-package-dag-price">€115 pp</span>
             </div>
-            <p class="package-summary" data-content-id="quote-package-dag-summary">Een volledige dag zeilen, met lunch en borrel. <button type="button" class="inline-details-link" data-modal="dagvaart-modal">ⓘ Bekijk details</button></p>
+            <p class="package-summary" data-content-id="quote-package-dag-summary">Een volledige dag zeilen, met lunch en borrel. <button type="button" class="inline-details-link" data-modal="dagtocht-modal">ⓘ Bekijk details</button></p>
           </div>
         </label>
         
@@ -75,17 +75,17 @@ title: De Zeilkeuken - Vraag een offerte aan
           </div>
         </label>
         
-        <!-- Maatwerk Package -->
+        <!-- Flexibel Package -->
         <label class="package-option">
-          <input type="radio" name="package" value="maatwerk" required>
+          <input type="radio" name="package" value="flexibel" required>
           <div class="package-card-radio">
             <div class="package-header-radio">
               <div>
-                <h3 data-content-id="quote-package-maatwerk-name">Flexibel <span class="package-time" data-content-id="quote-package-maatwerk-time">Op aanvraag</span></h3>
+                <h3 data-content-id="quote-package-flexibel-name">Flexibel <span class="package-time" data-content-id="quote-package-flexibel-time">Op aanvraag</span></h3>
               </div>
-              <span class="package-price-badge" data-content-id="quote-package-maatwerk-price">Op maat</span>
+              <span class="package-price-badge" data-content-id="quote-package-flexibel-price">Op maat</span>
             </div>
-            <p class="package-summary" data-content-id="quote-package-maatwerk-summary">Volledig afgestemd op jouw wensen. <button type="button" class="inline-details-link" data-modal="maatwerk-modal">ⓘ Bekijk details</button></p>
+            <p class="package-summary" data-content-id="quote-package-flexibel-summary">Volledig afgestemd op jouw wensen. <button type="button" class="inline-details-link" data-modal="flexibel-modal">ⓘ Bekijk details</button></p>
           </div>
         </label>
         
@@ -408,7 +408,7 @@ title: De Zeilkeuken - Vraag een offerte aan
 </section>
 
 <!-- Package Detail Modals -->
-<div id="dagvaart-modal" class="modal">
+<div id="dagtocht-modal" class="modal">
   <div class="modal-content">
     <button class="modal-close" aria-label="Sluiten">&times;</button>
     <h2>Dagtocht</h2>
@@ -464,7 +464,7 @@ title: De Zeilkeuken - Vraag een offerte aan
   </div>
 </div>
 
-<div id="maatwerk-modal" class="modal">
+<div id="flexibel-modal" class="modal">
   <div class="modal-content">
     <button class="modal-close" aria-label="Sluiten">&times;</button>
     <h2>Flexibel Arrangement</h2>
@@ -485,7 +485,28 @@ title: De Zeilkeuken - Vraag een offerte aan
 
 <script>
   // Inject pricing data from 11ty build
-  window.PRICING_DATA = {{ pricing | dump | safe }};
+  window.PRICING_DATA = {
+    baseRates: {{ pricing.baseRates | dump | safe }},
+    fixedExtras: {{ pricing.fixedExtras | dump | safe }},
+    perPersonExtras: {{ pricing.perPersonExtras | dump | safe }},
+    packages: {
+      {% for pkg in packages %}
+      {{ pkg.id }}: {
+        name: {{ pkg.name | dump | safe }},
+        price: {{ pkg.pricing.basePrice | dump | safe }},
+        minGuests: {{ pkg.availability.minGuests }},
+        maxGuests: {{ pkg.availability.maxGuests }},
+        defaultDeparture: {{ pkg.schedule.defaultDeparture | dump | safe }},
+        defaultDuration: {{ pkg.schedule.defaultDuration | dump | safe }},
+        dateRange: {% if pkg.availability.seasonStart %}{ start: {{ pkg.availability.seasonStart | dump | safe }}, end: {{ pkg.availability.seasonEnd | dump | safe }} }{% else %}null{% endif %},
+        availableExtras: {{ pkg.extras | dump | safe }},
+        upgradePrice: {{ pkg.pricing.upgradePrice | dump | safe }},
+        upgradeText: {{ pkg.pricing.upgradeText | dump | safe }},
+        upgradeDescription: {{ pkg.pricing.upgradeDescription | dump | safe }}
+      }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    }
+  };
 </script>
 
 <script>

@@ -5,6 +5,16 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/js");
   eleventyConfig.addPassthroughCopy("src/videos");
 
+  // Markdown filter
+  const markdownIt = require("markdown-it");
+  const md = new markdownIt({ 
+    html: true,
+    breaks: true
+  });
+  eleventyConfig.addFilter("markdown", (content) => {
+    return md.render(content);
+  });
+
   return {
     dir: {
       input: "src",

@@ -1,0 +1,41 @@
+{
+  "id": "langevaart",
+  "name": "Lange vaart",
+  "slug": "lange-vaart",
+  "pricing": {
+    "base": 131,
+    "upgrade": {
+      "price": 35,
+      "description": "Premium wijnselectie hele dag, extra gangen, luxe aperitief"
+    }
+  },
+  "defaults": {
+    "departure": "10:00",
+    "duration": 10,
+    "guests": 40
+  },
+  "constraints": {
+    "minGuests": 10,
+    "maxGuests": 40,
+    "seasonStart": "2026-05-01",
+    "seasonEnd": "2026-09-30"
+  },
+  "extras": ["dj", "fotograaf", "oesters", "accordeon"],
+  "content": {
+    "badges": ["± 10 uur", "lunch", "diner", "ontdek"],
+    "heroSubtitle": "Van zonsopkomst tot zonsondergang",
+    "shortDescription": "Volledige zeildag met ontbijt, lunch en diner.",
+    "longDescription": "Voor echte zeilliefhebbers en culinaire avonturiers. Een volledige dag op het water met alle maaltijden van ontbijt tot diner. We varen een uitgebreide route met meerdere stops in karakteristieke havenstadjes.",
+    "timeline": [],
+    "highlights": [
+      "Zeiltocht van 10 uur",
+      "Ontbijt met vers brood en streekproducten",
+      "Uitgebreide lunch aan boord",
+      "Borrelmoment met lokale specialiteiten",
+      "Driegangendiner bij zonsondergang",
+      "Premium bier- en wijnpakket de hele dag",
+      "Meerdere aanlegmogelijkheden",
+      "Ervaren bemanning en live kokkerij"
+    ]
+  }
+}

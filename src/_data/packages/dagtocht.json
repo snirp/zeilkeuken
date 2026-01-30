@@ -1,0 +1,71 @@
+{
+  "id": "dagtocht",
+  "slug": "dagtocht",
+  "pricing": {
+    "base": 96,
+    "upgrade": {
+      "price": 25,
+      "description": "Premium wijnen, craft bieren, exclusieve kazen en extra gang"
+    }
+  },
+  "defaults": {
+    "departure": "10:00",
+    "duration": 7,
+    "guests": 40
+  },
+  "contraints": {
+    "minGuests": 10,
+    "maxGuests": 40,
+    "seasonStart": "2026-04-01",
+    "seasonEnd": "2026-10-31"
+  },
+  "extras": ["fotograaf", "oesters", "accordeon", "diner"],
+  "content": {
+    "name": "Dagtocht",
+    "badges": ["± 7 uur", "lunch", "borrel", "Marken"],
+    "heroSubtitle": "Een dag zeilen op een traditionele tjalk",
+    "shortDescription": "Geniet van een dagje IJsselmeer op onze traditionele tjalk. Terwijl we ontspannen zeilen naar pittoreske bestemmingen als Volendam of Marken, serveren we lunch met verse lokale ingrediënten. We sluiten het groepsuitje af met een gezellige borrel aan boord.",
+    "longDescription": "De **perfecte** dagvullende activiteit voor bedrijven, verenigingen of familiefeesten. We varen een prachtige route over het IJsselmeer, genieten van een uitgebreide lunch aan boord, en nemen de tijd om te ontspannen op het water.\n\nOf je nu actief wil meezeilen of liever geniet vanaf het dek met een glas wijn: het tempo ligt bij jou. We passen de route aan op basis van wind en weer, zodat je altijd de mooiste plekken ziet.",
+    "timeline": [
+    {
+      "time": "10:00",
+      "title": "Vertrek vanuit Muiden",
+      "description": "Ontvangst aan boord met koffie & thee. Kennismaking met de crew en uitleg over de dag."
+    },
+    {
+      "time": "10:30",
+      "title": "Zeilen naar bestemming",
+      "description": "We hijsen de zeilen en varen richting Volendam, Marken, Pampus, of een andere bestemming."
+    },
+    {
+      "time": "12:00",
+      "title": "Lunch aan boord",
+      "description": "Uitgebreide lunch met verse ingrediënten, bereid in onze kombuis. Salades, brood, vis en meer."
+    },
+    {
+      "time": "13:30",
+      "title": "Aanmeren bij bestemming",
+      "description": "Tijd om te wandelen, de omgeving te verkennen of gewoon te genieten van de rust."
+    },
+    {
+      "time": "15:00",
+      "title": "Borrel & terugvaren",
+      "description": "Bier, wijn en borrelhapjes terwijl we terugzeilen naar Muiden."
+    },
+    {
+      "time": "17:00",
+      "title": "Aankomst in Muiden",
+      "description": "Sluit een mooie dag op het water af met een wandeling door het vestingstadje Muiden."
+    }
+  ],
+    "highlights": [
+      "Een dag zeilen op een traditionele tjalk",
+      "Ontvangst met koffie, thee en lekkernijen",
+      "Lunch met verse ingrediënten",
+      "Borrelplank met lokale kazen en charcuterie",
+      "Onbeperkt koffie, thee en frisdrank",
+      "Bier en wijn bij de borrel",
+      "Professionele en gastvrije schipper en bemanning"
+    ]
+  }
+}

@@ -279,7 +279,7 @@
       departureInput.value = config.defaultDeparture;
       state.formData.departure = config.defaultDeparture;
     } else if (departureInput && !config.defaultDeparture) {
-      // Clear for packages without defaults (maatwerk)
+      // Clear for packages without defaults (flexibel)
       departureInput.value = '';
       state.formData.departure = null;
     }
@@ -289,7 +289,7 @@
       durationInput.value = config.defaultDuration;
       state.formData.duration = config.defaultDuration;
     } else if (durationInput && !config.defaultDuration) {
-      // Clear for packages without defaults (maatwerk)
+      // Clear for packages without defaults (flexibel)
       durationInput.value = '';
       state.formData.duration = null;
     }
@@ -312,7 +312,7 @@
       if (!checkbox) return;
 
       const extraName = checkbox.name;
-      const isAvailable = config.availableExtras.includes(extraName);
+      const isAvailable = config.extras.includes(extraName);
 
       if (isAvailable) {
         container.style.display = '';
@@ -325,7 +325,7 @@
     });
 
     // Update luxury upgrade text if available
-    if (config.availableExtras.includes('luxury-upgrade')) {
+    if (config.extras.includes('luxury-upgrade')) {
       const upgradeLabel = form.querySelector('#upgrade-label');
       const upgradeDescription = form.querySelector('#upgrade-description');
       
@@ -389,7 +389,7 @@
 
     const config = PACKAGE_CONFIG[state.formData.package];
     
-    // If maatwerk or no price, show custom pricing
+    // If flexibel or no price, show custom pricing
     if (!config.price) {
       basePriceEl.textContent = 'Op maat';
       totalPriceEl.textContent = 'Op maat';

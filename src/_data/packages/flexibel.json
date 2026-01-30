@@ -1,0 +1,36 @@
+{
+  "id": "flexibel",
+  "name": "Flexibel",
+  "slug": "flexibel",
+  "pricing": {
+    "base": null,
+    "upgrade": null
+  },
+  "defaults": {
+    "departure": null,
+    "duration": null,
+    "guests": null
+  },
+  "constraints": {
+    "minGuests": 10,
+    "maxGuests": 40,
+    "seasonStart": null,
+    "seasonEnd": null
+  },
+  "extras": ["dj", "fotograaf", "oesters", "accordeon"],
+  "content": {
+    "badges": [],
+    "heroSubtitle": "Volledig naar jouw wensen",
+    "shortDescription": "Volledig afgestemd op jouw wensen.",
+    "longDescription": "Bij een flexibel arrangement stellen we de tocht volledig samen volgens jouw wensen. Vrije keuze in vaartijd, duur, menu en bestemming.",
+    "timeline": [],
+    "highlights": [
+      "Vrije keuze in vaartijd en duur",
+      "Menu afgestemd op voorkeuren en budget",
+      "Speciale routes of bestemmingen",
+      "Thematische arrangementen",
+      "Zakelijke events met presentatiemogelijkheden",
+      "Combinatie met externe leveranciers"
+    ]
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "id": "dinervaart",
+  "name": "Dinervaart",
+  "slug": "dinervaart",
+  "pricing": {
+    "base": 93,
+    "upgrade": {
+      "price": 30,
+      "description": "Premium wijnarrangement, amuse & pre-dessert, specialty cocktails"
+    }
+  },
+  "defaults": {
+    "departure": "18:00",
+    "duration": 3.5,
+    "guests": 40
+  },
+  "constraints": {
+    "minGuests": 10,
+    "maxGuests": 40,
+    "seasonStart": "2026-04-01",
+    "seasonEnd": "2026-10-31"
+  },
+  "extras": ["dj", "fotograaf", "oesters"],
+  "content": {
+    "badges": ["± 3,5 uur", "borrel", "diner", "Pampus"],
+    "heroSubtitle": "Avondzeilen met driegangendiner",
+    "shortDescription": "Avondzeilen met driegangendiner.",
+    "longDescription": "Geniet van een ontspannen avondtocht waarbij varen en diner samenkomen. Terwijl de zon ondergaat, wordt aan boord een sfeervol diner geserveerd, met uitzicht op het water en ruimte om samen te genieten.",
+    "timeline": [
+      {
+        "time": "18:00",
+        "title": "Welkom aan boord",
+        "description": "Ontvangst met aperitief en amuses."
+      },
+      {
+        "time": "18:30",
+        "title": "Afvaren",
+        "description": "We zeilen richting Pampus of een rustige ankerplaats op het IJsselmeer."
+      },
+      {
+        "time": "19:00",
+        "title": "Voorgerecht",
+        "description": "Seizoensgebonden voorgerecht, vers bereid."
+      },
+      {
+        "time": "19:45",
+        "title": "Hoofdgerecht",
+        "description": "Vis of vlees van lokale leveranciers, met bijpassende garnituur."
+      },
+      {
+        "time": "20:30",
+        "title": "Nagerecht & koffie",
+        "description": "Afsluiten met iets zoets en een goede kop koffie."
+      },
+      {
+        "time": "21:30",
+        "title": "Aankomst in Muiden",
+        "description": "Terug in de haven, voldaan en met een volle maag."
+      }
+    ],
+    "highlights": [
+      "Avondzeiltocht van 3,5 uur",
+      "Driegangendiner aan boord",
+      "Aperitief met amuses",
+      "Wijn- of bierpakket bij het diner",
+      "Koffie/thee met petit fours",
+      "Sfeervol verlichte avondstemming"
+    ]
+  }
+}

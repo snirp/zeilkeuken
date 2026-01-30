@@ -10,7 +10,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
   
   <!-- Package Navigation -->
   <div class="package-navigation" data-content-id="packages-navigation">
-    <a href="#dagvaart" class="package-nav-link">
+    <a href="#dagtocht" class="package-nav-link">
       <strong>Dagtocht</strong>
       <span>7 uur • €115 pp</span>
     </a>
@@ -25,101 +25,52 @@ title: De Zeilkeuken - Arrangementen en prijzen
   </div>
 </section>
 
-<!-- Package 1: Dagvaart -->
-<section id="dagvaart" class="section package-detail">
+<!-- Package 1: Dagtocht -->
+{% set dagtocht = packages | selectattr("id", "equalto", "dagtocht") | first %}
+<section id="dagtocht" class="section package-detail">
   <div class="package-hero">
-    <img src="/images/placeholder-dagvaart.jpg" alt="Dagvaart arrangement" class="package-hero-image" data-content-id="package-dag-image">
+    <img src="/images/placeholder-dagtocht.jpg" alt="Dagtocht arrangement" class="package-hero-image" data-content-id="package-dag-image">
     <div class="package-hero-overlay">
       <div class="package-hero-header">
-        <h2 data-content-id="package-dag-name">Dagtocht</h2>
-        <span class="package-price-large" data-content-id="package-dag-price">€ 115 pp</span>
+        <h2 data-content-id="package-dag-name">{{ dagtocht.content.name }}</h2>
+        <span class="package-price-large" data-content-id="package-dag-price">€ {{ dagtocht.pricing.base }} pp</span>
       </div>
-      <p class="package-subtitle" data-content-id="package-dag-subtitle">Een volledige dag zeilen, met lunch en borrel</p>
+      <p class="package-subtitle" data-content-id="package-dag-subtitle">{{ dagtocht.content.heroSubtitle }}</p>
       <div class="badge-group">
-        <span class="badge" data-content-id="package-dag-duration">7 uur</span>
-        <span class="badge" data-content-id="package-dag-time">10:00 - 17:00</span>
-        <span class="badge" data-content-id="package-dag-season">april - oktober</span>
+        {% for badge in dagtocht.content.badges %}
+        <span class="badge" data-content-id="package-dag-badge-{{ loop.index }}">{{ badge }}</span>
+        {% endfor %}
       </div>
     </div>
   </div>
 
   <div class="package-content">
     <div data-content-id="package-dag-description">
-      <p>De perfecte dagvullende activiteit voor bedrijven, verenigingen of familiefeesten. We varen een prachtige route over het IJsselmeer, genieten van een uitgebreide lunch aan boord, en nemen de tijd om te ontspannen op het water.</p>
-      <p>Of je nu actief wil meezeilen of liever geniet vanaf het dek met een glas wijn: het tempo ligt bij jou. We passen de route aan op basis van wind en weer, zodat je altijd de mooiste plekken ziet.</p>
+      {{ dagtocht.content.longDescription | markdown | safe }}
     </div>
 
     <details class="timeline-details">
       <summary data-content-id="package-dag-timeline-title">Dagprogramma (indicatief)</summary>
       <div class="timeline" data-content-id="package-dag-timeline">
+        {% for item in dagtocht.content.timeline %}
         <div class="timeline-item">
-          <span class="timeline-time">10:00</span>
+          <span class="timeline-time">{{ item.time }}</span>
           <div class="timeline-content">
-            <strong>Vertrek vanuit Muiden</strong>
-            <p>Ontvangst aan boord met koffie & thee. Kennismaking met de crew en uitleg over de dag.</p>
+            <strong>{{ item.title }}</strong>
+            <p>{{ item.description }}</p>
           </div>
         </div>
-        <div class="timeline-item">
-          <span class="timeline-time">10:30</span>
-          <div class="timeline-content">
-            <strong>Zeilen naar bestemming</strong>
-            <p>We hijsen de zeilen en varen richting Pampus, Marken of de Marker Wadden (afhankelijk van wind en weer).</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-time">12:00</span>
-          <div class="timeline-content">
-            <strong>Lunch aan boord</strong>
-            <p>Uitgebreide lunch met verse ingrediënten, bereid in onze kombuis. Salades, brood, vis en meer.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-time">13:30</span>
-          <div class="timeline-content">
-            <strong>Aanmeren bij bestemming</strong>
-            <p>Tijd om te wandelen, de omgeving te verkennen of gewoon te genieten van de rust.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-time">15:00</span>
-          <div class="timeline-content">
-            <strong>Borrel & terug varen</strong>
-            <p>Bier, wijn en borrelhapjes terwijl we terug zeilen naar Muiden.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-time">17:00</span>
-          <div class="timeline-content">
-            <strong>Aankomst in Muiden</strong>
-            <p>Einde van een mooie dag op het water.</p>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </details>
 
     <div class="package-inclusions">
       <h3 class="sr-only" data-content-id="package-dag-inclusions-title">Wat krijg je?</h3>
       <ul data-content-id="package-dag-inclusions">
-        <li>7 uur zeilen op een authentiek klipper</li>
-        <li>Uitgebreide lunch met verse, lokale producten</li>
-        <li>Borrel met bier, wijn en hapjes</li>
-        <li>Onbeperkt koffie, thee en frisdrank</li>
-        <li>Professionele crew en schipper</li>
+        {% for highlight in dagtocht.content.highlights %}
+        <li>{{ highlight }}</li>
+        {% endfor %}
       </ul>
-    </div>
-
-    <div class="package-pricing">
-      <h3 class="sr-only" data-content-id="package-dag-pricing-title">Prijzen</h3>
-      <div class="pricing-table" data-content-id="package-dag-pricing">
-        <div class="pricing-row">
-          <span>Standaard arrangement (25-40 personen)</span>
-          <strong>€ 115 pp</strong>
-        </div>
-        <div class="pricing-row">
-          <span>Luxe pakket (premium wijnen, extra gang)</span>
-          <strong>+ € 25 pp</strong>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -276,20 +227,6 @@ title: De Zeilkeuken - Arrangementen en prijzen
         <li>Twee glazen wijn bij het diner</li>
         <li>Onbeperkt frisdrank, koffie en thee</li>
       </ul>
-    </div>
-
-    <div class="package-pricing">
-      <h3 class="sr-only" data-content-id="package-diner-pricing-title">Prijzen</h3>
-      <div class="pricing-table" data-content-id="package-diner-pricing">
-        <div class="pricing-row">
-          <span>Standaard arrangement (25-40 personen)</span>
-          <strong>€ 110 pp</strong>
-        </div>
-        <div class="pricing-row">
-          <span>Luxe pakket (premium wijnen, extra gang)</span>
-          <strong>+ € 30 pp</strong>
-        </div>
-      </div>
     </div>
   </div>
 </section>

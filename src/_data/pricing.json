@@ -10,68 +10,7 @@
     "fotograaf": 450,
     "accordeon": 300
   },
-  "perPersonExtras": {
+  "ppExtras": {
     "oesters": 15
-  },
-  "packages": {
-    "dagvaart": {
-      "name": "Dagtocht",
-      "price": 115,
-      "minGuests": 25,
-      "maxGuests": 40,
-      "defaultDeparture": "10:00",
-      "defaultDuration": 7,
-      "dateRange": {
-        "start": "2026-04-01",
-        "end": "2026-10-31"
-      },
-      "availableExtras": ["luxury-upgrade", "dj", "fotograaf", "oesters", "accordeon"],
-      "upgradePrice": 25,
-      "upgradeText": "(+€25 pp)",
-      "upgradeDescription": "Premium wijnen, craft bieren, exclusieve kazen en extra gang"
-    },
-    "langevaart": {
-      "name": "Lange vaart",
-      "price": 145,
-      "minGuests": 25,
-      "maxGuests": 40,
-      "defaultDeparture": "10:00",
-      "defaultDuration": 10,
-      "dateRange": {
-        "start": "2026-05-01",
-        "end": "2026-09-30"
-      },
-      "availableExtras": ["luxury-upgrade", "dj", "fotograaf", "oesters", "accordeon"],
-      "upgradePrice": 35,
-      "upgradeText": "(+€35 pp)",
-      "upgradeDescription": "Premium wijnselectie hele dag, extra gangen, luxe aperitief"
-    },
-    "dinervaart": {
-      "name": "Diner & sunset",
-      "price": 110,
-      "minGuests": 25,
-      "maxGuests": 40,
-      "defaultDeparture": "18:00",
-      "defaultDuration": 3.5,
-      "dateRange": {
-        "start": "2026-04-01",
-        "end": "2026-10-31"
-      },
-      "availableExtras": ["luxury-upgrade", "dj", "fotograaf", "oesters"],
-      "upgradePrice": 30,
-      "upgradeText": "(+€30 pp)",
-      "upgradeDescription": "Premium wijnarrangement, amuse & pre-dessert, specialty cocktails"
-    },
-    "maatwerk": {
-      "name": "Maatwerk",
-      "price": null,
-      "minGuests": 15,
-      "maxGuests": 40,
-      "defaultDeparture": null,
-      "defaultDuration": null,
-      "dateRange": null,
-      "availableExtras": ["dj", "fotograaf", "oesters", "accordeon"],
-      "upgradePrice": null
-    }
   }
 }

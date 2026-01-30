@@ -99,25 +99,25 @@ layout: layouts/base.njk
   <p class="package-footnote" data-content-id="packages-footnote">Prijzen zijn afhankelijk van groepsgrootte, duur en gekozen opties.</p>
 
   <div class="package-cards grid-3">
-      <a href="/arrangementen/#dagvaart" class="package-card package-card-link" data-content-id="packages-card-day">
+      {% set dagtocht = packages | selectattr("id", "equalto", "dagtocht") | first %}
+      <a href="/arrangementen/#dagtocht" class="package-card package-card-link" data-content-id="packages-card-day">
         <div class="package-header">
-          <h3>Dagtocht</h3>
-          <span class="package-price">€ 115 pp</span>
+          <h3>{{ dagtocht.content.name }}</h3>
+          <span class="package-price">€ {{ dagtocht.pricing.base }} pp</span>
         </div>
         <div class="badge-group">
-          <span class="badge">± 6 uur</span>
-          <span class="badge">lunch</span>
-          <span class="badge">borrel</span>
-          <span class="badge">Marken</span>
+          {% for badge in dagtocht.content.badges %}
+          <span class="badge">{{ badge }}</span>
+          {% endfor %}
         </div>
-        <p class="package-description">Een volledige dag zeilen met koffie, lunch en borrel. Aanleggen in Marken of Volendam.</p>
+        <p class="package-description">{{ dagtocht.content.shortDescription }}</p>
         <span class="link package-cta">Details →</span>
       </a>
       
       <a href="/arrangementen/#langevaart" class="package-card package-card-link" data-content-id="packages-card-long">
         <div class="package-header">
           <h3>Lange vaart</h3>
-          <span class="package-price">€ 145 pp</span>
+          <span class="package-price">€ 131 pp</span>
         </div>
         <div class="badge-group">
           <span class="badge">± 10 uur</span>
@@ -132,7 +132,7 @@ layout: layouts/base.njk
       <a href="/arrangementen/#dinervaart" class="package-card package-card-link" data-content-id="packages-card-dinner">
         <div class="package-header">
           <h3>Diner & sunset</h3>
-          <span class="package-price">€ 110 pp</span>
+          <span class="package-price">€ 93 pp</span>
         </div>
         <div class="badge-group">
           <span class="badge">± 3,5 uur</span>
