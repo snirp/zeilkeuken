@@ -13,7 +13,7 @@
     "duration": 7,
     "guests": 40
   },
-  "contraints": {
+  "constraints": {
     "minGuests": 10,
     "maxGuests": 40,
     "seasonStart": "2026-04-01",

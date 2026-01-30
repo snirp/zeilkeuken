@@ -3,6 +3,32 @@ layout: layouts/base.njk
 title: De Zeilkeuken - Vraag een offerte aan
 ---
 
+<script>
+  // Inject pricing data from 11ty build - MUST load before stepped-form.js
+  window.PRICING_DATA = {
+    baseRates: {{ pricing.baseRates | dump | safe }},
+    fixedExtras: {{ pricing.fixedExtras | dump | safe }},
+    perPersonExtras: {{ pricing.ppExtras | dump | safe }},
+    packages: {
+      {% for pkg in packages %}
+      {{ pkg.id }}: {
+        name: {{ pkg.content.name | dump | safe }},
+        price: {% if pkg.pricing.base %}{{ pkg.pricing.base }}{% else %}null{% endif %},
+        minGuests: {{ pkg.constraints.minGuests }},
+        maxGuests: {{ pkg.constraints.maxGuests }},
+        defaultDeparture: {% if pkg.defaults.departure %}{{ pkg.defaults.departure | dump | safe }}{% else %}null{% endif %},
+        defaultDuration: {% if pkg.defaults.duration %}{{ pkg.defaults.duration }}{% else %}null{% endif %},
+        dateRange: {% if pkg.constraints.seasonStart %}{ start: {{ pkg.constraints.seasonStart | dump | safe }}, end: {{ pkg.constraints.seasonEnd | dump | safe }} }{% else %}null{% endif %},
+        extras: {{ pkg.extras | dump | safe }},
+        upgradePrice: {% if pkg.pricing.upgrade %}{{ pkg.pricing.upgrade.price }}{% else %}null{% endif %},
+        upgradeText: {% if pkg.pricing.upgrade %}"(+€{{ pkg.pricing.upgrade.price }} pp)"{% else %}null{% endif %},
+        upgradeDescription: {% if pkg.pricing.upgrade %}{{ pkg.pricing.upgrade.description | dump | safe }}{% else %}null{% endif %}
+      }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    }
+  };
+</script>
+
 <!-- Hero Section -->
 <section class="section quote-hero">
   <h1 data-content-id="quote-hero-title">Binnen 24 uur een vrijblijvende offerte op maat</h1>
@@ -34,60 +60,80 @@ title: De Zeilkeuken - Vraag een offerte aan
       <div class="package-selection">
         
         <!-- Dagtocht Package -->
+        {% for pkg in packages %}
+          {% if pkg.id == "dagtocht" %}
+            {% set endTime = pkg.defaults.departure | addHours(pkg.defaults.duration) %}
         <label class="package-option">
           <input type="radio" name="package" value="dagtocht" required>
           <div class="package-card-radio">
             <div class="package-header-radio">
               <div>
-                <h3 data-content-id="quote-package-dag-name">Dagtocht <span class="package-time" data-content-id="quote-package-dag-time">10:00 - 17:00</span></h3>
+                <h3>{{ pkg.content.name }}{% if endTime %} <span class="package-time">{{ pkg.defaults.departure }} - {{ endTime }}</span>{% endif %}</h3>
               </div>
-              <span class="package-price-badge" data-content-id="quote-package-dag-price">€115 pp</span>
+              <span class="package-price-badge">€{{ pkg.pricing.base }} pp</span>
             </div>
-            <p class="package-summary" data-content-id="quote-package-dag-summary">Een volledige dag zeilen, met lunch en borrel. <button type="button" class="inline-details-link" data-modal="dagtocht-modal">ⓘ Bekijk details</button></p>
+            <p class="package-summary">{{ pkg.content.shortDescription }} <button type="button" class="inline-details-link" data-modal="dagtocht-modal">ⓘ Bekijk details</button></p>
           </div>
         </label>
+          {% endif %}
+        {% endfor %}
         
         <!-- Lange vaart Package -->
+        {% for pkg in packages %}
+          {% if pkg.id == "langevaart" %}
+            {% set endTime = pkg.defaults.departure | addHours(pkg.defaults.duration) %}
         <label class="package-option">
           <input type="radio" name="package" value="langevaart" required>
           <div class="package-card-radio">
             <div class="package-header-radio">
               <div>
-                <h3 data-content-id="quote-package-long-name">Lange vaart <span class="package-time" data-content-id="quote-package-long-time">08:00 - 18:00</span></h3>
+                <h3>{{ pkg.content.name }}{% if endTime %} <span class="package-time">{{ pkg.defaults.departure }} - {{ endTime }}</span>{% endif %}</h3>
               </div>
-              <span class="package-price-badge" data-content-id="quote-package-long-price">€145 pp</span>
+              <span class="package-price-badge">€{{ pkg.pricing.base }} pp</span>
             </div>
-            <p class="package-summary" data-content-id="quote-package-long-summary">Volledige zeildag met ontbijt, lunch en diner. <button type="button" class="inline-details-link" data-modal="langevaart-modal">ⓘ Bekijk details</button></p>
+            <p class="package-summary">{{ pkg.content.shortDescription }} <button type="button" class="inline-details-link" data-modal="langevaart-modal">ⓘ Bekijk details</button></p>
           </div>
         </label>
+          {% endif %}
+        {% endfor %}
         
         <!-- Dinervaart Package -->
+        {% for pkg in packages %}
+          {% if pkg.id == "dinervaart" %}
+            {% set endTime = pkg.defaults.departure | addHours(pkg.defaults.duration) %}
         <label class="package-option">
           <input type="radio" name="package" value="dinervaart" required>
           <div class="package-card-radio">
             <div class="package-header-radio">
               <div>
-                <h3 data-content-id="quote-package-diner-name">Diner & sunset <span class="package-time" data-content-id="quote-package-diner-time">18:00 - 21:30</span></h3>
+                <h3>{{ pkg.content.name }}{% if endTime %} <span class="package-time">{{ pkg.defaults.departure }} - {{ endTime }}</span>{% endif %}</h3>
               </div>
-              <span class="package-price-badge" data-content-id="quote-package-diner-price">€110 pp</span>
+              <span class="package-price-badge">€{{ pkg.pricing.base }} pp</span>
             </div>
-            <p class="package-summary" data-content-id="quote-package-diner-summary">Avondzeilen met driegangendiner. <button type="button" class="inline-details-link" data-modal="dinervaart-modal">ⓘ Bekijk details</button></p>
+            <p class="package-summary">{{ pkg.content.shortDescription }} <button type="button" class="inline-details-link" data-modal="dinervaart-modal">ⓘ Bekijk details</button></p>
           </div>
         </label>
+          {% endif %}
+        {% endfor %}
         
         <!-- Flexibel Package -->
+        {% for pkg in packages %}
+          {% if pkg.id == "flexibel" %}
+            {% set endTime = pkg.defaults.departure | addHours(pkg.defaults.duration) %}
         <label class="package-option">
           <input type="radio" name="package" value="flexibel" required>
           <div class="package-card-radio">
             <div class="package-header-radio">
               <div>
-                <h3 data-content-id="quote-package-flexibel-name">Flexibel <span class="package-time" data-content-id="quote-package-flexibel-time">Op aanvraag</span></h3>
+                <h3>{{ pkg.content.name }}{% if endTime %} <span class="package-time">{{ pkg.defaults.departure }} - {{ endTime }}</span>{% else %} <span class="package-time">Op aanvraag</span>{% endif %}</h3>
               </div>
-              <span class="package-price-badge" data-content-id="quote-package-flexibel-price">Op maat</span>
+              <span class="package-price-badge">{% if pkg.pricing.base %}€{{ pkg.pricing.base }} pp{% else %}Op maat{% endif %}</span>
             </div>
-            <p class="package-summary" data-content-id="quote-package-flexibel-summary">Volledig afgestemd op jouw wensen. <button type="button" class="inline-details-link" data-modal="flexibel-modal">ⓘ Bekijk details</button></p>
+            <p class="package-summary">{{ pkg.content.shortDescription }} <button type="button" class="inline-details-link" data-modal="flexibel-modal">ⓘ Bekijk details</button></p>
           </div>
         </label>
+          {% endif %}
+        {% endfor %}
         
       </div>
     </div>
@@ -408,106 +454,99 @@ title: De Zeilkeuken - Vraag een offerte aan
 </section>
 
 <!-- Package Detail Modals -->
+{% for pkg in packages %}
+  {% if pkg.id == "dagtocht" %}
+    {% set endTime = pkg.defaults.departure | addHours(pkg.defaults.duration) %}
 <div id="dagtocht-modal" class="modal">
   <div class="modal-content">
     <button class="modal-close" aria-label="Sluiten">&times;</button>
-    <h2>Dagtocht</h2>
-    <p class="modal-meta">10:00 - 17:00 • €115 pp</p>
+    <h2>{{ pkg.content.heroSubtitle }}</h2>
+    <p class="modal-meta">{% if endTime %}{{ pkg.defaults.departure }} - {{ endTime }} • {% endif %}€{{ pkg.pricing.base }} pp</p>
+    
+    <div>
+      {{ pkg.content.longDescription | markdown | safe }}
+    </div>
     
     <h3>Wat is inbegrepen</h3>
     <ul>
-      <li>Zeiltocht van 7 uur</li>
-      <li>Lunch met verse ingrediënten</li>
-      <li>Borrelplank met lokale kazen en charcuterie</li>
-      <li>Onbeperkt koffie, thee en frisdrank</li>
-      <li>Bier en wijn bij de borrel</li>
-      <li>Ervaren schipper en bemanning</li>
+      {% for highlight in pkg.content.highlights %}
+      <li>{{ highlight }}</li>
+      {% endfor %}
     </ul>
   </div>
 </div>
+  {% endif %}
+{% endfor %}
 
+{% for pkg in packages %}
+  {% if pkg.id == "langevaart" %}
+    {% set endTime = pkg.defaults.departure | addHours(pkg.defaults.duration) %}
 <div id="langevaart-modal" class="modal">
   <div class="modal-content">
     <button class="modal-close" aria-label="Sluiten">&times;</button>
-    <h2>Lange vaart</h2>
-    <p class="modal-meta">08:00 - 18:00 • €145 pp</p>
+    <h2>{{ pkg.content.heroSubtitle }}</h2>
+    <p class="modal-meta">{% if endTime %}{{ pkg.defaults.departure }} - {{ endTime }} • {% endif %}€{{ pkg.pricing.base }} pp</p>
+    
+    <div>
+      {{ pkg.content.longDescription | markdown | safe }}
+    </div>
     
     <h3>Wat is inbegrepen</h3>
     <ul>
-      <li>Zeiltocht van 10 uur</li>
-      <li>Ontbijt met vers brood en streekproducten</li>
-      <li>Uitgebreide lunch aan boord</li>
-      <li>Borrelmoment met lokale specialiteiten</li>
-      <li>Driegangendiner bij zonsondergang</li>
-      <li>Premium bier- en wijnpakket de hele dag</li>
-      <li>Meerdere aanlegmogelijkheden</li>
-      <li>Ervaren bemanning en live kokkerij</li>
+      {% for highlight in pkg.content.highlights %}
+      <li>{{ highlight }}</li>
+      {% endfor %}
     </ul>
   </div>
 </div>
+  {% endif %}
+{% endfor %}
 
+{% for pkg in packages %}
+  {% if pkg.id == "dinervaart" %}
+    {% set endTime = pkg.defaults.departure | addHours(pkg.defaults.duration) %}
 <div id="dinervaart-modal" class="modal">
   <div class="modal-content">
     <button class="modal-close" aria-label="Sluiten">&times;</button>
-    <h2>Diner & sunset</h2>
-    <p class="modal-meta">18:00 - 21:30 • €110 pp</p>
+    <h2>{{ pkg.content.heroSubtitle }}</h2>
+    <p class="modal-meta">{% if endTime %}{{ pkg.defaults.departure }} - {{ endTime }} • {% endif %}€{{ pkg.pricing.base }} pp</p>
+    
+    <div>
+      {{ pkg.content.longDescription | markdown | safe }}
+    </div>
     
     <h3>Wat is inbegrepen</h3>
     <ul>
-      <li>Avondzeiltocht van 3,5 uur</li>
-      <li>Driegangendiner aan boord</li>
-      <li>Aperitief met amuses</li>
-      <li>Wijn- of bierpakket bij het diner</li>
-      <li>Koffie/thee met petit fours</li>
-      <li>Sfeervol verlichte avondstemming</li>
+      {% for highlight in pkg.content.highlights %}
+      <li>{{ highlight }}</li>
+      {% endfor %}
     </ul>
   </div>
 </div>
+  {% endif %}
+{% endfor %}
 
+{% for pkg in packages %}
+  {% if pkg.id == "flexibel" %}
 <div id="flexibel-modal" class="modal">
   <div class="modal-content">
     <button class="modal-close" aria-label="Sluiten">&times;</button>
-    <h2>Flexibel Arrangement</h2>
+    <h2>{{ pkg.content.heroSubtitle }}</h2>
     <p class="modal-meta">Op aanvraag • Prijs op maat</p>
     
     <h3>Volledig naar jouw wensen</h3>
-    <p>Bij een flexibel arrangement stellen we de tocht volledig samen volgens jouw wensen:</p>
+    <div>
+      {{ pkg.content.longDescription | markdown | safe }}
+    </div>
     <ul>
-      <li>Vrije keuze in vaartijd en duur</li>
-      <li>Menu afgestemd op voorkeuren en budget</li>
-      <li>Speciale routes of bestemmingen</li>
-      <li>Thematische arrangementen</li>
-      <li>Zakelijke events met presentatiemogelijkheden</li>
-      <li>Combinatie met externe leveranciers</li>
+      {% for highlight in pkg.content.highlights %}
+      <li>{{ highlight }}</li>
+      {% endfor %}
     </ul>
   </div>
 </div>
-
-<script>
-  // Inject pricing data from 11ty build
-  window.PRICING_DATA = {
-    baseRates: {{ pricing.baseRates | dump | safe }},
-    fixedExtras: {{ pricing.fixedExtras | dump | safe }},
-    perPersonExtras: {{ pricing.perPersonExtras | dump | safe }},
-    packages: {
-      {% for pkg in packages %}
-      {{ pkg.id }}: {
-        name: {{ pkg.name | dump | safe }},
-        price: {{ pkg.pricing.basePrice | dump | safe }},
-        minGuests: {{ pkg.availability.minGuests }},
-        maxGuests: {{ pkg.availability.maxGuests }},
-        defaultDeparture: {{ pkg.schedule.defaultDeparture | dump | safe }},
-        defaultDuration: {{ pkg.schedule.defaultDuration | dump | safe }},
-        dateRange: {% if pkg.availability.seasonStart %}{ start: {{ pkg.availability.seasonStart | dump | safe }}, end: {{ pkg.availability.seasonEnd | dump | safe }} }{% else %}null{% endif %},
-        availableExtras: {{ pkg.extras | dump | safe }},
-        upgradePrice: {{ pkg.pricing.upgradePrice | dump | safe }},
-        upgradeText: {{ pkg.pricing.upgradeText | dump | safe }},
-        upgradeDescription: {{ pkg.pricing.upgradeDescription | dump | safe }}
-      }{% if not loop.last %},{% endif %}
-      {% endfor %}
-    }
-  };
-</script>
+  {% endif %}
+{% endfor %}
 
 <script>
   // Modal handling for package details

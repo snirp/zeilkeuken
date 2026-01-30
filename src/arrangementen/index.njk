@@ -9,19 +9,31 @@ title: De Zeilkeuken - Arrangementen en prijzen
   <p data-content-id="packages-intro">Van april tot oktober varen we met groepen van 25 tot 40 personen vanuit Muiden. Alle arrangementen zijn inclusief eten, drinken en een onvergetelijke zeilervaring op het IJsselmeer. Vaste prijs per persoon, geen verrassingen.</p>
   
   <!-- Package Navigation -->
-  <div class="package-navigation" data-content-id="packages-navigation">
+  <div class="package-navigation">
+    {% for pkg in packages %}
+      {% if pkg.id == "dagtocht" %}
     <a href="#dagtocht" class="package-nav-link">
-      <strong>Dagtocht</strong>
-      <span>7 uur • €115 pp</span>
+      <strong>{{ pkg.content.name }}</strong>
+      <span>{{ pkg.defaults.duration }} uur • €{{ pkg.pricing.base }} pp</span>
     </a>
+      {% endif %}
+    {% endfor %}
+    {% for pkg in packages %}
+      {% if pkg.id == "langevaart" %}
     <a href="#langevaart" class="package-nav-link">
-      <strong>Lange vaart</strong>
-      <span>10 uur • €145 pp</span>
+      <strong>{{ pkg.content.name }}</strong>
+      <span>{{ pkg.defaults.duration }} uur • €{{ pkg.pricing.base }} pp</span>
     </a>
+      {% endif %}
+    {% endfor %}
+    {% for pkg in packages %}
+      {% if pkg.id == "dinervaart" %}
     <a href="#dinervaart" class="package-nav-link">
-      <strong>Diner & sunset</strong>
-      <span>3,5 uur • €110 pp</span>
+      <strong>{{ pkg.content.name }}</strong>
+      <span>{{ pkg.defaults.duration }} uur • €{{ pkg.pricing.base }} pp</span>
     </a>
+      {% endif %}
+    {% endfor %}
   </div>
 </section>
 
@@ -29,29 +41,29 @@ title: De Zeilkeuken - Arrangementen en prijzen
 {% set dagtocht = packages | selectattr("id", "equalto", "dagtocht") | first %}
 <section id="dagtocht" class="section package-detail">
   <div class="package-hero">
-    <img src="/images/placeholder-dagtocht.jpg" alt="Dagtocht arrangement" class="package-hero-image" data-content-id="package-dag-image">
+    <img src="/images/placeholder-dagtocht.jpg" alt="Dagtocht arrangement" class="package-hero-image">
     <div class="package-hero-overlay">
       <div class="package-hero-header">
-        <h2 data-content-id="package-dag-name">{{ dagtocht.content.name }}</h2>
-        <span class="package-price-large" data-content-id="package-dag-price">€ {{ dagtocht.pricing.base }} pp</span>
+        <h2>{{ dagtocht.content.name }}</h2>
+        <span class="package-price-large">€ {{ dagtocht.pricing.base }} pp</span>
       </div>
-      <p class="package-subtitle" data-content-id="package-dag-subtitle">{{ dagtocht.content.heroSubtitle }}</p>
+      <p class="package-subtitle">{{ dagtocht.content.heroSubtitle }}</p>
       <div class="badge-group">
         {% for badge in dagtocht.content.badges %}
-        <span class="badge" data-content-id="package-dag-badge-{{ loop.index }}">{{ badge }}</span>
+        <span class="badge">{{ badge }}</span>
         {% endfor %}
       </div>
     </div>
   </div>
 
   <div class="package-content">
-    <div data-content-id="package-dag-description">
+    <div>
       {{ dagtocht.content.longDescription | markdown | safe }}
     </div>
 
     <details class="timeline-details">
-      <summary data-content-id="package-dag-timeline-title">Dagprogramma (indicatief)</summary>
-      <div class="timeline" data-content-id="package-dag-timeline">
+      <summary>Dagprogramma (indicatief)</summary>
+      <div class="timeline">
         {% for item in dagtocht.content.timeline %}
         <div class="timeline-item">
           <span class="timeline-time">{{ item.time }}</span>
@@ -65,8 +77,8 @@ title: De Zeilkeuken - Arrangementen en prijzen
     </details>
 
     <div class="package-inclusions">
-      <h3 class="sr-only" data-content-id="package-dag-inclusions-title">Wat krijg je?</h3>
-      <ul data-content-id="package-dag-inclusions">
+      <h3 class="sr-only">Wat krijg je?</h3>
+      <ul>
         {% for highlight in dagtocht.content.highlights %}
         <li>{{ highlight }}</li>
         {% endfor %}

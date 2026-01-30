@@ -99,56 +99,69 @@ layout: layouts/base.njk
   <p class="package-footnote" data-content-id="packages-footnote">Prijzen zijn afhankelijk van groepsgrootte, duur en gekozen opties.</p>
 
   <div class="package-cards grid-3">
-      {% set dagtocht = packages | selectattr("id", "equalto", "dagtocht") | first %}
-      <a href="/arrangementen/#dagtocht" class="package-card package-card-link" data-content-id="packages-card-day">
+      {% for pkg in packages %}
+        {% if pkg.id == "dagtocht" %}
+      <a href="/arrangementen/#dagtocht" class="package-card package-card-link">
         <div class="package-header">
-          <h3>{{ dagtocht.content.name }}</h3>
-          <span class="package-price">€ {{ dagtocht.pricing.base }} pp</span>
+          <h3>{{ pkg.content.name }}</h3>
+          <span class="package-price">€ {{ pkg.pricing.base }} pp</span>
         </div>
         <div class="badge-group">
-          {% for badge in dagtocht.content.badges %}
+          {% for badge in pkg.content.badges %}
           <span class="badge">{{ badge }}</span>
           {% endfor %}
         </div>
-        <p class="package-description">{{ dagtocht.content.shortDescription }}</p>
+        <p class="package-description">{{ pkg.content.shortDescription }}</p>
         <span class="link package-cta">Details →</span>
       </a>
+        {% endif %}
+      {% endfor %}
       
-      <a href="/arrangementen/#langevaart" class="package-card package-card-link" data-content-id="packages-card-long">
+      {% for pkg in packages %}
+        {% if pkg.id == "langevaart" %}
+      <a href="/arrangementen/#langevaart" class="package-card package-card-link">
         <div class="package-header">
-          <h3>Lange vaart</h3>
-          <span class="package-price">€ 131 pp</span>
+          <h3>{{ pkg.content.name }}</h3>
+          <span class="package-price">€ {{ pkg.pricing.base }} pp</span>
         </div>
         <div class="badge-group">
-          <span class="badge">± 10 uur</span>
-          <span class="badge">lunch</span>
-          <span class="badge">diner</span>
-          <span class="badge">ontdek</span>
+          {% for badge in pkg.content.badges %}
+          <span class="badge">{{ badge }}</span>
+          {% endfor %}
         </div>
-        <p class="package-description">Een volledige zeildag van zonsopkomst tot zonsondergang. Inclusief alle maaltijden en meerdere aanlegplaatsen. Voor wie echt wil genieten van varen en culinair verwennen.</p>
+        <p class="package-description">{{ pkg.content.shortDescription }}</p>
         <span class="link package-cta">Details →</span>
       </a>
+        {% endif %}
+      {% endfor %}
       
-      <a href="/arrangementen/#dinervaart" class="package-card package-card-link" data-content-id="packages-card-dinner">
+      {% for pkg in packages %}
+        {% if pkg.id == "dinervaart" %}
+      <a href="/arrangementen/#dinervaart" class="package-card package-card-link">
         <div class="package-header">
-          <h3>Diner & sunset</h3>
-          <span class="package-price">€ 93 pp</span>
+          <h3>{{ pkg.content.name }}</h3>
+          <span class="package-price">€ {{ pkg.pricing.base }} pp</span>
         </div>
         <div class="badge-group">
-          <span class="badge">± 3,5 uur</span>
-          <span class="badge">borrel</span>
-          <span class="badge">diner</span>
-          <span class="badge">Pampus</span>
+          {% for badge in pkg.content.badges %}
+          <span class="badge">{{ badge }}</span>
+          {% endfor %}
         </div>
-        <p class="package-description">Geniet van een ontspannen avondtocht waarbij varen en diner samenkomen. Terwijl de zon ondergaat, wordt aan boord een sfeervol diner geserveerd, met uitzicht op het water en ruimte om samen te genieten.</p>
+        <p class="package-description">{{ pkg.content.shortDescription }}</p>
         <span class="link package-cta">Details →</span>
       </a>
+        {% endif %}
+      {% endfor %}
     </div>
 
     <div class="custom-package-cta">
       <div class="custom-package-content">
-        <h3>Flexibel Arrangement</h3>
-        <p>Huwelijksfeest, bedrijfsevent, of een volledig andere wens? Bij een flexibel arrangement stemmen we alles af op uw idee. Andere afvaartlocaties (Harlingen, Amsterdam CS) of combinaties met externe activiteiten—we denken graag met u mee en hanteren dezelfde scherpe prijzen.</p>
+        {% for pkg in packages %}
+          {% if pkg.id == "flexibel" %}
+        <h3>{{ pkg.content.name }}</h3>
+        <p>{{ pkg.content.shortDescription }}</p>
+          {% endif %}
+        {% endfor %}
         <ul class="custom-package-features">
           <li>Vrije keuze in vaartijd, duur en route</li>
           <li>Menu volledig op maat en budget</li>

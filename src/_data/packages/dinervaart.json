@@ -1,6 +1,5 @@
 {
   "id": "dinervaart",
-  "name": "Dinervaart",
   "slug": "dinervaart",
   "pricing": {
     "base": 93,
@@ -22,9 +21,10 @@
   },
   "extras": ["dj", "fotograaf", "oesters"],
   "content": {
+    "name": "Diner & sunset",
     "badges": ["± 3,5 uur", "borrel", "diner", "Pampus"],
     "heroSubtitle": "Avondzeilen met driegangendiner",
-    "shortDescription": "Avondzeilen met driegangendiner.",
+    "shortDescription": "Geniet van een intieme avondtocht tijdens het mooiste moment van de dag. We zeilen richting Pampus terwijl de chef een driegangendiner voor je bereidt. Met de ondergaande zon als decor en een glas wijn in de hand, sluit je de dag stijlvol af op het water.",
     "longDescription": "Geniet van een ontspannen avondtocht waarbij varen en diner samenkomen. Terwijl de zon ondergaat, wordt aan boord een sfeervol diner geserveerd, met uitzicht op het water en ruimte om samen te genieten.",
     "timeline": [
       {

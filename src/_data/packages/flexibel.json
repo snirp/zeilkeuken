@@ -1,6 +1,5 @@
 {
   "id": "flexibel",
-  "name": "Flexibel",
   "slug": "flexibel",
   "pricing": {
     "base": null,
@@ -19,9 +18,10 @@
   },
   "extras": ["dj", "fotograaf", "oesters", "accordeon"],
   "content": {
+    "name": "Flexibel",
     "badges": [],
     "heroSubtitle": "Volledig naar jouw wensen",
-    "shortDescription": "Volledig afgestemd op jouw wensen.",
+    "shortDescription": "Heb je een specifiek programma, thema of tijdstip in gedachten? Bij een flexibel arrangement bepaal jij zelf de duur, het menu en de route. We denken graag met je mee om een unieke zeilervaring te creëren die perfect past bij jouw groep en budget.",
     "longDescription": "Bij een flexibel arrangement stellen we de tocht volledig samen volgens jouw wensen. Vrije keuze in vaartijd, duur, menu en bestemming.",
     "timeline": [],
     "highlights": [

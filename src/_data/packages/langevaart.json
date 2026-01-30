@@ -1,6 +1,5 @@
 {
   "id": "langevaart",
-  "name": "Lange vaart",
   "slug": "lange-vaart",
   "pricing": {
     "base": 131,
@@ -22,9 +21,10 @@
   },
   "extras": ["dj", "fotograaf", "oesters", "accordeon"],
   "content": {
+    "name": "Lange vaart",
     "badges": ["± 10 uur", "lunch", "diner", "ontdek"],
     "heroSubtitle": "Van zonsopkomst tot zonsondergang",
-    "shortDescription": "Volledige zeildag met ontbijt, lunch en diner.",
+    "shortDescription": "Beleef een complete zeildag van ontbijt tot diner op het IJsselmeer. We varen een uitgebreide route langs meerdere havenstadjes zoals Volendam en Marken, met alle tijd om te genieten van vers bereide maaltijden. Perfect voor wie een échte zeilervaring wil met culinaire verwennerij de hele dag door.",
     "longDescription": "Voor echte zeilliefhebbers en culinaire avonturiers. Een volledige dag op het water met alle maaltijden van ontbijt tot diner. We varen een uitgebreide route met meerdere stops in karakteristieke havenstadjes.",
     "timeline": [],
     "highlights": [
