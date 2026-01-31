@@ -6,34 +6,30 @@ title: De Zeilkeuken - Arrangementen en prijzen
 <!-- Intro Section -->
 <section class="section">
   <h1 data-content-id="packages-title">Arrangementen & Prijzen</h1>
-  <p data-content-id="packages-intro">Van april tot oktober varen we met groepen van 25 tot 40 personen vanuit Muiden. Alle arrangementen zijn inclusief eten, drinken en een onvergetelijke zeilervaring op het IJsselmeer. Vaste prijs per persoon, geen verrassingen.</p>
-  
+  <p data-content-id="packages-intro">
+    Van april tot oktober varen we met groepen van 25 tot 40 personen vanuit Muiden. Alle
+    arrangementen zijn inclusief eten, drinken en een onvergetelijke zeilervaring op het IJsselmeer.
+    Vaste prijs per persoon, geen verrassingen.
+  </p>
+
   <!-- Package Navigation -->
   <div class="package-navigation">
-    {% for pkg in packages %}
-      {% if pkg.id == "dagtocht" %}
+    {% for pkg in packages %} {% if pkg.id == "dagtocht" %}
     <a href="#dagtocht" class="package-nav-link">
       <strong>{{ pkg.content.name }}</strong>
       <span>{{ pkg.defaults.duration }} uur • €{{ pkg.pricing.base }} pp</span>
     </a>
-      {% endif %}
-    {% endfor %}
-    {% for pkg in packages %}
-      {% if pkg.id == "langevaart" %}
+    {% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "langevaart" %}
     <a href="#langevaart" class="package-nav-link">
       <strong>{{ pkg.content.name }}</strong>
       <span>{{ pkg.defaults.duration }} uur • €{{ pkg.pricing.base }} pp</span>
     </a>
-      {% endif %}
-    {% endfor %}
-    {% for pkg in packages %}
-      {% if pkg.id == "dinervaart" %}
+    {% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "dinervaart" %}
     <a href="#dinervaart" class="package-nav-link">
       <strong>{{ pkg.content.name }}</strong>
       <span>{{ pkg.defaults.duration }} uur • €{{ pkg.pricing.base }} pp</span>
     </a>
-      {% endif %}
-    {% endfor %}
+    {% endif %} {% endfor %}
   </div>
 </section>
 
@@ -41,7 +37,11 @@ title: De Zeilkeuken - Arrangementen en prijzen
 {% set dagtocht = packages | selectattr("id", "equalto", "dagtocht") | first %}
 <section id="dagtocht" class="section package-detail">
   <div class="package-hero">
-    <img src="/images/placeholder-dagtocht.jpg" alt="Dagtocht arrangement" class="package-hero-image">
+    <img
+      src="/images/placeholder-dagtocht.jpg"
+      alt="Dagtocht arrangement"
+      class="package-hero-image"
+    />
     <div class="package-hero-overlay">
       <div class="package-hero-header">
         <h2>{{ dagtocht.content.name }}</h2>
@@ -57,9 +57,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
   </div>
 
   <div class="package-content">
-    <div>
-      {{ dagtocht.content.longDescription | markdown | safe }}
-    </div>
+    <div>{{ dagtocht.content.longDescription | markdown | safe }}</div>
 
     <details class="timeline-details">
       <summary>Dagprogramma (indicatief)</summary>
@@ -90,13 +88,20 @@ title: De Zeilkeuken - Arrangementen en prijzen
 <!-- Package 2: Lange vaart -->
 <section id="langevaart" class="section package-detail">
   <div class="package-hero">
-    <img src="/images/placeholder-langevaart.jpg" alt="Lange vaart arrangement" class="package-hero-image" data-content-id="package-long-image">
+    <img
+      src="/images/placeholder-langevaart.jpg"
+      alt="Lange vaart arrangement"
+      class="package-hero-image"
+      data-content-id="package-long-image"
+    />
     <div class="package-hero-overlay">
       <div class="package-hero-header">
         <h2 data-content-id="package-long-name">Lange vaart</h2>
         <span class="package-price-large" data-content-id="package-long-price">€ 145 pp</span>
       </div>
-      <p class="package-subtitle" data-content-id="package-long-subtitle">Van zonsopkomst tot zonsondergang</p>
+      <p class="package-subtitle" data-content-id="package-long-subtitle">
+        Van zonsopkomst tot zonsondergang
+      </p>
       <div class="badge-group">
         <span class="badge" data-content-id="package-long-duration">10 uur</span>
         <span class="badge" data-content-id="package-long-time">08:00 - 18:00</span>
@@ -107,8 +112,15 @@ title: De Zeilkeuken - Arrangementen en prijzen
 
   <div class="package-content">
     <div data-content-id="package-long-description">
-      <p>Voor echte zeilliefhebbers en culinaire avonturiers. Een volledige dag op het water met alle maaltijden van ontbijt tot diner. We varen een uitgebreide route met meerdere stops in karakteristieke havenstadjes.</p>
-      <p>Verwacht een ontspannen tempo, ruimte voor actief zeilen, en een culinaire reis die de hele dag doorloopt. Perfect voor groepen die een echte beleving willen en niet gehaast zijn.</p>
+      <p>
+        Voor echte zeilliefhebbers en culinaire avonturiers. Een volledige dag op het water met alle
+        maaltijden van ontbijt tot diner. We varen een uitgebreide route met meerdere stops in
+        karakteristieke havenstadjes.
+      </p>
+      <p>
+        Verwacht een ontspannen tempo, ruimte voor actief zeilen, en een culinaire reis die de hele
+        dag doorloopt. Perfect voor groepen die een echte beleving willen en niet gehaast zijn.
+      </p>
     </div>
 
     <h3 data-content-id="package-long-included-title">Wat is inbegrepen</h3>
@@ -126,13 +138,23 @@ title: De Zeilkeuken - Arrangementen en prijzen
 
     <h3 data-content-id="package-long-route-title">Route en planning</h3>
     <div data-content-id="package-long-route">
-      <p>We starten vroeg in de ochtend vanuit Amsterdam en varen een uitgebreide route over het Markermeer. Onderweg leggen we aan in minimaal twee havens waar gasten aan wal kunnen voor een wandeling. De route wordt aangepast op weersomstandigheden en groepsvoorkeuren.</p>
-      <p><strong>Voorbeeldroute:</strong> Amsterdam → Marken (koffie & ontbijt) → Volendam (lunch & wandeling) → Pampus (borrel) → terug naar Amsterdam (diner tijdens varen)</p>
+      <p>
+        We starten vroeg in de ochtend vanuit Amsterdam en varen een uitgebreide route over het
+        Markermeer. Onderweg leggen we aan in minimaal twee havens waar gasten aan wal kunnen voor
+        een wandeling. De route wordt aangepast op weersomstandigheden en groepsvoorkeuren.
+      </p>
+      <p>
+        <strong>Voorbeeldroute:</strong> Amsterdam → Marken (koffie & ontbijt) → Volendam (lunch &
+        wandeling) → Pampus (borrel) → terug naar Amsterdam (diner tijdens varen)
+      </p>
     </div>
 
     <h3 data-content-id="package-long-extras-title">Extra opties</h3>
     <ul class="extras-list" data-content-id="package-long-extras">
-      <li><strong>Luxury Upgrade (+€35 pp):</strong> Premium wijnselectie, extra gangen, luxe aperitief</li>
+      <li>
+        <strong>Luxury Upgrade (+€35 pp):</strong> Premium wijnselectie, extra gangen, luxe
+        aperitief
+      </li>
       <li><strong>DJ aan boord (€350):</strong> Achtergrondmuziek en sfeer</li>
       <li><strong>Fotograaf (€450):</strong> Professionele reportage van de dag</li>
       <li><strong>Oesters bij borrel (+€12 pp):</strong> Verse Zeeuwse oesters</li>
@@ -140,15 +162,9 @@ title: De Zeilkeuken - Arrangementen en prijzen
 
     <h3 data-content-id="package-long-practical-title">Praktische informatie</h3>
     <div class="package-practical" data-content-id="package-long-practical">
-      <div class="practical-item">
-        <strong>Groepsgrootte:</strong> 25-40 personen
-      </div>
-      <div class="practical-item">
-        <strong>Seizoen:</strong> Mei t/m september
-      </div>
-      <div class="practical-item">
-        <strong>Tijden:</strong> 08:00 - 18:00 (flexibel)
-      </div>
+      <div class="practical-item"><strong>Groepsgrootte:</strong> 25-40 personen</div>
+      <div class="practical-item"><strong>Seizoen:</strong> Mei t/m september</div>
+      <div class="practical-item"><strong>Tijden:</strong> 08:00 - 18:00 (flexibel)</div>
       <div class="practical-item">
         <strong>Startlocatie:</strong> Amsterdam centrum (op loopafstand CS)
       </div>
@@ -161,13 +177,20 @@ title: De Zeilkeuken - Arrangementen en prijzen
 <!-- Package 3: Dinervaart -->
 <section id="dinervaart" class="section package-detail">
   <div class="package-hero">
-    <img src="/images/placeholder-dinervaart.jpg" alt="Dinervaart arrangement" class="package-hero-image" data-content-id="package-diner-image">
+    <img
+      src="/images/placeholder-dinervaart.jpg"
+      alt="Dinervaart arrangement"
+      class="package-hero-image"
+      data-content-id="package-diner-image"
+    />
     <div class="package-hero-overlay">
       <div class="package-hero-header">
         <h2 data-content-id="package-diner-name">Diner & sunset</h2>
         <span class="package-price-large" data-content-id="package-diner-price">€ 110 pp</span>
       </div>
-      <p class="package-subtitle" data-content-id="package-diner-subtitle">Avondzeilen met driegangendiner</p>
+      <p class="package-subtitle" data-content-id="package-diner-subtitle">
+        Avondzeilen met driegangendiner
+      </p>
       <div class="badge-group">
         <span class="badge" data-content-id="package-diner-duration">3,5 uur</span>
         <span class="badge" data-content-id="package-diner-time">18:00 - 21:30</span>
@@ -178,8 +201,15 @@ title: De Zeilkeuken - Arrangementen en prijzen
 
   <div class="package-content">
     <div data-content-id="package-diner-description">
-      <p>De meest romantische optie. Een korte maar intense zeilervaring in het mooie avondlicht, gecombineerd met een culinair driegangendiner. Perfect voor kleinere groepen, verjaardagen of zakelijke diners met een twist.</p>
-      <p>We varen een korte route zodat er alle tijd is om te genieten van het eten. De chef bereidt alles live in de kombuis, terwijl de zon langzaam ondergaat over het IJsselmeer.</p>
+      <p>
+        De meest romantische optie. Een korte maar intense zeilervaring in het mooie avondlicht,
+        gecombineerd met een culinair driegangendiner. Perfect voor kleinere groepen, verjaardagen
+        of zakelijke diners met een twist.
+      </p>
+      <p>
+        We varen een korte route zodat er alle tijd is om te genieten van het eten. De chef bereidt
+        alles live in de kombuis, terwijl de zon langzaam ondergaat over het IJsselmeer.
+      </p>
     </div>
 
     <details class="timeline-details">
@@ -246,30 +276,40 @@ title: De Zeilkeuken - Arrangementen en prijzen
 <!-- Add-ons -->
 <section id="extras" class="section">
   <h2 data-content-id="packages-extras-title">Extra's</h2>
-  <p data-content-id="packages-extras-intro">Maak uw arrangement compleet met één van deze opties:</p>
-  
+  <p data-content-id="packages-extras-intro">
+    Maak uw arrangement compleet met één van deze opties:
+  </p>
+
   <div class="extras-grid">
     <div class="extra-item">
       <h3 data-content-id="packages-extra-dj-title">DJ</h3>
-      <p data-content-id="packages-extra-dj-description">Live muziek en entertainment aan boord. Van background jazz tot dansbare beats.</p>
+      <p data-content-id="packages-extra-dj-description">
+        Live muziek en entertainment aan boord. Van background jazz tot dansbare beats.
+      </p>
       <p class="extra-price" data-content-id="packages-extra-dj-price">€ 350</p>
     </div>
-    
+
     <div class="extra-item">
       <h3 data-content-id="packages-extra-fotograaf-title">Fotograaf</h3>
-      <p data-content-id="packages-extra-fotograaf-description">Professionele reportage van uw dag. Alle foto's digitaal geleverd binnen een week.</p>
+      <p data-content-id="packages-extra-fotograaf-description">
+        Professionele reportage van uw dag. Alle foto's digitaal geleverd binnen een week.
+      </p>
       <p class="extra-price" data-content-id="packages-extra-fotograaf-price">€ 450</p>
     </div>
-    
+
     <div class="extra-item">
       <h3 data-content-id="packages-extra-oesters-title">Oestermeisje</h3>
-      <p data-content-id="packages-extra-oesters-description">Verse oesters gekraakt aan boord, geserveerd met champagne en citroen.</p>
+      <p data-content-id="packages-extra-oesters-description">
+        Verse oesters gekraakt aan boord, geserveerd met champagne en citroen.
+      </p>
       <p class="extra-price" data-content-id="packages-extra-oesters-price">€ 15 pp</p>
     </div>
-    
+
     <div class="extra-item">
       <h3 data-content-id="packages-extra-accordeon-title">Accordeonist</h3>
-      <p data-content-id="packages-extra-accordeon-description">Sfeervolle live muziek met authentieke zeemansliederen en klassiekers.</p>
+      <p data-content-id="packages-extra-accordeon-description">
+        Sfeervolle live muziek met authentieke zeemansliederen en klassiekers.
+      </p>
       <p class="extra-price" data-content-id="packages-extra-accordeon-price">€ 300</p>
     </div>
   </div>
@@ -278,32 +318,55 @@ title: De Zeilkeuken - Arrangementen en prijzen
 <!-- FAQ: Critical Questions -->
 <section id="faq" class="section">
   <h2 data-content-id="packages-faq-title">Veelgestelde Vragen</h2>
-  
+
   <div class="faq-list">
     <details class="faq-item">
       <summary data-content-id="packages-faq-weer-q">Wat gebeurt er bij slecht weer?</summary>
-      <p data-content-id="packages-faq-weer-a">We varen bij vrijwel alle weersomstandigheden. Het schip heeft een verwarmde salon met grote ramen, dus ook bij regen is het aan boord gezellig. Bij extreme omstandigheden (harde storm, onveilige situaties) overleggen we tijdig over alternatieven of verzetten we de datum kosteloos.</p>
+      <p data-content-id="packages-faq-weer-a">
+        We varen bij vrijwel alle weersomstandigheden. Het schip heeft een verwarmde salon met grote
+        ramen, dus ook bij regen is het aan boord gezellig. Bij extreme omstandigheden (harde storm,
+        onveilige situaties) overleggen we tijdig over alternatieven of verzetten we de datum
+        kosteloos.
+      </p>
     </details>
-    
+
     <details class="faq-item">
-      <summary data-content-id="packages-faq-dieet-q">Kunnen jullie rekening houden met dieetwensen?</summary>
-      <p data-content-id="packages-faq-dieet-a">Absoluut. We houden rekening met vegetarische, veganistische, halal, kosjer en allergie-wensen. Geef dit bij uw offerte-aanvraag door, dan stemmen we het menu hierop af. We werken met verse producten, dus aanpassen is geen probleem.</p>
+      <summary data-content-id="packages-faq-dieet-q">
+        Kunnen jullie rekening houden met dieetwensen?
+      </summary>
+      <p data-content-id="packages-faq-dieet-a">
+        Absoluut. We houden rekening met vegetarische, veganistische, halal, kosjer en
+        allergie-wensen. Geef dit bij uw offerte-aanvraag door, dan stemmen we het menu hierop af.
+        We werken met verse producten, dus aanpassen is geen probleem.
+      </p>
     </details>
-    
+
     <details class="faq-item">
       <summary data-content-id="packages-faq-annulering-q">Wat is het annuleringsbeleid?</summary>
-      <p data-content-id="packages-faq-annulering-a">Tot 4 weken voor vertrek: kosteloos annuleren. 2-4 weken van tevoren: 50% van de totaalprijs. Binnen 2 weken: 100%. Bij overmacht (ziekte, overlijden) zoeken we altijd naar een oplossing. Zie onze <a href="/voorwaarden/">algemene voorwaarden</a> voor alle details.</p>
+      <p data-content-id="packages-faq-annulering-a">
+        Tot 4 weken voor vertrek: kosteloos annuleren. 2-4 weken van tevoren: 50% van de
+        totaalprijs. Binnen 2 weken: 100%. Bij overmacht (ziekte, overlijden) zoeken we altijd naar
+        een oplossing. Zie onze <a href="/voorwaarden/">algemene voorwaarden</a> voor alle details.
+      </p>
     </details>
-    
+
     <details class="faq-item">
       <summary data-content-id="packages-faq-betaling-q">Hoe werkt de betaling?</summary>
-      <p data-content-id="packages-faq-betaling-a">Bij reservering betaalt u 30% aanbetaling via factuur. Het restant (70%) is uiterlijk 2 weken voor vertrek verschuldigd. Betaling mogelijk via iDEAL of bankoverschrijving. Na ontvangst van de aanbetaling is uw boeking definitief. Zie onze <a href="/voorwaarden/">algemene voorwaarden</a> voor details.</p>
+      <p data-content-id="packages-faq-betaling-a">
+        Bij reservering betaalt u 30% aanbetaling via factuur. Het restant (70%) is uiterlijk 2
+        weken voor vertrek verschuldigd. Betaling mogelijk via iDEAL of bankoverschrijving. Na
+        ontvangst van de aanbetaling is uw boeking definitief. Zie onze
+        <a href="/voorwaarden/">algemene voorwaarden</a> voor details.
+      </p>
     </details>
-    
+
     <details class="faq-item">
       <summary data-content-id="packages-faq-kinderen-q">Zijn kinderen welkom aan boord?</summary>
-      <p data-content-id="packages-faq-kinderen-a">Ja, kinderen vanaf 6 jaar zijn welkom. We hebben zwemvesten in alle maten en de crew let goed op de veiligheid. Voor het menu kunnen we kinderportie's of aangepaste gerechten serveren.</p>
+      <p data-content-id="packages-faq-kinderen-a">
+        Ja, kinderen vanaf 6 jaar zijn welkom. We hebben zwemvesten in alle maten en de crew let
+        goed op de veiligheid. Voor het menu kunnen we kinderportie's of aangepaste gerechten
+        serveren.
+      </p>
     </details>
   </div>
 </section>
-

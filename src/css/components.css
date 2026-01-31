@@ -9,7 +9,9 @@
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-gray-300);
   z-index: 100;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
   max-width: 100% !important; /* Override container max-width for full-width header */
 }
 
@@ -147,7 +149,9 @@
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s, visibility 0.3s;
+  transition:
+    opacity 0.3s,
+    visibility 0.3s;
   z-index: 200;
 }
 
@@ -228,25 +232,23 @@
   .header-container {
     max-width: 1200px;
     margin: 0 auto;
-    justify-content: center;
-    gap: var(--spacing-xl);
+    justify-content: space-between;
     padding-left: var(--spacing-md);
     padding-right: var(--spacing-md);
   }
 
   .logo {
-    order: -1;
+    font-size: var(--font-size-xl);
   }
 
   .nav-desktop {
     display: flex;
-    order: 0;
   }
 
   .header-actions {
     order: 1;
   }
-  
+
   .menu-toggle,
   .nav-mobile,
   .menu-overlay {
@@ -284,7 +286,9 @@
   border: 1px solid var(--color-gray-200);
   border-radius: 4px;
   padding: var(--spacing-md);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .package-card-link {
@@ -492,7 +496,9 @@
   border-radius: 4px;
   background-color: var(--color-white);
   border: 1px solid var(--color-gray-300);
-  transition: background-color 0.2s, border-color 0.2s;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
 }
 
 .footer-social a:hover {
@@ -540,7 +546,9 @@
   border-radius: 4px;
   text-decoration: none;
   color: var(--color-gray-800);
-  transition: border-color 0.2s, background-color 0.2s;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s;
 }
 
 .info-link:hover {
@@ -654,7 +662,7 @@
 }
 
 .modal-content ul li::before {
-  content: "✓";
+  content: '✓';
   position: absolute;
   left: 0;
   color: var(--color-purple);
@@ -665,7 +673,7 @@
   .modal {
     padding: var(--spacing-sm);
   }
-  
+
   .modal-content {
     padding: var(--spacing-md);
     margin: auto;

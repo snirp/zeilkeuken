@@ -4,12 +4,15 @@
   "description": "DeZeilkeuken.nl website",
   "scripts": {
     "start": "eleventy --serve",
-    "build": "eleventy"
+    "build": "eleventy",
+    "format": "prettier --write \"src/**/*.{js,njk,html,css}\"",
+    "format:check": "prettier --check \"src/**/*.{js,njk,html,css}\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@11ty/eleventy": "^2.0.1"
+    "@11ty/eleventy": "^2.0.1",
+    "prettier": "^3.8.1"
   }
 }

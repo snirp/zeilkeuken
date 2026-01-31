@@ -73,7 +73,9 @@
   color: var(--color-white);
   margin-bottom: 0;
   line-height: 1.2;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.4);
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.6),
+    0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .hero-subtitle {
@@ -105,7 +107,7 @@
   .hero-bottom-bar {
     padding: var(--spacing-md) var(--spacing-md);
   }
-  
+
   .hero-subtitle {
     font-size: 0.95rem;
   }
@@ -267,7 +269,7 @@
   .package-nav-link {
     padding: var(--spacing-sm) var(--spacing-md);
   }
-  
+
   .package-nav-link strong {
     font-size: var(--font-size-base);
   }
@@ -341,7 +343,7 @@
   .package-cards {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .package-cards.grid-3 {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -398,7 +400,7 @@
 }
 
 .custom-package-features li:before {
-  content: "✓";
+  content: '✓';
   position: absolute;
   left: 0;
   color: var(--color-purple);
@@ -470,7 +472,7 @@
 }
 
 .extra-details li:before {
-  content: "•";
+  content: '•';
   position: absolute;
   left: 0;
 }
@@ -720,7 +722,7 @@
   .extras-grid {
     grid-template-columns: repeat(4, 1fr);
   }
-  
+
   .facilities-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -1056,7 +1058,7 @@
   .crew-member {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   /* Reset order on desktop - let HTML source order determine layout */
   .crew-member .crew-image,
   .crew-member .crew-content {
@@ -1292,4 +1294,3 @@
 .sustainability-section .text-link:hover {
   color: var(--color-gray-300);
 }
-

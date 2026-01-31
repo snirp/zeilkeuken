@@ -51,7 +51,8 @@
 }
 
 @keyframes boat-bob {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(-50%) scaleX(-1) translateY(0);
   }
   50% {
@@ -125,7 +126,7 @@
   .progress-steps {
     flex-wrap: nowrap;
   }
-  
+
   .progress-step {
     min-width: auto;
   }
@@ -137,7 +138,7 @@
   animation: fadeIn 0.3s ease;
 }
 
-.form-step[aria-hidden="false"] {
+.form-step[aria-hidden='false'] {
   display: block;
 }
 
@@ -287,7 +288,7 @@
   cursor: pointer;
 }
 
-.package-option input[type="radio"] {
+.package-option input[type='radio'] {
   position: absolute;
   opacity: 0;
   pointer-events: none;
@@ -298,14 +299,16 @@
   background-color: var(--color-white);
   border: 1px solid var(--color-gray-200);
   border-radius: 4px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .package-option:hover .package-card-radio {
   border-color: var(--color-gray-400);
 }
 
-.package-option input[type="radio"]:checked + .package-card-radio {
+.package-option input[type='radio']:checked + .package-card-radio {
   border-color: var(--color-purple);
   box-shadow: 0 0 0 1px var(--color-purple);
   background-color: var(--color-white);
@@ -381,12 +384,12 @@
   font-size: var(--font-size-base);
 }
 
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="tel"],
-.form-group input[type="date"],
-.form-group input[type="time"],
-.form-group input[type="number"],
+.form-group input[type='text'],
+.form-group input[type='email'],
+.form-group input[type='tel'],
+.form-group input[type='date'],
+.form-group input[type='time'],
+.form-group input[type='number'],
 .form-group select,
 .form-group textarea {
   width: 100%;
@@ -451,7 +454,7 @@
   .form-row {
     flex-direction: row;
   }
-  
+
   .form-row .form-group {
     flex: 1;
   }
@@ -479,13 +482,13 @@
   background-color: var(--color-gray-50);
 }
 
-.checkbox-label input[type="checkbox"] {
+.checkbox-label input[type='checkbox'] {
   width: 20px;
   height: 20px;
   cursor: pointer;
 }
 
-.checkbox-label input[type="checkbox"]:disabled {
+.checkbox-label input[type='checkbox']:disabled {
   cursor: not-allowed;
 }
 
@@ -503,7 +506,7 @@
   cursor: pointer;
 }
 
-.upgrade-option input[type="checkbox"] {
+.upgrade-option input[type='checkbox'] {
   position: absolute;
   opacity: 0;
   pointer-events: none;
@@ -521,7 +524,7 @@
   border-color: var(--color-gray-400);
 }
 
-.upgrade-option input[type="checkbox"]:checked + .upgrade-card {
+.upgrade-option input[type='checkbox']:checked + .upgrade-card {
   border-color: var(--color-purple);
   background-color: rgba(147, 51, 234, 0.05);
 }
@@ -646,4 +649,3 @@
 .contact-item a:hover {
   text-decoration: underline;
 }
-

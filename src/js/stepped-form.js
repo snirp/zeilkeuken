@@ -3,12 +3,12 @@
  * Manages a multi-step form with package-based validation and dynamic content
  */
 
-(function() {
+(function () {
   'use strict';
 
   // Load pricing data from global variable (injected by 11ty)
   const pricingData = window.PRICING_DATA || {};
-  
+
   // Package configuration - loaded from data file
   const PACKAGE_CONFIG = pricingData.packages || {};
 
@@ -32,8 +32,8 @@
       departure: null,
       duration: null,
       extras: [],
-      personalDetails: {}
-    }
+      personalDetails: {},
+    },
   };
 
   // DOM elements
@@ -92,20 +92,20 @@
     const guestsInput = form.querySelector('#guests');
     const departureInput = form.querySelector('#departure');
     const durationInput = form.querySelector('#duration');
-    
+
     if (dateInput) {
       dateInput.addEventListener('change', handleDateChange);
     }
-    
+
     if (guestsInput) {
       guestsInput.addEventListener('input', handleGuestsChange);
     }
-    
+
     // Departure time select
     if (departureInput) {
       departureInput.addEventListener('change', handleDepartureChange);
     }
-    
+
     if (durationInput) {
       durationInput.addEventListener('input', handleDurationChange);
     }
@@ -119,7 +119,7 @@
     // Personal details inputs
     const nameInput = form.querySelector('#name');
     const emailInput = form.querySelector('#email');
-    
+
     if (nameInput) nameInput.addEventListener('input', handlePersonalDetailsChange);
     if (emailInput) emailInput.addEventListener('input', handlePersonalDetailsChange);
 
@@ -180,25 +180,25 @@
   function handleDurationChange(e) {
     const input = e.target;
     let value = parseFloat(input.value);
-    
+
     if (isNaN(value)) {
       state.formData.duration = null;
       updatePriceEstimate();
       updateNavigationState();
       return;
     }
-    
+
     // Enforce min/max
     if (value < 2) value = 2;
     if (value > 12) value = 12;
-    
+
     // Round to nearest 0.5
     value = Math.round(value * 2) / 2;
-    
+
     if (parseFloat(input.value) !== value) {
       input.value = value;
     }
-    
+
     state.formData.duration = value;
     updatePriceEstimate();
     updateNavigationState();
@@ -212,7 +212,7 @@
     const checkedExtras = Array.from(
       form.querySelectorAll('.extras-step input[type="checkbox"]:checked')
     ).map(cb => cb.name);
-    
+
     state.formData.extras = checkedExtras;
     updatePriceCalculator();
     saveState();
@@ -224,10 +224,10 @@
   function handlePersonalDetailsChange() {
     const nameInput = form.querySelector('#name');
     const emailInput = form.querySelector('#email');
-    
+
     state.formData.personalDetails = {
       name: nameInput ? nameInput.value : '',
-      email: emailInput ? emailInput.value : ''
+      email: emailInput ? emailInput.value : '',
     };
     updateNavigationState();
     saveState();
@@ -241,7 +241,7 @@
     if (!dateInput || !state.formData.package) return;
 
     const config = PACKAGE_CONFIG[state.formData.package];
-    
+
     if (config.dateRange) {
       dateInput.min = config.dateRange.start;
       dateInput.max = config.dateRange.end;
@@ -293,7 +293,7 @@
       durationInput.value = '';
       state.formData.duration = null;
     }
-    
+
     // Update price estimate with new defaults
     updatePriceEstimate();
   }
@@ -328,7 +328,7 @@
     if (config.extras.includes('luxury-upgrade')) {
       const upgradeLabel = form.querySelector('#upgrade-label');
       const upgradeDescription = form.querySelector('#upgrade-description');
-      
+
       if (upgradeLabel && config.upgradeText) {
         upgradeLabel.innerHTML = `Luxe upgrade <strong>${config.upgradeText}</strong>`;
       }
@@ -352,17 +352,18 @@
     }
 
     // Calculate base: pvrt + duration * pu + guests * pppu * duration
-    let total = PRICING.pvrt + 
-                state.formData.duration * PRICING.pu + 
-                state.formData.guests * PRICING.pppu * state.formData.duration;
-    
+    let total =
+      PRICING.pvrt +
+      state.formData.duration * PRICING.pu +
+      state.formData.guests * PRICING.pppu * state.formData.duration;
+
     // Add dinner extra if dinervaart package is selected
     if (state.formData.package === 'dinervaart') {
       total += PRICING.dnr * state.formData.guests;
     }
-    
+
     const perPerson = total / state.formData.guests;
-    
+
     // Round to nearest 0.5
     const rounded = Math.round(perPerson * 2) / 2;
 
@@ -388,7 +389,7 @@
     }
 
     const config = PACKAGE_CONFIG[state.formData.package];
-    
+
     // If flexibel or no price, show custom pricing
     if (!config.price) {
       basePriceEl.textContent = 'Op maat';
@@ -439,7 +440,7 @@
    */
   function updateNavigationState() {
     if (!btnNext) return;
-    
+
     const isValid = validateCurrentStepSilent();
     btnNext.disabled = !isValid;
   }
@@ -451,39 +452,44 @@
     switch (state.currentStep) {
       case 1: // Package selection
         return state.formData.package !== null;
-      
+
       case 2: // Date, guests, departure, duration
-        if (!state.formData.date || !state.formData.guests || 
-            !state.formData.departure || !state.formData.duration) return false;
-        
+        if (
+          !state.formData.date ||
+          !state.formData.guests ||
+          !state.formData.departure ||
+          !state.formData.duration
+        )
+          return false;
+
         const config = PACKAGE_CONFIG[state.formData.package];
         if (config.dateRange) {
           const selectedDate = new Date(state.formData.date);
           const startDate = new Date(config.dateRange.start);
           const endDate = new Date(config.dateRange.end);
-          
+
           if (selectedDate < startDate || selectedDate > endDate) return false;
         }
-        
+
         if (state.formData.guests < config.minGuests || state.formData.guests > config.maxGuests) {
           return false;
         }
-        
+
         return true;
-      
+
       case 3: // Extras (optional, always valid)
         return true;
-      
+
       case 4: // Personal details
         const nameInput = form.querySelector('#name');
         const emailInput = form.querySelector('#email');
-        
+
         if (!nameInput || !emailInput) return false;
         if (!nameInput.value.trim()) return false;
         if (!emailInput.value.trim() || !isValidEmail(emailInput.value)) return false;
-        
+
         return true;
-      
+
       default:
         return false;
     }
@@ -496,42 +502,46 @@
     switch (state.currentStep) {
       case 1: // Package selection
         return state.formData.package !== null;
-      
+
       case 2: // Date, guests, departure, duration
-        if (!state.formData.date || !state.formData.guests || 
-            !state.formData.departure || !state.formData.duration) {
+        if (
+          !state.formData.date ||
+          !state.formData.guests ||
+          !state.formData.departure ||
+          !state.formData.duration
+        ) {
           showError('Vul alle verplichte velden in');
           return false;
         }
-        
+
         // Validate date range if applicable
         const config = PACKAGE_CONFIG[state.formData.package];
         if (config.dateRange) {
           const selectedDate = new Date(state.formData.date);
           const startDate = new Date(config.dateRange.start);
           const endDate = new Date(config.dateRange.end);
-          
+
           if (selectedDate < startDate || selectedDate > endDate) {
             showError('Kies een datum binnen het seizoen (april - oktober)');
             return false;
           }
         }
-        
+
         // Validate guest count
         if (state.formData.guests < config.minGuests || state.formData.guests > config.maxGuests) {
           showError(`Aantal personen moet tussen ${config.minGuests} en ${config.maxGuests} zijn`);
           return false;
         }
-        
+
         return true;
-      
+
       case 3: // Extras (optional, always valid)
         return true;
-      
+
       case 4: // Personal details
         const nameInput = form.querySelector('#name');
         const emailInput = form.querySelector('#email');
-        
+
         if (!nameInput || !emailInput) return false;
         if (!nameInput.value.trim()) {
           showError('Vul je naam in');
@@ -541,9 +551,9 @@
           showError('Vul een geldig e-mailadres in');
           return false;
         }
-        
+
         return true;
-      
+
       default:
         return false;
     }
@@ -567,10 +577,10 @@
       errorEl.className = 'form-error';
       form.insertBefore(errorEl, form.querySelector('.form-navigation'));
     }
-    
+
     errorEl.textContent = message;
     errorEl.style.display = 'block';
-    
+
     // Auto-hide after 5 seconds
     setTimeout(() => {
       errorEl.style.display = 'none';
@@ -592,9 +602,9 @@
    */
   function goToNextStep() {
     if (!validateCurrentStep()) return;
-    
+
     hideError();
-    
+
     if (state.currentStep < state.totalSteps) {
       state.currentStep++;
       renderStep();
@@ -607,7 +617,7 @@
    */
   function goToPreviousStep() {
     hideError();
-    
+
     if (state.currentStep > 1) {
       state.currentStep--;
       renderStep();
@@ -623,7 +633,7 @@
     if (targetStep > state.currentStep) {
       return; // Cannot jump forward
     }
-    
+
     hideError();
     state.currentStep = targetStep;
     renderStep();
@@ -643,13 +653,13 @@
     // Update sailboat position (moves within the 75% width bar)
     if (progressBoat) {
       progressBoat.style.left = progressPercent + '%';
-      
+
       // Trigger wobble animation
       progressBoat.classList.remove('wobble');
       // Force reflow to restart animation
       void progressBoat.offsetWidth;
       progressBoat.classList.add('wobble');
-      
+
       // Remove wobble class after animation completes to return to bobbing
       setTimeout(() => {
         progressBoat.classList.remove('wobble');
@@ -659,10 +669,10 @@
     // Update progress steps
     progressSteps.forEach((step, index) => {
       const stepNumber = index + 1;
-      
+
       // Remove all classes first
       step.classList.remove('active', 'completed', 'clickable');
-      
+
       if (stepNumber < state.currentStep) {
         step.classList.add('completed', 'clickable');
       } else if (stepNumber === state.currentStep) {
@@ -671,7 +681,7 @@
         // Future steps - not clickable
         step.style.cursor = 'default';
       }
-      
+
       // Set cursor style
       if (stepNumber <= state.currentStep) {
         step.style.cursor = 'pointer';
@@ -694,7 +704,7 @@
 
     // Update navigation buttons
     btnBack.style.display = state.currentStep === 1 ? 'none' : 'inline-block';
-    
+
     if (state.currentStep === state.totalSteps) {
       btnNext.style.display = 'none';
       btnSubmit.style.display = 'inline-block';
@@ -741,43 +751,45 @@
       if (saved) {
         const savedState = JSON.parse(saved);
         Object.assign(state, savedState);
-        
+
         // Restore form values
         if (state.formData.package) {
-          const packageRadio = form.querySelector(`input[name="package"][value="${state.formData.package}"]`);
+          const packageRadio = form.querySelector(
+            `input[name="package"][value="${state.formData.package}"]`
+          );
           if (packageRadio) packageRadio.checked = true;
           updateDateConstraints();
           updateGuestsConstraints();
           updateAvailableExtras();
         }
-        
+
         if (state.formData.date) {
           const dateInput = form.querySelector('#date');
           if (dateInput) dateInput.value = state.formData.date;
         }
-        
+
         if (state.formData.guests) {
           const guestsInput = form.querySelector('#guests');
           if (guestsInput) guestsInput.value = state.formData.guests;
         }
-        
+
         // Restore extras
         state.formData.extras.forEach(extraName => {
           const checkbox = form.querySelector(`input[name="${extraName}"]`);
           if (checkbox) checkbox.checked = true;
         });
-        
+
         // Restore personal details
         if (state.formData.personalDetails.name) {
           const nameInput = form.querySelector('#name');
           if (nameInput) nameInput.value = state.formData.personalDetails.name;
         }
-        
+
         if (state.formData.personalDetails.email) {
           const emailInput = form.querySelector('#email');
           if (emailInput) emailInput.value = state.formData.personalDetails.email;
         }
-        
+
         updatePriceCalculator();
       }
     } catch (e) {
@@ -793,14 +805,14 @@
       e.preventDefault();
       return false;
     }
-    
+
     // Clear saved state on successful submission
     try {
       sessionStorage.removeItem('quoteFormState');
     } catch (e) {
       console.warn('Could not clear form state:', e);
     }
-    
+
     // Form will submit normally to Cloudflare Worker
   }
 
