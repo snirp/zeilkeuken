@@ -7,7 +7,7 @@
   position: sticky;
   top: 0;
   background-color: var(--color-white);
-  border-bottom: 1px solid var(--color-gray-300);
+  border-bottom: 1px solid var(--color-border);
   z-index: 100;
   transition:
     background-color 0.3s ease,
@@ -21,7 +21,7 @@
   width: 100%;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(186, 223, 219, 0.3);
   border-bottom-color: transparent;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -45,7 +45,7 @@
 
 .has-hero .header.scrolled {
   background-color: var(--color-white);
-  border-bottom-color: var(--color-gray-300);
+  border-bottom-color: var(--color-border);
 }
 
 .has-hero .header.scrolled .logo,
@@ -80,6 +80,20 @@
   font-size: var(--font-size-lg);
   color: var(--color-black);
   text-decoration: none;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-xs);
+  overflow: hidden;
+  max-height: 48px;
+  margin-bottom: calc(-1 * var(--spacing-sm));
+}
+
+.logo-image {
+  height: 108px;
+  width: 108px;
+  object-fit: contain;
+  flex-shrink: 0;
+  color: currentColor;
 }
 
 /* Navigation */
@@ -113,11 +127,11 @@
 }
 
 .header-actions .btn {
-  background-color: var(--color-purple);
+  background-color: var(--color-primary);
 }
 
 .header-actions .btn:hover {
-  background-color: #7c2cc5;
+  background-color: var(--color-primary-hover);
 }
 
 .header-actions i {
