@@ -94,12 +94,12 @@
 }
 
 .logo-svg {
-  height: 128px;
-  width: 128px;
+  height: 104px;
+  width: 104px;
   flex-shrink: 0;
   color: currentColor;
   display: block;
-  animation: rudder-steer 10s ease-in-out infinite;
+  animation: rudder-steer 15s ease-in-out infinite;
 }
 
 .logo-svg svg {

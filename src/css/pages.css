@@ -92,9 +92,7 @@
   left: 0;
   right: 0;
   z-index: 1;
-  background: var(--gradient-hero);
-  background-size: 100% 600px;
-  background-position: top;
+  background-color: var(--color-off-white);
   width: 100%;
   padding: var(--spacing-sm) var(--spacing-md);
   display: flex;
@@ -288,15 +286,16 @@
 .value-proposition {
   padding-top: 0;
   margin-top: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .proposition-container {
-  background: var(--gradient-hero);
-  background-size: 100% 600px;
-  background-position: bottom;
+  background-color: var(--color-off-white);
   padding: var(--spacing-lg) var(--spacing-md);
   margin: 0;
   text-align: center;
+  border-radius: 0 0 16px 16px;
 }
 
 .proposition-container h2 {
@@ -316,7 +315,6 @@
     max-width: 1000px;
     margin: 0 auto;
     padding: var(--spacing-xl) var(--spacing-xl);
-    border-radius: 0 0 16px 16px;
   }
 }
 
