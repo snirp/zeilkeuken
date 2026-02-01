@@ -13,7 +13,8 @@
   --color-primary-hover: #ffbdbd; /* Light coral */
   --color-secondary: #badfdb; /* Soft mint */
   --color-secondary-hover: #a5d4cf; /* Darker mint */
-  --color-earth: #5e5243; /* Darker earth/brown tone */
+  --color-earth: #564d42; /* Darker earth/brown tone */
+  --color-earth-dark: #423c37; /* Very dark earth for footer */
 
   /* Neutral tones */
   --color-border: #e8e0c8;
@@ -76,6 +77,10 @@ body {
 /* Layout */
 .header,
 .section,
+main {
+  margin-bottom: var(--spacing-xl);
+}
+
 .footer,
 .hero-section {
   max-width: 100%;
@@ -100,6 +105,8 @@ body {
   .footer,
   .hero-section {
     max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .section {
