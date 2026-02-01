@@ -2,69 +2,43 @@
    COMPONENTS.CSS - Reusable UI Components
    ========================================================================== */
 
-/* Header */
+/* Header - Persistent Frosted Glass */
 .header {
   position: sticky;
   top: 0;
-  background-color: var(--color-white);
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
   z-index: 100;
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease;
   max-width: 100% !important; /* Override container max-width for full-width header */
 }
 
-/* Transparent header overlay for hero pages */
+/* Fixed positioning for hero pages */
 .has-hero .header {
   position: fixed;
   width: 100%;
   left: 0;
   right: 0;
-  background-color: rgba(186, 223, 219, 0.3);
-  border-bottom-color: transparent;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
-.has-hero .header .logo,
-.has-hero .header .nav-link {
-  color: var(--color-white);
-}
-
-.has-hero .header .nav-link:hover,
-.has-hero .header .nav-link.active {
-  color: var(--color-white);
-  opacity: 0.9;
-}
-
-.has-hero .header .header-actions i,
-.has-hero .header .menu-toggle i {
-  stroke: var(--color-white);
-}
-
-.has-hero .header.scrolled {
-  background-color: var(--color-white);
-  border-bottom-color: var(--color-border);
-}
-
-.has-hero .header.scrolled .logo,
-.has-hero .header.scrolled .nav-link {
+/* Black text and icons for all pages */
+.header .logo,
+.header .nav-link {
   color: var(--color-black);
 }
 
-.has-hero .header.scrolled .nav-link {
+.header .nav-link {
   color: var(--color-gray-700);
 }
 
-.has-hero .header.scrolled .nav-link:hover,
-.has-hero .header.scrolled .nav-link.active {
+.header .nav-link:hover,
+.header .nav-link.active {
   color: var(--color-black);
-  opacity: 1;
 }
 
-.has-hero .header.scrolled .header-actions i,
-.has-hero .header.scrolled .menu-toggle i {
+.header .header-actions i,
+.header .menu-toggle i {
   stroke: var(--color-gray-700);
 }
 
@@ -346,7 +320,6 @@
 }
 
 .destination-card,
-.package-card,
 .testimonial-card {
   background: var(--color-white);
   border: 1px solid var(--color-gray-200);
@@ -355,6 +328,31 @@
   transition:
     box-shadow 0.2s ease,
     transform 0.2s ease;
+}
+
+.package-card {
+  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 4px;
+  padding: var(--spacing-md);
+  position: relative;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.package-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #badfdb 0%, #ffa4a4 100%);
+  border-radius: 4px 4px 0 0;
 }
 
 .package-card-link {
@@ -366,8 +364,10 @@
 
 .package-card-link:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-color: var(--color-gray-300);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.12),
+    0 8px 24px rgba(0, 0, 0, 0.08);
+  border-color: var(--color-gray-400);
 }
 
 .package-card-link .package-cta {
@@ -375,6 +375,13 @@
   align-self: flex-end;
   margin-top: auto;
   padding-top: var(--spacing-md);
+  color: #2d9e91;
+  font-weight: 600;
+}
+
+.package-card-link:hover .package-cta {
+  color: #1f7e73;
+  text-decoration: underline;
 }
 
 .destination-card h3,

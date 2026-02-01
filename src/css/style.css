@@ -68,7 +68,7 @@ body {
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   font-size: var(--font-size-base);
-  line-height: 1.6;
+  line-height: 1.8;
   color: var(--color-black);
   background-color: var(--color-white);
 }
@@ -289,22 +289,11 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0;
-  margin-left: calc(-1 * var(--spacing-md));
-  margin-right: calc(-1 * var(--spacing-md));
 }
 
 @media (min-width: 768px) {
   .split-layout {
     grid-template-columns: repeat(2, 1fr);
-    margin-left: calc(-1 * var(--spacing-lg));
-    margin-right: calc(-1 * var(--spacing-lg));
-  }
-}
-
-@media (min-width: 1024px) {
-  .split-layout {
-    margin-left: calc(-1 * var(--spacing-xl));
-    margin-right: calc(-1 * var(--spacing-xl));
   }
 }
 
@@ -344,12 +333,13 @@ body {
 
 /* Links */
 .link {
-  color: var(--color-purple);
+  color: #2d9e91;
   text-decoration: none;
   font-weight: 600;
 }
 
 .link:hover {
+  color: #1f7e73;
   text-decoration: underline;
 }
 
