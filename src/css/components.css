@@ -82,24 +82,45 @@
   color: var(--color-black);
   text-decoration: none;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--spacing-xs);
   overflow: hidden;
   max-height: 48px;
-  margin-bottom: calc(-1 * var(--spacing-sm));
+}
+
+@media (min-width: 768px) {
+  .logo {
+    align-items: flex-start;
+    margin-bottom: calc(-1 * var(--spacing-sm));
+  }
 }
 
 .logo-text {
-  margin-left: -12px;
+  margin-left: -4px;
+}
+
+@media (min-width: 768px) {
+  .logo-text {
+    margin-left: -12px;
+  }
 }
 
 .logo-svg {
-  height: 104px;
-  width: 104px;
+  height: 80px;
+  width: 80px;
   flex-shrink: 0;
   color: currentColor;
   display: block;
   animation: rudder-steer 15s ease-in-out infinite;
+  margin-top: 40px;
+}
+
+@media (min-width: 768px) {
+  .logo-svg {
+    height: 104px;
+    width: 104px;
+    margin-top: 0;
+  }
 }
 
 .logo-svg svg {
