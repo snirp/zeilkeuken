@@ -106,24 +106,25 @@ layout: layouts/base.njk
 
 <!-- Food Experience -->
 <section id="food" class="section food-experience">
+  <figure class="food-image">
+    <img
+      src="/images/barbecue.jpg"
+      alt="Chef bereidt vers eten op de barbecue aan boord"
+      loading="lazy"
+    />
+  </figure>
+  
   <div class="split-layout">
     <div class="split-title">
       <h2 data-content-id="food-title">Live koken op het water</h2>
     </div>
     <div class="split-content">
-      <figure class="food-image">
-        <img
-          src="/images/barbecue.jpg"
-          alt="Chef bereidt vers eten op de barbecue aan boord"
-          loading="lazy"
-        />
-      </figure>
       <p data-content-id="food-content">
         We bereiden vis van lokale vissers en groenten van Waterlandse boeren. Alles wordt vers aan
         boord klaargemaakt, met het ritme van de golven als achtergrondmuziek. Geen haast, geen
         voorgerechten uit de koeling. Gewoon eerlijk eten, met aandacht gemaakt.
       </p>
-      <a href="/keuken/" class="text-link" data-content-id="food-read-more">Meer over onze keuken →</a>
+      <a href="/keuken/" class="btn btn-md btn-secondary" data-content-id="food-read-more">Meer over onze keuken →</a>
     </div>
   </div>
 </section>
@@ -157,7 +158,17 @@ layout: layouts/base.njk
 
 <!-- Packages -->
 <section id="packages" class="section packages">
-  <h2 data-content-id="packages-title">Arrangementen</h2>
+  <div class="split-layout">
+    <div class="split-title">
+      <h2 data-content-id="packages-title">Arrangementen</h2>
+    </div>
+    <div class="split-content">
+      <p data-content-id="packages-intro">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      </p>
+    </div>
+  </div>
+
   <p class="package-footnote" data-content-id="packages-footnote">
     Prijzen zijn afhankelijk van groepsgrootte, duur en gekozen opties.
   </p>
@@ -206,36 +217,51 @@ layout: layouts/base.njk
       <span class="link package-cta">Details →</span>
     </a>
     {% endif %} {% endfor %}
-  </div>
 
-  <div class="custom-package-cta">
-    <div class="custom-package-content">
-      {% for pkg in packages %} {% if pkg.id == "flexibel" %}
-      <h3>{{ pkg.content.name }}</h3>
-      <p>{{ pkg.content.shortDescription }}</p>
-      {% endif %} {% endfor %}
-      <ul class="custom-package-features">
-        <li>Vrije keuze in vaartijd, duur en route</li>
-        <li>Menu volledig op maat en budget</li>
-        <li>Ceremonie, receptie of presentatiemogelijkheden</li>
-      </ul>
-      <a href="/offerte/" class="btn btn-md">Vraag vrijblijvend offerte aan →</a>
+    <div class="custom-package-cta">
+      <div class="custom-package-header">
+        {% for pkg in packages %} {% if pkg.id == "flexibel" %}
+        <h3>{{ pkg.content.name }}</h3>
+        {% endif %} {% endfor %}
+        <a href="/offerte/" class="btn btn-sm">Offerte aanvragen</a>
+      </div>
+      <div class="custom-package-content">
+        <div class="custom-package-text">
+          {% for pkg in packages %} {% if pkg.id == "flexibel" %}
+          <p>{{ pkg.content.shortDescription }}</p>
+          {% endif %} {% endfor %}
+        </div>
+        <ul class="custom-package-features">
+          <li>Vrije keuze in vaartijd, duur en route</li>
+          <li>Menu volledig op maat en budget</li>
+          <li>Ceremonie, receptie of presentatiemogelijkheden</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- Differentiation -->
 <section id="why" class="section differentiation">
-  <h2 data-content-id="differentiation-title">Waarom De Zeilkeuken</h2>
-  <div data-content-id="differentiation-content">
-    <p>
-      De Zeilkeuken biedt meer dan een vaartocht: het is een complete beleving op het water. U vaart
-      met een karaktervol, historisch schip en geniet tegelijk van hoogwaardige, vers bereide
-      gerechten aan boord. Persoonlijke aandacht, flexibiliteit en een ontspannen sfeer staan
-      centraal. Of het nu gaat om een zakelijke bijeenkomst, een viering of een dag uit met
-      vrienden: bij De Zeilkeuken komen varen, goed eten en samen genieten op een unieke manier
-      samen.
-    </p>
+  <div class="split-layout">
+    <div class="split-title">
+      <h2 data-content-id="differentiation-title">Waarom De Zeilkeuken</h2>
+    </div>
+    <div class="split-content">
+      <div data-content-id="differentiation-content">
+        <p>
+          De Zeilkeuken biedt meer dan een vaartocht: het is een complete beleving op het water. U vaart
+          met een karaktervol, historisch schip en geniet tegelijk van hoogwaardige, vers bereide
+          gerechten aan boord. Persoonlijke aandacht, flexibiliteit en een ontspannen sfeer staan
+          centraal. Of het nu gaat om een zakelijke bijeenkomst, een viering of een dag uit met
+          vrienden: bij De Zeilkeuken komen varen, goed eten en samen genieten op een unieke manier
+          samen.
+        </p>
+      </div>
+      <p data-content-id="differentiation-paragraph-2">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      </p>
+    </div>
   </div>
 </section>
 

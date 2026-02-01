@@ -118,6 +118,8 @@
 
   .split-content {
     padding-right: var(--spacing-xl);
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   .split-content p {
@@ -157,7 +159,7 @@
 
 /* Destinations Section */
 .destinations .split-title h2 {
-  font-size: calc(var(--font-size-3xl) * 2);
+  font-size: calc(var(--font-size-3xl) * 1.75);
   line-height: 1.1;
 }
 
@@ -196,8 +198,8 @@
 
 /* Food Section */
 .food-image {
-  margin: 0 0 var(--spacing-md);
-  width: 100%;
+  margin: 0 calc(-1 * var(--spacing-md)) var(--spacing-md);
+  width: calc(100% + 2 * var(--spacing-md));
 }
 
 .food-image img {
@@ -206,11 +208,36 @@
   display: block;
   object-fit: cover;
   max-height: 500px;
-  border-radius: 4px;
 }
 
 .food-experience .split-title h2 {
-  font-size: calc(var(--font-size-3xl) * 2);
+  font-size: calc(var(--font-size-3xl) * 1.75);
+  line-height: 1.1;
+}
+
+@media (min-width: 768px) {
+  .food-image {
+    margin: 0 calc(-1 * var(--spacing-lg)) var(--spacing-lg);
+    width: calc(100% + 2 * var(--spacing-lg));
+  }
+}
+
+@media (min-width: 1024px) {
+  .food-image {
+    margin: 0 calc(-1 * var(--spacing-xl)) var(--spacing-xl);
+    width: calc(100% + 2 * var(--spacing-xl));
+  }
+}
+
+/* Packages Section */
+.packages .split-title h2 {
+  font-size: calc(var(--font-size-3xl) * 1.75);
+  line-height: 1.1;
+}
+
+/* Differentiation Section */
+.differentiation .split-title h2 {
+  font-size: calc(var(--font-size-3xl) * 1.75);
   line-height: 1.1;
 }
 
@@ -386,51 +413,80 @@
 
 /* Custom Package CTA */
 .custom-package-cta {
-  margin-top: var(--spacing-xl);
   background-color: var(--color-gray-100);
   border-radius: 8px;
-  padding: var(--spacing-lg);
-  text-align: center;
+  padding: var(--spacing-md);
 }
 
 @media (min-width: 768px) {
   .custom-package-cta {
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
   }
 }
 
-.custom-package-content h3 {
-  font-size: var(--font-size-xl);
-  font-weight: 700;
-  color: var(--color-black);
-  margin-bottom: var(--spacing-sm);
+@media (min-width: 1024px) {
+  .package-cards.grid-3 .custom-package-cta {
+    grid-column: 1 / -1; /* Span full width */
+  }
 }
 
-.custom-package-content p {
+.custom-package-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: var(--spacing-md);
+  gap: var(--spacing-md);
+}
+
+.custom-package-header h3 {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-black);
+  margin: 0;
+}
+
+.custom-package-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .custom-package-content {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+  }
+}
+
+.custom-package-text p {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+  margin: 0;
 }
 
 .custom-package-features {
   list-style: none;
   padding: 0;
-  margin: var(--spacing-md) 0;
-  text-align: left;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0;
 }
 
 .custom-package-features li {
   padding-left: var(--spacing-md);
   position: relative;
   margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+}
+
+.custom-package-features li:last-child {
+  margin-bottom: 0;
 }
 
 .custom-package-features li:before {
   content: '✓';
   position: absolute;
   left: 0;
-  color: var(--color-purple);
+  color: var(--color-gray-500);
   font-weight: 700;
 }
 
@@ -1251,9 +1307,11 @@
 
 /* Sustainability Section */
 .sustainability-section {
-  background-color: var(--color-secondary);
-  color: var(--color-black);
+  background-color: var(--color-earth);
+  color: var(--color-white);
   padding: var(--spacing-xl) var(--spacing-md);
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1278,13 +1336,13 @@
 }
 
 .sustainability-section h2 {
-  color: var(--color-black);
+  color: var(--color-white);
   margin-bottom: var(--spacing-sm);
   text-align: center;
 }
 
 .sustainability-section p {
-  color: var(--color-black);
+  color: var(--color-white);
   margin-bottom: var(--spacing-md);
   text-align: center;
 }
@@ -1308,16 +1366,16 @@
 }
 
 .sustainability-list li {
-  color: var(--color-black);
+  color: var(--color-white);
   font-size: var(--font-size-base);
 }
 
 .sustainability-section .text-link {
-  color: var(--color-black);
+  color: var(--color-white);
   display: inline-block;
   margin-top: var(--spacing-md);
 }
 
 .sustainability-section .text-link:hover {
-  color: var(--color-gray-700);
+  color: var(--color-gray-200);
 }
