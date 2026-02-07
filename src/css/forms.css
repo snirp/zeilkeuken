@@ -500,55 +500,6 @@
   margin-bottom: 0;
 }
 
-/* Upgrade Options */
-.upgrade-option {
-  display: block;
-  cursor: pointer;
-}
-
-.upgrade-option input[type='checkbox'] {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.upgrade-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md);
-}
-
-.upgrade-option:hover .upgrade-card {
-  border-color: var(--color-gray-400);
-}
-
-.upgrade-option input[type='checkbox']:checked + .upgrade-card {
-  border-color: var(--color-purple);
-  background-color: rgba(147, 51, 234, 0.05);
-}
-
-.upgrade-card strong {
-  display: block;
-  font-weight: 600;
-  color: var(--color-gray-800);
-  margin-bottom: 4px;
-}
-
-.upgrade-card p {
-  font-size: var(--font-size-sm);
-  color: var(--color-gray-600);
-  margin: 0;
-}
-
-.upgrade-price {
-  font-size: var(--font-size-lg);
-  font-weight: 700;
-  color: var(--color-purple);
-  white-space: nowrap;
-}
-
 /* Price Calculator */
 .price-calculator {
   background-color: var(--color-gray-100);
@@ -605,12 +556,6 @@
 .form-actions {
   text-align: center;
   padding: var(--spacing-lg) 0;
-}
-
-.form-reassurance {
-  margin-top: var(--spacing-md);
-  font-size: var(--font-size-sm);
-  color: var(--color-gray-600);
 }
 
 /* ==========================================================================

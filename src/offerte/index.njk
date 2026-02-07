@@ -587,7 +587,7 @@ addHours(pkg.defaults.duration) %}
     <div>{{ pkg.content.longDescription | markdown | safe }}</div>
 
     <h3>Wat is inbegrepen</h3>
-    <ul>
+    <ul class="list-check">
       {% for highlight in pkg.content.highlights %}
       <li>{{ highlight }}</li>
       {% endfor %}
@@ -608,7 +608,7 @@ pkg.defaults.departure | addHours(pkg.defaults.duration) %}
     <div>{{ pkg.content.longDescription | markdown | safe }}</div>
 
     <h3>Wat is inbegrepen</h3>
-    <ul>
+    <ul class="list-check">
       {% for highlight in pkg.content.highlights %}
       <li>{{ highlight }}</li>
       {% endfor %}
@@ -629,7 +629,7 @@ pkg.defaults.departure | addHours(pkg.defaults.duration) %}
     <div>{{ pkg.content.longDescription | markdown | safe }}</div>
 
     <h3>Wat is inbegrepen</h3>
-    <ul>
+    <ul class="list-check">
       {% for highlight in pkg.content.highlights %}
       <li>{{ highlight }}</li>
       {% endfor %}
@@ -645,7 +645,7 @@ pkg.defaults.departure | addHours(pkg.defaults.duration) %}
 
     <h3>Volledig naar jouw wensen</h3>
     <div>{{ pkg.content.longDescription | markdown | safe }}</div>
-    <ul>
+    <ul class="list-check">
       {% for highlight in pkg.content.highlights %}
       <li>{{ highlight }}</li>
       {% endfor %}

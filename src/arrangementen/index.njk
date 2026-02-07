@@ -36,7 +36,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
 <!-- Package 1: Dagtocht -->
 {% set dagtocht = packages | selectattr("id", "equalto", "dagtocht") | first %}
 <section id="dagtocht" class="section package-detail">
-  <div class="package-hero">
+  <div class="package-hero bleed-both">
     <img
       src="/images/placeholder-dagtocht.jpg"
       alt="Dagtocht arrangement"
@@ -76,7 +76,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
 
     <div class="package-inclusions">
       <h3 class="sr-only">Wat krijg je?</h3>
-      <ul>
+      <ul class="list-check">
         {% for highlight in dagtocht.content.highlights %}
         <li>{{ highlight }}</li>
         {% endfor %}
@@ -87,7 +87,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
 
 <!-- Package 2: Lange vaart -->
 <section id="langevaart" class="section package-detail">
-  <div class="package-hero">
+  <div class="package-hero bleed-both">
     <img
       src="/images/placeholder-langevaart.jpg"
       alt="Lange vaart arrangement"
@@ -176,7 +176,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
 
 <!-- Package 3: Dinervaart -->
 <section id="dinervaart" class="section package-detail">
-  <div class="package-hero">
+  <div class="package-hero bleed-both">
     <img
       src="/images/placeholder-dinervaart.jpg"
       alt="Dinervaart arrangement"
@@ -262,7 +262,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
 
     <div class="package-inclusions">
       <h3 class="sr-only" data-content-id="package-diner-inclusions-title">Wat krijg je?</h3>
-      <ul data-content-id="package-diner-inclusions">
+      <ul class="list-check" data-content-id="package-diner-inclusions">
         <li>3,5 uur avondzeilen</li>
         <li>Driegangendiner, live bereid</li>
         <li>Aperitief en amuses bij aankomst</li>
@@ -280,7 +280,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
     Maak uw arrangement compleet met één van deze opties:
   </p>
 
-  <div class="extras-grid">
+  <div class="extras-grid grid-3">
     <div class="extra-item">
       <h3 data-content-id="packages-extra-dj-title">DJ</h3>
       <p data-content-id="packages-extra-dj-description">

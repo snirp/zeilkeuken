@@ -158,11 +158,17 @@ Load order in base.njk: style → components → forms → pages
 **Key principle:** Use utility classes for common patterns, component classes for unique UI
 
 **Utilities available:**
-- Buttons: Base class with size modifiers (sm, md, lg, full)
-- Cards: Base card with interactive variant
-- Layouts: Grid utilities (grid-2, grid-3, grid-4) and flex containers
-- Badges: Badge component with badge-group wrapper
-- Links: Styled links for text and standalone links
+- **Buttons:** Base class with size modifiers (sm, md, lg, full)
+- **Cards:** Base card with interactive variant
+- **Layouts:** Grid utilities (grid-2, grid-3, grid-4) and flex containers (flex-col, flex-col-sm)
+- **Grids:** grid-2 (1→2 cols), grid-3 (1→3 cols), grid-4 (2→4 cols)
+- **Gaps:** gap-xs, gap-sm, gap-md, gap-lg, gap-xl
+- **Edge Bleeds:** bleed-left, bleed-right, bleed-both (breakout of container padding)
+- **Width Constraints:** max-w-md (600px), max-w-lg (800px), max-w-xl (1000px)
+- **Typography:** text-sm, text-base, text-lg, text-xl, text-2xl, text-3xl
+- **Lists:** list-check (checkmark list pattern for feature lists)
+- **Badges:** Badge component with badge-group wrapper
+- **Links:** Styled links (.link) for standalone links, (.text-link) for inline text links
 
 **When to add new CSS:**
 1. Check if utility classes can solve the need
