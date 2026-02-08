@@ -409,6 +409,22 @@
 }
 
 /* Testimonials */
+.testimonials {
+  padding-bottom: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .testimonials {
+    padding-bottom: var(--spacing-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .testimonials {
+    padding-bottom: var(--spacing-xl);
+  }
+}
+
 .testimonial-card {
   display: flex;
   gap: var(--spacing-sm);

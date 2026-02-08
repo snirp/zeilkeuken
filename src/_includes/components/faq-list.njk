@@ -1,0 +1,18 @@
+{# 
+  FAQ List Component
+  Parameters:
+  - page: the page tag to filter FAQs (e.g., "home", "packages", "quote", "kitchen")
+  - titleId: optional content-id for the h2 title
+  - title: optional title text (defaults to "Veelgestelde Vragen")
+#}
+{% set pageTag = page | default("general") %}
+{% set faqTitle = title | default("Veelgestelde Vragen") %}
+
+<div class="faq-list">
+  {% for faq in faqs.items | filterFaqs(pageTag) %}
+  <details class="faq-item">
+    <summary data-content-id="faq-{{ faq.id }}-q">{{ faq.question }}</summary>
+    <p data-content-id="faq-{{ faq.id }}-a">{{ faq.answer | safe }}</p>
+  </details>
+  {% endfor %}
+</div>

@@ -15,6 +15,10 @@ layout: layouts/base.njk
       met familie, vrienden of collega's tot 40 personen.
       Goed eten, open water, échte gesprekken.
     </p>
+    <div class="hero-ctas">
+      <a href="/offerte/" class="btn btn-lg" data-content-id="hero-cta-primary">Boek nu</a>
+      <a href="/arrangementen/" class="btn btn-lg btn-secondary" data-content-id="hero-cta-secondary">Arrangementen</a>
+    </div>
   </div>
   <div class="scroll-hint" aria-label="Scroll voor meer">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -164,19 +168,19 @@ layout: layouts/base.njk
     <h2 data-content-id="destinations-title">Zeilen op het Markermeer</h2>
     <div class="text-content">
       <p data-content-id="destinations-intro">
-        We varen over het Markermeer naar historische plekken als Fort Pampus, Marken en Volendam. Wie wil helpen met de zeilen is welkom—onze bemanning legt graag uit hoe het werkt. Liever rustig meedeinen? Ook goed. Het tempo ligt laag, de zeilen doen het werk, en tussen het varen door leggen we aan voor een wandeling of lunch. Wind en water bepalen de exacte route, maar de bestemming staat vast: een dag waarop je even weg bent van alles.
+        We varen over het Markermeer naar historische plekken als Pampus, Marken en Volendam. Wie wil helpen met de zeilen is welkom—onze bemanning legt graag uit hoe het werkt. Liever rustig meedeinen? Ook goed. Het tempo ligt laag, de zeilen doen het werk, en tussen het varen door leggen we aan voor een wandeling of lunch. Wind en water bepalen de exacte route, maar de bestemming staat vast: een dag waarop je even weg bent van alles.
       </p>
     </div>
 
     <div class="map-container">
       <div class="destination-cards">
         <a href="/ervaar/#pampus" class="card card-hover card-interactive" data-content-id="destinations-card-1">
-          <h3>Pampus</h3>
+          <h3>Fort Pampus</h3>
           <div class="badge-group">
             <span class="badge">45 min</span>
             <span class="badge">Forteiland</span>
           </div>
-          <p class="destination-description">Eens het slot op de stelling van Amsterdam en nu een museum. Verken de historie van het eiland, of neem hier een verkoelende duik.</p>
+          <p class="destination-description">Eens het slot op de stelling van Amsterdam en nu een museum. Verken de historie van het eiland, of neem een verfrissende duik.</p>
         </a>
 
         <a href="/ervaar/#volendam" class="card card-hover card-interactive" data-content-id="destinations-card-2">
@@ -186,8 +190,7 @@ layout: layouts/base.njk
             <span class="badge">Pittoresk</span>
           </div>
           <p class="destination-description">
-            Loop over "de" dijk van het vissersdorp en de geboortegrond van de palingsound. Of ga op
-            de foto in Volendamse klederdracht.
+            De geboortegrond van de palingsound. Dit vissersdorp is beroemd om "de" dijk.
           </p>
         </a>
 
@@ -198,8 +201,7 @@ layout: layouts/base.njk
             <span class="badge">Vissersdorp</span>
           </div>
           <p class="destination-description">
-            Aanleggen in de haven van het voormalig eiland, wandelen tussen de houten huisjes gebouwd
-            op palen
+            Verlies jezelf in de historie van dit voormalige eiland, met haar authentieke houten huisjes.
           </p>
         </a>
 
@@ -218,25 +220,27 @@ layout: layouts/base.njk
 <section id="food" class="section section-white food-experience">
   <div class="section-container">
     <h2 data-content-id="food-title">Verse producten aan boord</h2>
-    <p data-content-id="food-content">
-      Als 17-jarig maatje op een charterschip leerde schipper Nick één ding: een geslaagde zeiltocht 
-      draait om gastvrijheid. Jaren later, na de zeevaartschool en restaurantkeukens, kocht hij De Saffier. 
-      Niet om zeiltochten te verkopen, maar om te doen wat nergens anders kan: vis halen bij de vissers 
-      in Volendam, groenten ophalen bij boeren die hij kent, en het aan boord klaarma­ken. Je ruikt 
-      de rook voor de wind komt, proeft wanneer iets écht vers is. Dat is de basis—en we stemmen 
-      het menu en de setting af op jouw groep.
-    </p>
-    <a href="/keuken/" class="btn btn-md btn-secondary" data-content-id="food-read-more">Menu's, leveranciers en werkwijze →</a>
+    <div class="food-intro">
+      <p data-content-id="food-content">
+        Als 17-jarig maatje op een charterschip leerde schipper Nick één ding: een geslaagde zeiltocht 
+        draait om gastvrijheid. Jaren later, na de zeevaartschool en restaurantkeukens, kocht hij De Saffier. 
+        Niet om zeiltochten te verkopen, maar om te doen wat nergens anders kan: vis halen bij de vissers 
+        in Volendam, groenten ophalen bij boeren die hij kent, en het aan boord klaarma­ken. Je ruikt 
+        de rook voor de wind komt, proeft wanneer iets écht vers is. Dat is de basis—en we stemmen 
+        het menu en de setting af op jouw groep.
+      </p>
+      <a href="/keuken/" class="btn btn-md btn-secondary" data-content-id="food-read-more">Menu's, leveranciers en werkwijze →</a>
+    </div>
   </div>
   <div class="food-images">
     <img
-      src="/images/barbecue.jpg"
+      src="/images/food-barbecue.jpg"
       alt="Chef bereidt vers eten op de barbecue aan boord"
       loading="lazy"
       data-content-id="food-image-1"
     />
     <img
-      src="/images/barbecue.jpg"
+      src="/images/food-people.jpg"
       alt="Vers bereide gerechten aan boord"
       loading="lazy"
       data-content-id="food-image-2"
@@ -368,6 +372,10 @@ layout: layouts/base.njk
         </ul>
       </div>
     </div>
+    
+    <div class="section-cta">
+      <a href="/offerte/" class="btn btn-lg" data-content-id="why-us-cta">Plan je zeiltocht →</a>
+    </div>
   </div>
 </section>
 
@@ -391,5 +399,14 @@ layout: layouts/base.njk
         </p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="section section-white">
+  <div class="section-container">
+    <h2 data-content-id="home-faq-title">Veelgestelde Vragen</h2>
+    {% set page = "home" %}
+    {% include "components/faq-list.njk" %}
   </div>
 </section>

@@ -382,81 +382,8 @@ title: De Zeilkeuken - Vers Bereid, Aan Boord
 <!-- FAQ Section -->
 <section class="section faq-section">
   <h2 data-content-id="faq-title">Veelgestelde Vragen (Zakelijk)</h2>
-
-  <details class="faq-item">
-    <summary data-content-id="faq-1-question">
-      Kunnen jullie 40 verschillende dieetwensen aan?
-    </summary>
-    <p data-content-id="faq-1-answer">
-      Ja. Tot nu toe is ons record 18 verschillende beperkingen in één groep. Het kost extra
-      voorbereiding, maar het kan.
-    </p>
-  </details>
-
-  <details class="faq-item">
-    <summary data-content-id="faq-2-question">Wat als mijn agenda uitloopt?</summary>
-    <p data-content-id="faq-2-answer">
-      We houden rekening met 30 minuten flexibiliteit. Daarna kan eten koud worden—we communiceren
-      tijdens de dag als timing kritisch wordt.
-    </p>
-  </details>
-
-  <details class="faq-item">
-    <summary data-content-id="faq-3-question">Serveren jullie buffet of aan tafel?</summary>
-    <p data-content-id="faq-3-answer">
-      Beide mogelijk. Buffet werkt beter voor networking, shared dining voor intimiteit. Jij
-      beslist.
-    </p>
-  </details>
-
-  <details class="faq-item">
-    <summary data-content-id="faq-4-question">
-      Kan ik het menu 3 maanden van tevoren vastleggen?
-    </summary>
-    <p data-content-id="faq-4-answer">
-      Ja. We sturen een schriftelijke bevestiging. Wijzigingen mogelijk tot 2 weken voor vertrek.
-    </p>
-  </details>
-
-  <details class="faq-item">
-    <summary data-content-id="faq-5-question">Wat bij slecht weer?</summary>
-    <p data-content-id="faq-5-answer">
-      Dekservering mogelijk tot windkracht 6 en lichte regen. Bij zwaarder weer serveren we
-      binnen—menu blijft hetzelfde.
-    </p>
-  </details>
-
-  <details class="faq-item">
-    <summary data-content-id="faq-6-question">
-      Kunnen jullie stil serveren tijdens presentaties?
-    </summary>
-    <p data-content-id="faq-6-answer">
-      Ja. Crew is getraind om tijdens zakelijke sessies minimaal aanwezig te zijn. Koffie wordt
-      vooraf klaargezet, opruimen gebeurt in pauzes.
-    </p>
-  </details>
-
-  <details class="faq-item">
-    <summary data-content-id="faq-7-question">
-      Wat als iemand een allergische reactie krijgt?
-    </summary>
-    <p data-content-id="faq-7-answer">
-      EpiPen en EHBO aan boord. Crew is BHV-gecertificeerd. Bij bekende ernstige allergieën
-      overleggen we vooraf over extra maatregelen.
-    </p>
-  </details>
-
-  <details class="faq-item">
-    <summary data-content-id="faq-8-question">Annuleringsbeleid?</summary>
-    <div data-content-id="faq-8-answer">
-      <p>
-        Tot 4 weken: gratis annuleren<br />
-        2-4 weken: 50% kosten<br />
-        &lt;2 weken: 100% kosten<br />
-        (Weersomstandigheden: altijd verplaatsen mogelijk)
-      </p>
-    </div>
-  </details>
+  {% set page = "kitchen" %}
+  {% include "components/faq-list.njk" %}
 </section>
 
 <!-- Sample Menu Section -->
