@@ -724,3 +724,54 @@
     margin: auto;
   }
 }
+
+/* ==========================================================================
+   Scroll Reveal Animations
+   ========================================================================== */
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered delays for sequential reveals */
+.scroll-reveal:nth-child(1) {
+  transition-delay: 0s;
+}
+
+.scroll-reveal:nth-child(2) {
+  transition-delay: 0.1s;
+}
+
+.scroll-reveal:nth-child(3) {
+  transition-delay: 0.2s;
+}
+
+.scroll-reveal:nth-child(4) {
+  transition-delay: 0.3s;
+}
+
+.scroll-reveal:nth-child(5) {
+  transition-delay: 0.4s;
+}
+
+.scroll-reveal:nth-child(6) {
+  transition-delay: 0.5s;
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
