@@ -2,24 +2,26 @@
    COMPONENTS.CSS - Reusable UI Components
    ========================================================================== */
 
-/* Header - Persistent Frosted Glass */
+/* Header - Pill Shape */
 .header {
   position: sticky;
-  top: 0;
-  background-color: rgba(255, 255, 255, 0.7);
+  top: var(--spacing-sm);
+  background-color: rgba(229, 229, 229, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--color-border);
+  border-radius: 100px;
   z-index: 100;
-  max-width: 100% !important; /* Override container max-width for full-width header */
+  max-width: 1200px;
+  width: calc(100% - var(--spacing-md) * 2);
+  margin: 0 auto;
 }
 
 /* Fixed positioning for hero pages */
 .has-hero .header {
   position: fixed;
-  width: 100%;
-  left: 0;
-  right: 0;
+  top: var(--spacing-sm);
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* Black text and icons for all pages */
@@ -46,31 +48,28 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-sm) var(--spacing-md);
-  padding-left: 6px;
+  height: 56px;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
 }
 
 .logo {
   font-weight: 700;
-  font-size: var(--font-size-lg);
+  font-size: 18px;
   color: var(--color-black);
   text-decoration: none;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--spacing-xs);
   overflow: hidden;
-  max-height: 48px;
-}
-
-@media (min-width: 768px) {
-  .logo {
-    align-items: flex-start;
-    margin-bottom: calc(-1 * var(--spacing-sm));
-  }
+  height: 100%;
 }
 
 .logo-text {
   margin-left: -4px;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -80,21 +79,13 @@
 }
 
 .logo-svg {
-  height: 80px;
-  width: 80px;
+  height: 104px;
+  width: 104px;
   flex-shrink: 0;
   color: currentColor;
   display: block;
   animation: rudder-steer 15s ease-in-out infinite;
-  margin-top: 40px;
-}
-
-@media (min-width: 768px) {
-  .logo-svg {
-    height: 104px;
-    width: 104px;
-    margin-top: 0;
-  }
+  margin-top: 10px;
 }
 
 .logo-svg svg {
@@ -268,17 +259,21 @@
   font-weight: 600;
 }
 
+@media (min-width: 768px) and (max-width: 900px) {
+  .nav-desktop {
+    gap: var(--spacing-sm);
+  }
+
+  .nav-link {
+    font-size: var(--font-size-sm);
+  }
+}
+
 @media (min-width: 768px) {
   .header-container {
     max-width: 1200px;
     margin: 0 auto;
     justify-content: space-between;
-    padding-left: var(--spacing-md);
-    padding-right: var(--spacing-md);
-  }
-
-  .logo {
-    font-size: var(--font-size-xl);
   }
 
   .nav-desktop {
