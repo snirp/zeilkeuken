@@ -10,7 +10,7 @@
 
   /* Primary & Secondary Colors */
   --color-primary: #f08080; /* Coral pink */
-  --color-primary-hover: #ffbdbd; /* Light coral */
+  --color-primary-hover: #d05050; /* Darker coral */
   --color-secondary: #badfdb; /* Soft mint */
   --color-secondary-hover: #a5d4cf; /* Darker mint */
   --color-earth: #423c37; /* Dark earth tone */
@@ -540,6 +540,10 @@ main {
   position: absolute;
   left: 0;
   font-weight: 700;
+}
+
+.section-dark .list-check li::before {
+  color: var(--color-secondary-hover);
 }
 
 /* Links */

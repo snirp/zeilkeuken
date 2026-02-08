@@ -53,12 +53,24 @@ layout: layouts/base.njk
     </div>
   </div>
   <div class="ship-gallery">
-    <img src="/images/barbecue.jpg" alt="Scheepsdetail 1" loading="lazy" data-content-id="ship-gallery-1" class="ship-gallery-hero" data-gallery-index="0" />
-    <img src="/images/barbecue.jpg" alt="Scheepsdetail 2" loading="lazy" data-content-id="ship-gallery-2" data-gallery-index="1" />
-    <img src="/images/barbecue.jpg" alt="Scheepsdetail 3" loading="lazy" data-content-id="ship-gallery-3" data-gallery-index="2" />
-    <img src="/images/barbecue.jpg" alt="Scheepsdetail 4" loading="lazy" data-content-id="ship-gallery-4" class="ship-gallery-desktop" data-gallery-index="3" />
-    <img src="/images/barbecue.jpg" alt="Scheepsdetail 5" loading="lazy" data-content-id="ship-gallery-5" class="ship-gallery-desktop" data-gallery-index="4" />
-    <img src="/images/barbecue.jpg" alt="Scheepsdetail 6" loading="lazy" data-content-id="ship-gallery-6" class="ship-gallery-hidden" data-gallery-index="5" />
+    <div class="ship-gallery-item ship-gallery-hero">
+      <img src="/images/schip-zeilen.jpg" alt="De Saffier onder zeil op het IJsselmeer" loading="lazy" data-content-id="ship-gallery-1" data-gallery-index="0" />
+    </div>
+    <div class="ship-gallery-item">
+      <img src="/images/schip-katrol.jpg" alt="Detail van het zeiltuig" loading="lazy" data-content-id="ship-gallery-2" data-gallery-index="1" />
+    </div>
+    <div class="ship-gallery-item">
+      <img src="/images/schip-mensen.avif" alt="Gasten aan boord tijdens een zeiltocht" loading="lazy" data-content-id="ship-gallery-3" data-gallery-index="2" />
+    </div>
+    <div class="ship-gallery-item ship-gallery-desktop">
+      <img src="/images/schip-geheel.jpg" alt="Zijaanzicht van de historische Groninger Tjalk" loading="lazy" data-content-id="ship-gallery-4" data-gallery-index="3" />
+    </div>
+    <div class="ship-gallery-item ship-gallery-desktop">
+      <img src="/images/schip-mast.jpg" alt="Mast en tuigage van De Saffier" loading="lazy" data-content-id="ship-gallery-5" data-gallery-index="4" />
+    </div>
+    <div class="ship-gallery-item ship-gallery-hidden">
+      <img src="/images/schip-geheel.jpg" alt="De Saffier op het water" loading="lazy" data-content-id="ship-gallery-6" data-gallery-index="5" />
+    </div>
   </div>
 </section>
 
@@ -293,7 +305,7 @@ layout: layouts/base.njk
           {% for pkg in packages %} {% if pkg.id == "flexibel" %}
           <h3>{{ pkg.content.name }}</h3>
           {% endif %} {% endfor %}
-          <a href="/offerte/" class="btn btn-sm">Offerte aanvragen</a>
+          <a href="/offerte/" class="btn btn-sm">Bereken je prijs</a>
         </div>
         <div class="custom-package-content">
           <div class="custom-package-text">
