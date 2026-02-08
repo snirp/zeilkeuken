@@ -13,11 +13,12 @@
   --color-primary-hover: #ffbdbd; /* Light coral */
   --color-secondary: #badfdb; /* Soft mint */
   --color-secondary-hover: #a5d4cf; /* Darker mint */
-  --color-earth: #564d42; /* Darker earth/brown tone */
+  --color-earth: #423c37; /* Dark earth tone */
   --color-earth-dark: #423c37; /* Very dark earth for footer */
 
   /* Neutral tones */
   --color-border: #e8e0c8;
+  --color-gray-50: #fafafa;
   --color-gray-100: #f5f5f5;
   --color-gray-200: #e5e5e5;
   --color-gray-300: #d4d4d4;
@@ -230,8 +231,14 @@ main {
 .card {
   background-color: var(--color-white);
   border: 1px solid var(--color-gray-200);
-  border-radius: 4px;
+  border-radius: 8px;
   padding: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: var(--spacing-lg);
+  }
 }
 
 /* Card typography */
@@ -310,11 +317,12 @@ main {
 .badge {
   font-size: var(--font-size-sm);
   color: var(--color-gray-600);
-  background-color: var(--color-gray-100);
+  background-color: var(--color-gray-50);
   padding: 4px var(--spacing-xs);
   border-radius: 4px;
-  border: 1px solid var(--color-gray-300);
+  border: 1px solid var(--color-gray-200);
   display: inline-block;
+  font-weight: 500;
 }
 
 .badge-group {
