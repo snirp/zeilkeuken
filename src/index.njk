@@ -24,8 +24,8 @@ layout: layouts/base.njk
 </section>
 
 <!-- Value Proposition -->
-<section id="proposition" class="section value-proposition">
-  <div class="proposition-container">
+<section id="proposition" class="section section-white value-proposition">
+  <div class="section-container">
     <h2 data-content-id="proposition-title">Oud karakter, nieuwe wind</h2>
     <p data-content-id="proposition-content">
       Een kwartier vanaf Amsterdam vaar je weg van de dagelijkse drukte. 
@@ -41,225 +41,347 @@ layout: layouts/base.njk
   </div>
 </section>
 
+<!-- Ship Section -->
+<section id="ship" class="section section-dark ship-section">
+  <div class="section-container">
+    <h2 data-content-id="ship-title">Het Schip</h2>
+    <div class="ship-intro">
+      <p data-content-id="ship-intro">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      </p>
+      <a href="/schip/" class="btn btn-md btn-secondary" data-content-id="ship-read-more">Meer over ons schip →</a>
+    </div>
+  </div>
+  <div class="ship-gallery">
+    <img src="/images/barbecue.jpg" alt="Scheepsdetail 1" loading="lazy" data-content-id="ship-gallery-1" class="ship-gallery-hero" data-gallery-index="0" />
+    <img src="/images/barbecue.jpg" alt="Scheepsdetail 2" loading="lazy" data-content-id="ship-gallery-2" data-gallery-index="1" />
+    <img src="/images/barbecue.jpg" alt="Scheepsdetail 3" loading="lazy" data-content-id="ship-gallery-3" data-gallery-index="2" />
+    <img src="/images/barbecue.jpg" alt="Scheepsdetail 4" loading="lazy" data-content-id="ship-gallery-4" class="ship-gallery-desktop" data-gallery-index="3" />
+    <img src="/images/barbecue.jpg" alt="Scheepsdetail 5" loading="lazy" data-content-id="ship-gallery-5" class="ship-gallery-desktop" data-gallery-index="4" />
+    <img src="/images/barbecue.jpg" alt="Scheepsdetail 6" loading="lazy" data-content-id="ship-gallery-6" class="ship-gallery-hidden" data-gallery-index="5" />
+  </div>
+</section>
+
+<!-- Ship Gallery Lightbox -->
+<div class="ship-lightbox" id="ship-lightbox">
+  <button class="ship-lightbox-close" aria-label="Galerij sluiten">&times;</button>
+  <button class="ship-lightbox-nav ship-lightbox-prev" aria-label="Vorige foto">&lt;</button>
+  <button class="ship-lightbox-nav ship-lightbox-next" aria-label="Volgende foto">&gt;</button>
+  <img class="ship-lightbox-image" src="" alt="" />
+  <div class="ship-lightbox-counter">
+    <span id="ship-current">1</span> / <span id="ship-total">6</span>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const galleryImages = document.querySelectorAll('.ship-gallery img');
+    const lightbox = document.getElementById('ship-lightbox');
+    const lightboxImage = lightbox.querySelector('.ship-lightbox-image');
+    const closeBtn = lightbox.querySelector('.ship-lightbox-close');
+    const prevBtn = lightbox.querySelector('.ship-lightbox-prev');
+    const nextBtn = lightbox.querySelector('.ship-lightbox-next');
+    const currentEl = document.getElementById('ship-current');
+    const totalEl = document.getElementById('ship-total');
+
+    let currentIndex = 0;
+    const totalImages = galleryImages.length;
+
+    totalEl.textContent = totalImages;
+
+    function openLightbox(index) {
+      currentIndex = index;
+      updateLightboxImage();
+      lightbox.classList.add('ship-lightbox-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('ship-lightbox-open');
+      document.body.style.overflow = '';
+    }
+
+    function updateLightboxImage() {
+      const img = galleryImages[currentIndex];
+      lightboxImage.src = img.src;
+      lightboxImage.alt = img.alt;
+      currentEl.textContent = currentIndex + 1;
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % totalImages;
+      updateLightboxImage();
+    }
+
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+      updateLightboxImage();
+    }
+
+    // Event listeners
+    galleryImages.forEach((img, index) => {
+      img.style.cursor = 'pointer';
+      img.addEventListener('click', () => openLightbox(index));
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    prevBtn.addEventListener('click', showPrev);
+    nextBtn.addEventListener('click', showNext);
+
+    // Close on overlay click
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('ship-lightbox-open')) return;
+
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'ArrowLeft') showPrev();
+    });
+  })();
+</script>
+
 <!-- Destinations -->
-<section id="destinations" class="section destinations">
-  <h2 data-content-id="destinations-title">Onze Vaarroutes</h2>
-  <p data-content-id="destinations-intro">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-  </p>
-  <p data-content-id="destinations-paragraph-2">
-    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
-  </p>
+<section id="destinations" class="section section-white destinations">
+  <div class="section-container">
+    <h2 data-content-id="destinations-title">Onze Vaarroutes</h2>
+    <div class="text-content">
+      <p data-content-id="destinations-intro">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      </p>
+      <p data-content-id="destinations-paragraph-2">
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
+      </p>
+    </div>
 
-  <div class="map-container">
-    <div class="destination-cards">
-      <a href="/ervaar/#pampus" class="card card-hover card-interactive" data-content-id="destinations-card-1">
-        <h3>Pampus</h3>
-        <div class="badge-group">
-          <span class="badge">45 min</span>
-          <span class="badge">Historisch fort</span>
-        </div>
-        <p class="destination-description">Lunch op een fort-eiland met skyline-uitzicht</p>
-      </a>
+    <div class="map-container">
+      <div class="destination-cards">
+        <a href="/ervaar/#pampus" class="card card-hover card-interactive" data-content-id="destinations-card-1">
+          <h3>Pampus</h3>
+          <div class="badge-group">
+            <span class="badge">45 min</span>
+            <span class="badge">Historisch fort</span>
+          </div>
+          <p class="destination-description">Lunch op een fort-eiland met skyline-uitzicht</p>
+        </a>
 
-      <a href="/ervaar/#volendam" class="card card-hover card-interactive" data-content-id="destinations-card-2">
-        <h3>Volendam</h3>
-        <div class="badge-group">
-          <span class="badge">1.5 uur</span>
-          <span class="badge">Pittoresk</span>
-        </div>
-        <p class="destination-description">
-          Loop over "de" dijk van het vissersdorp en de geboortegrond van de palingsound. Of ga op
-          de foto in Volendamse klederdracht.
-        </p>
-      </a>
+        <a href="/ervaar/#volendam" class="card card-hover card-interactive" data-content-id="destinations-card-2">
+          <h3>Volendam</h3>
+          <div class="badge-group">
+            <span class="badge">1.5 uur</span>
+            <span class="badge">Pittoresk</span>
+          </div>
+          <p class="destination-description">
+            Loop over "de" dijk van het vissersdorp en de geboortegrond van de palingsound. Of ga op
+            de foto in Volendamse klederdracht.
+          </p>
+        </a>
 
-      <a href="/ervaar/#marken" class="card card-hover card-interactive" data-content-id="destinations-card-3">
-        <h3>Marken</h3>
-        <div class="badge-group">
-          <span class="badge">1 uur</span>
-          <span class="badge">Vissersdorp</span>
-        </div>
-        <p class="destination-description">
-          Aanleggen in de haven van het voormalig eiland, wandelen tussen de houten huisjes gebouwd
-          op palen
-        </p>
-      </a>
+        <a href="/ervaar/#marken" class="card card-hover card-interactive" data-content-id="destinations-card-3">
+          <h3>Marken</h3>
+          <div class="badge-group">
+            <span class="badge">1 uur</span>
+            <span class="badge">Vissersdorp</span>
+          </div>
+          <p class="destination-description">
+            Aanleggen in de haven van het voormalig eiland, wandelen tussen de houten huisjes gebouwd
+            op palen
+          </p>
+        </a>
 
-      <a href="/ervaar/" class="card card-hover card-interactive destination-cta" data-content-id="destinations-cta">
-        <h3>Zeilen op het IJsselmeer</h3>
-        <p class="destination-description">
-          Ontdek alle vaarroutes en lees meer over de zeilervaring →
-        </p>
-      </a>
+        <a href="/ervaar/" class="card card-hover card-interactive destination-cta" data-content-id="destinations-cta">
+          <h3>Zeilen op het IJsselmeer</h3>
+          <p class="destination-description">
+            Ontdek alle vaarroutes en lees meer over de zeilervaring →
+          </p>
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- Food Experience -->
-<section id="food" class="section food-experience">
-  <figure class="food-image bleed-both">
+<section id="food" class="section section-white food-experience">
+  <div class="section-container">
+    <h2 data-content-id="food-title">Live koken op het water</h2>
+    <p data-content-id="food-content">
+      We bereiden vis van lokale vissers en groenten van Waterlandse boeren. Alles wordt vers aan
+      boord klaargemaakt, met het ritme van de golven als achtergrondmuziek. Geen haast, geen
+      voorgerechten uit de koeling. Gewoon eerlijk eten, met aandacht gemaakt.
+    </p>
+    <a href="/keuken/" class="btn btn-md btn-secondary" data-content-id="food-read-more">Meer over onze keuken →</a>
+  </div>
+  <div class="food-images">
     <img
       src="/images/barbecue.jpg"
       alt="Chef bereidt vers eten op de barbecue aan boord"
       loading="lazy"
+      data-content-id="food-image-1"
     />
-  </figure>
-  
-  <h2 data-content-id="food-title">Live koken op het water</h2>
-  <p data-content-id="food-content">
-        We bereiden vis van lokale vissers en groenten van Waterlandse boeren. Alles wordt vers aan
-        boord klaargemaakt, met het ritme van de golven als achtergrondmuziek. Geen haast, geen
-        voorgerechten uit de koeling. Gewoon eerlijk eten, met aandacht gemaakt.
-      </p>
-      <a href="/keuken/" class="btn btn-md btn-secondary" data-content-id="food-read-more">Meer over onze keuken →</a>
-    </div>
-  </div>
-</section>
-
-<!-- Sustainability -->
-<section id="sustainability" class="section sustainability-section">
-  <div class="sustainability-content">
-    <h2 data-content-id="sustainability-title">Duurzaam Varen en Koken</h2>
-    <p data-content-id="sustainability-intro">
-      Zeilen draait om de kracht van de wind. Koken draait om de kwaliteit van ingrediënten. Beide
-      vragen om respect voor wat de natuur geeft. We varen zoveel mogelijk op de wind. Onze vis komt
-      uit het Markermeer, groenten van boerderijen binnen 20 kilometer. We koken met biologische
-      ingrediënten waar het kan, serveren op echt servies, en passen ons menu aan wat het seizoen
-      biedt. Niet omdat het moet, maar omdat het logisch is.
-    </p>
-
-    <ul class="sustainability-list list-check">
-      <li data-content-id="sustainability-item-wind">✓ Windkracht als motor</li>
-      <li data-content-id="sustainability-item-local">✓ Lokale leveranciers binnen 20 km</li>
-      <li data-content-id="sustainability-item-organic">✓ Biologische producten</li>
-      <li data-content-id="sustainability-item-fresh">✓ Vers aan boord bereid</li>
-      <li data-content-id="sustainability-item-plastic">✓ Geen wegwerpplastic</li>
-      <li data-content-id="sustainability-item-seasonal">✓ Seizoensgebonden menu's</li>
-    </ul>
-
-    <a href="/duurzaamheid/" class="text-link" data-content-id="sustainability-read-more"
-      >🌱 Lees ons volledige duurzaamheidsstatement →</a
-    >
+    <img
+      src="/images/barbecue.jpg"
+      alt="Vers bereide gerechten aan boord"
+      loading="lazy"
+      data-content-id="food-image-2"
+      class="food-image-desktop"
+    />
   </div>
 </section>
 
 <!-- Packages -->
-<section id="packages" class="section packages">
-  <h2 data-content-id="packages-title">Arrangementen</h2>
-  <p data-content-id="packages-intro">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-  </p>
+<section id="packages" class="section section-white packages">
+  <div class="section-container">
+    <h2 data-content-id="packages-title">Arrangementen</h2>
+    <div class="text-content">
+      <p data-content-id="packages-intro">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      </p>
 
-  <p class="package-footnote" data-content-id="packages-footnote">
-    Prijzen zijn afhankelijk van groepsgrootte, duur en gekozen opties.
-  </p>
+      <p class="package-footnote" data-content-id="packages-footnote">
+        Prijzen zijn afhankelijk van groepsgrootte, duur en gekozen opties.
+      </p>
+    </div>
 
-  <div class="package-cards grid-3">
-    {% for pkg in packages %} {% if pkg.id == "dagtocht" %}
-    <a href="/arrangementen/#dagtocht" class="card card-package card-hover package-card-link">
-      <div class="package-header">
-        <h3>{{ pkg.content.name }}</h3>
-        <span class="package-price">€ {{ pkg.pricing.base }} pp</span>
-      </div>
-      <div class="badge-group">
-        {% for badge in pkg.content.badges %}
-        <span class="badge">{{ badge }}</span>
-        {% endfor %}
-      </div>
-      <p class="package-description">{{ pkg.content.shortDescription }}</p>
-      <span class="link package-cta">Details →</span>
-    </a>
-    {% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "langevaart" %}
-    <a href="/arrangementen/#langevaart" class="card card-package card-hover package-card-link">
-      <div class="package-header">
-        <h3>{{ pkg.content.name }}</h3>
-        <span class="package-price">€ {{ pkg.pricing.base }} pp</span>
-      </div>
-      <div class="badge-group">
-        {% for badge in pkg.content.badges %}
-        <span class="badge">{{ badge }}</span>
-        {% endfor %}
-      </div>
-      <p class="package-description">{{ pkg.content.shortDescription }}</p>
-      <span class="link package-cta">Details →</span>
-    </a>
-    {% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "dinervaart" %}
-    <a href="/arrangementen/#dinervaart" class="card card-package card-hover package-card-link">
-      <div class="package-header">
-        <h3>{{ pkg.content.name }}</h3>
-        <span class="package-price">€ {{ pkg.pricing.base }} pp</span>
-      </div>
-      <div class="badge-group">
-        {% for badge in pkg.content.badges %}
-        <span class="badge">{{ badge }}</span>
-        {% endfor %}
-      </div>
-      <p class="package-description">{{ pkg.content.shortDescription }}</p>
-      <span class="link package-cta">Details →</span>
-    </a>
-    {% endif %} {% endfor %}
-
-    <div class="custom-package-cta">
-      <div class="custom-package-header">
-        {% for pkg in packages %} {% if pkg.id == "flexibel" %}
-        <h3>{{ pkg.content.name }}</h3>
-        {% endif %} {% endfor %}
-        <a href="/offerte/" class="btn btn-sm">Offerte aanvragen</a>
-      </div>
-      <div class="custom-package-content">
-        <div class="custom-package-text">
-          {% for pkg in packages %} {% if pkg.id == "flexibel" %}
-          <p>{{ pkg.content.shortDescription }}</p>
-          {% endif %} {% endfor %}
+    <div class="package-cards grid-3">
+      {% for pkg in packages %} {% if pkg.id == "dagtocht" %}
+      <a href="/arrangementen/#dagtocht" class="card card-package card-hover package-card-link">
+        <div class="package-header">
+          <h3>{{ pkg.content.name }}</h3>
+          <span class="package-price">€ {{ pkg.pricing.base }} pp</span>
         </div>
-        <ul class="custom-package-features list-check">
-          <li>Vrije keuze in vaartijd, duur en route</li>
-          <li>Menu volledig op maat en budget</li>
-          <li>Ceremonie, receptie of presentatiemogelijkheden</li>
+        <div class="badge-group">
+          {% for badge in pkg.content.badges %}
+          <span class="badge">{{ badge }}</span>
+          {% endfor %}
+        </div>
+        <p class="package-description">{{ pkg.content.shortDescription }}</p>
+        <span class="link package-cta">Details →</span>
+      </a>
+      {% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "langevaart" %}
+      <a href="/arrangementen/#langevaart" class="card card-package card-hover package-card-link">
+        <div class="package-header">
+          <h3>{{ pkg.content.name }}</h3>
+          <span class="package-price">€ {{ pkg.pricing.base }} pp</span>
+        </div>
+        <div class="badge-group">
+          {% for badge in pkg.content.badges %}
+          <span class="badge">{{ badge }}</span>
+          {% endfor %}
+        </div>
+        <p class="package-description">{{ pkg.content.shortDescription }}</p>
+        <span class="link package-cta">Details →</span>
+      </a>
+      {% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "dinervaart" %}
+      <a href="/arrangementen/#dinervaart" class="card card-package card-hover package-card-link">
+        <div class="package-header">
+          <h3>{{ pkg.content.name }}</h3>
+          <span class="package-price">€ {{ pkg.pricing.base }} pp</span>
+        </div>
+        <div class="badge-group">
+          {% for badge in pkg.content.badges %}
+          <span class="badge">{{ badge }}</span>
+          {% endfor %}
+        </div>
+        <p class="package-description">{{ pkg.content.shortDescription }}</p>
+        <span class="link package-cta">Details →</span>
+      </a>
+      {% endif %} {% endfor %}
+
+      <div class="custom-package-cta">
+        <div class="custom-package-header">
+          {% for pkg in packages %} {% if pkg.id == "flexibel" %}
+          <h3>{{ pkg.content.name }}</h3>
+          {% endif %} {% endfor %}
+          <a href="/offerte/" class="btn btn-sm">Offerte aanvragen</a>
+        </div>
+        <div class="custom-package-content">
+          <div class="custom-package-text">
+            {% for pkg in packages %} {% if pkg.id == "flexibel" %}
+            <p>{{ pkg.content.shortDescription }}</p>
+            {% endif %} {% endfor %}
+          </div>
+          <ul class="custom-package-features list-check">
+            <li>Vrije keuze in vaartijd, duur en route</li>
+            <li>Menu volledig op maat en budget</li>
+            <li>Ceremonie, receptie of presentatiemogelijkheden</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Us (merged sustainability + differentiation) -->
+<section id="why-us" class="section section-dark why-us-section">
+  <div class="section-container">
+    <h2 data-content-id="why-us-title">Waarom De Zeilkeuken</h2>
+    <div class="why-us-content">
+      <p data-content-id="why-us-intro">
+        De Zeilkeuken biedt meer dan een vaartocht: het is een complete beleving op het water. U vaart
+        met een karaktervol, historisch schip en geniet tegelijk van hoogwaardige, vers bereide
+        gerechten aan boord. Persoonlijke aandacht, flexibiliteit en een ontspannen sfeer staan
+        centraal.
+      </p>
+    </div>
+    
+    <div class="why-us-grid">
+      <div class="why-us-item" data-content-id="why-us-sustainability">
+        <h3>Duurzaam Varen</h3>
+        <p>
+          Zeilen draait om de kracht van de wind. We varen zoveel mogelijk op windkracht, 
+          gebruiken verse lokale ingrediënten, en serveren op echt servies. 
+          Niet omdat het moet, maar omdat het logisch is.
+        </p>
+        <ul class="list-check">
+          <li>Windkracht als motor</li>
+          <li>Lokale leveranciers binnen 20 km</li>
+          <li>Biologische producten waar mogelijk</li>
+          <li>Geen wegwerpplastic</li>
+        </ul>
+      </div>
+      
+      <div class="why-us-item" data-content-id="why-us-flexibility">
+        <h3>Flexibiliteit & Service</h3>
+        <p>
+          Of het nu gaat om een zakelijke bijeenkomst, een viering of een dag uit met vrienden: 
+          we passen elk arrangement aan uw wensen aan. Faciliteiten voor presentaties, 
+          transparante prijzen, en persoonlijke begeleiding.
+        </p>
+        <ul class="list-check">
+          <li>Maatwerk arrangementen</li>
+          <li>Presentatie faciliteiten aan boord</li>
+          <li>Transparante prijzen</li>
+          <li>Ervaren bemanning</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Differentiation -->
-<section id="why" class="section differentiation">
-  <h2 data-content-id="differentiation-title">Waarom De Zeilkeuken</h2>
-  <div data-content-id="differentiation-content">
-    <p>
-      De Zeilkeuken biedt meer dan een vaartocht: het is een complete beleving op het water. U vaart
-      met een karaktervol, historisch schip en geniet tegelijk van hoogwaardige, vers bereide
-      gerechten aan boord. Persoonlijke aandacht, flexibiliteit en een ontspannen sfeer staan
-      centraal. Of het nu gaat om een zakelijke bijeenkomst, een viering of een dag uit met
-      vrienden: bij De Zeilkeuken komen varen, goed eten en samen genieten op een unieke manier
-      samen.
-    </p>
-  </div>
-  <p data-content-id="differentiation-paragraph-2">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      </p>
-    </div>
-  </div>
-</section>
-
 <!-- Testimonials -->
-<section id="testimonials" class="section testimonials">
-  <div class="testimonial-cards grid-2">
-    <div class="card card-testimonial" data-content-id="testimonials-card-1">
-      <div class="testimonial-avatar"></div>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua.
-      </p>
-    </div>
+<section id="testimonials" class="section section-white testimonials">
+  <div class="section-container">
+    <div class="testimonial-cards grid-2">
+      <div class="card card-testimonial" data-content-id="testimonials-card-1">
+        <div class="testimonial-avatar"></div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua.
+        </p>
+      </div>
 
-    <div class="card card-testimonial" data-content-id="testimonials-card-2">
-      <div class="testimonial-avatar"></div>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua.
-      </p>
+      <div class="card card-testimonial" data-content-id="testimonials-card-2">
+        <div class="testimonial-avatar"></div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua.
+        </p>
+      </div>
     </div>
   </div>
 </section>

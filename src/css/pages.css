@@ -133,35 +133,100 @@
 }
 
 @media (min-width: 1024px) {
-  .destinations .map-container {
-    grid-column: 1 / -1; /* Span full width */
-    margin-left: 0;
-    margin-right: 0;
-    width: 100%;
-  }
-
-  .destination-cards {
+  .destinations .destination-cards {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
 /* Food Section */
-.food-image {
+.food-experience {
+  padding-bottom: 0 !important; /* Remove bottom padding so images extend to edge */
+}
+
+.food-experience h2 {
+  text-align: center;
+}
+
+.food-experience p {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: var(--spacing-md);
 }
 
+.food-experience .btn {
+  display: block;
+  width: fit-content;
+  margin: var(--spacing-md) auto var(--spacing-xl) auto;
+}
+
+/* Food Images - 1 on mobile, 2 on desktop */
+.food-images {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0 calc(-1 * var(--spacing-md));
+}
+
+.food-images img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Hide second image on mobile */
+.food-image-desktop {
+  display: none;
+}
+
 @media (min-width: 768px) {
-  .food-image {
-    margin-bottom: var(--spacing-lg);
+  .food-images {
+    grid-template-columns: 1fr 1fr;
+    margin: 0 calc(-1 * var(--spacing-lg));
+  }
+
+  .food-images img {
+    height: 400px;
+  }
+
+  /* Show second image on desktop */
+  .food-image-desktop {
+    display: block;
   }
 }
 
-.food-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-  max-height: 500px;
+@media (min-width: 1024px) {
+  .food-images {
+    margin: 0 calc(-1 * var(--spacing-xl));
+  }
+
+  .food-images img {
+    height: 450px;
+  }
+}
+
+/* Packages Section */
+.packages h2 {
+  text-align: center;
+}
+
+.packages .text-content {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--spacing-lg);
+}
+
+.packages .text-content p {
+  margin-bottom: var(--spacing-md);
+}
+
+.package-footnote {
+  text-align: center;
+  color: var(--color-gray-600);
+  font-size: var(--font-size-sm);
+  margin-bottom: 0;
 }
 
 /* Package Navigation */
@@ -227,20 +292,264 @@
   scroll-margin-top: 80px;
 }
 
-.value-proposition {
-  padding-top: 0;
-  margin-top: 0;
-  padding-left: 0;
-  padding-right: 0;
+.value-proposition h2 {
+  text-align: center;
 }
 
-.proposition-container {
-  background-color: var(--color-white);
-  padding: var(--spacing-lg) var(--spacing-md);
-  padding-top: var(--spacing-lg);
-  margin: 0;
+.value-proposition p {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Ship Section */
+.ship-section {
+  padding-bottom: 0 !important; /* Remove bottom padding so gallery extends to edge */
+}
+
+.ship-section h2 {
   text-align: center;
-  position: relative;
+}
+
+.ship-intro {
+  max-width: 800px;
+  margin: 0 auto var(--spacing-xl) auto;
+}
+
+.ship-intro .btn {
+  margin-top: var(--spacing-md);
+}
+
+/* Ship Gallery - Asymmetric Grid with Hero Image */
+.ship-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin: 0 calc(-1 * var(--spacing-md));
+}
+
+/* Hero image - full width on mobile */
+.ship-gallery-hero {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Regular images on mobile - 2 columns */
+.ship-gallery img:not(.ship-gallery-hero):not(.ship-gallery-hidden):not(.ship-gallery-desktop) {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Hide desktop-only images on mobile */
+.ship-gallery-desktop {
+  display: none;
+}
+
+/* Hide 6th image from layout but keep for lightbox */
+.ship-gallery-hidden {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .ship-gallery {
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0 calc(-1 * var(--spacing-lg));
+  }
+
+  /* Hero spans 2 rows on desktop - exactly 2x regular image height */
+  .ship-gallery-hero {
+    grid-column: 1;
+    grid-row: span 2;
+    height: 500px;
+  }
+
+  /* Show desktop images on tablet+ */
+  .ship-gallery-desktop {
+    display: block;
+  }
+
+  /* Regular images - consistent height */
+  .ship-gallery img:not(.ship-gallery-hero):not(.ship-gallery-hidden) {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ship-gallery {
+    margin: 0 calc(-1 * var(--spacing-xl));
+  }
+}
+
+/* Ship Gallery Lightbox */
+.ship-lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ship-lightbox-open {
+  display: flex;
+  opacity: 1;
+}
+
+.ship-lightbox-image {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  animation: shipZoomIn 0.3s ease;
+}
+
+@keyframes shipZoomIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.ship-lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: var(--color-white);
+  font-size: 32px;
+  font-weight: 300;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  line-height: 1;
+  padding: 0;
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+}
+
+.ship-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: rotate(90deg);
+}
+
+.ship-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: var(--color-white);
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+}
+
+.ship-lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.ship-lightbox-prev {
+  left: 20px;
+}
+
+.ship-lightbox-next {
+  right: 20px;
+}
+
+@media (min-width: 768px) {
+  .ship-lightbox-close {
+    top: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    font-size: 40px;
+  }
+
+  .ship-lightbox-nav {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+  }
+
+  .ship-lightbox-prev {
+    left: 30px;
+  }
+
+  .ship-lightbox-next {
+    right: 30px;
+  }
+}
+
+.ship-lightbox-counter {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--color-white);
+  font-size: var(--font-size-base);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .ship-lightbox-counter {
+    bottom: 30px;
+    padding: 12px 24px;
+  }
+}
+
+/* Destinations Section */
+.destinations h2 {
+  text-align: center;
+}
+
+.destinations .text-content {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--spacing-lg);
+}
+
+.destinations .text-content p {
+  margin-bottom: var(--spacing-md);
+}
+
+.destinations .map-container {
+  margin-bottom: var(--spacing-md);
 }
 
 @media (min-width: 1024px) {
@@ -1163,4 +1472,51 @@
 
 .sustainability-section .text-link:hover {
   color: var(--color-gray-200);
+}
+/* Why Us Section (merged sustainability + differentiation) */
+.why-us-section h2 {
+  text-align: center;
+}
+
+.why-us-content {
+  max-width: 800px;
+  margin: 0 auto var(--spacing-xl) auto;
+}
+
+.why-us-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+@media (min-width: 768px) {
+  .why-us-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xl);
+  }
+}
+
+.why-us-item h3 {
+  color: var(--color-white);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+}
+
+.why-us-item p {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0;
+}
+
+.why-us-item ul {
+  list-style: none;
+  padding: 0;
+  margin: var(--spacing-sm) 0 0 0;
+  text-align: left;
+}
+
+.why-us-item li {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-base);
 }

@@ -9,6 +9,9 @@ Client website built with 11ty (Eleventy) static site generator. Project follows
 **Tech Stack:** 11ty, Custom CSS, Nunjucks templating, Cloudflare Pages (hosting + Workers for serverless functions)
 **Language:** Dutch (nl-NL) - English support planned for future
 
+## Content Guidelines
+- **Lorem ipsum placeholder text:** Ignore all lorem ipsum content when providing critiques or suggestions. Placeholder text is temporary and will be addressed in a separate content pass. Focus feedback on structure, design patterns, and implementation quality.
+
 ## Project Structure (11ty conventions)
 ```
 src/               # Source files
