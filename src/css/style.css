@@ -217,6 +217,17 @@ main {
   color: var(--color-black);
 }
 
+.btn-outline-primary {
+  background-color: transparent;
+  color: var(--color-white);
+  border: 2px solid var(--color-primary);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
 .btn-sm {
   padding: var(--spacing-xs) var(--spacing-sm);
   font-size: var(--font-size-sm);

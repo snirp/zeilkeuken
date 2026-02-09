@@ -53,11 +53,18 @@
   justify-content: space-between;
   align-items: center;
   height: 48px;
+  padding-right: 16px;
+}
+
+@media (min-width: 768px) {
+  .header-container {
+    padding-right: 0;
+  }
 }
 
 .logo {
   font-weight: 400;
-  font-size: 18px;
+  font-size: var(--font-size-base);
   color: var(--color-earth);
   text-decoration: none;
   display: flex;
@@ -69,16 +76,10 @@
 }
 
 .logo-text {
-  margin-left: -4px;
+  margin-left: -12px;
   display: flex;
   align-items: center;
   height: 100%;
-}
-
-@media (min-width: 768px) {
-  .logo-text {
-    margin-left: -12px;
-  }
 }
 
 .logo-svg {
@@ -89,6 +90,7 @@
   display: block;
   animation: rudder-steer 15s ease-in-out infinite;
   margin-top: 10px;
+  margin-left: -12px;
 }
 
 .logo-svg svg {
@@ -126,7 +128,7 @@
 .nav-link {
   color: var(--color-earth);
   text-decoration: none;
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
   font-weight: 400;
   transition: color 0.2s;
 }
@@ -147,6 +149,13 @@
 
 .header-actions .btn {
   background-color: var(--color-primary);
+  padding: 6px 12px;
+}
+
+@media (min-width: 768px) {
+  .header-actions .btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
 }
 
 .header-actions .btn:hover {
