@@ -1045,10 +1045,12 @@
 }
 
 .faq-item {
-  border: 1px solid var(--color-gray-300);
-  border-radius: 4px;
-  padding: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-gray-300);
+  padding: var(--spacing-sm) 0;
+}
+
+.faq-item:last-child {
+  border-bottom: none;
 }
 
 .faq-item summary {
@@ -1075,8 +1077,9 @@
   content: '−';
 }
 
-.faq-item p {
-  margin-top: var(--spacing-md);
+.faq-item p,
+.faq-item div {
+  margin-top: var(--spacing-sm);
   margin-bottom: 0;
 }
 

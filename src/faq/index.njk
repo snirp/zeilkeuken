@@ -1,0 +1,40 @@
+---
+layout: layouts/base.njk
+title: Veelgestelde Vragen - De Zeilkeuken
+---
+
+<!-- FAQ Content -->
+<section class="section section-white">
+  <div class="section-container">
+    {% for category in faqs.categories %}
+    <div class="faq-category" style="margin-bottom: var(--spacing-xl);">
+      <h2 data-content-id="faq-category-{{ category.id }}-title">Vragen {{ category.title }}</h2>
+      
+      <div class="faq-list">
+        {% for faq in faqs.items %}
+          {% if faq.category == category.id %}
+          <details class="faq-item">
+            <summary data-content-id="faq-{{ faq.id }}-q">{{ faq.question }}</summary>
+            <div data-content-id="faq-{{ faq.id }}-a">{{ faq.answer | safe }}</div>
+          </details>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- FAQ CTA -->
+<section class="section section-white">
+  <div class="section-container" style="text-align: center;">
+    <h2 data-content-id="faq-cta-title">Nog vragen?</h2>
+    <p data-content-id="faq-cta-text" style="max-width: 600px; margin: 0 auto var(--spacing-md);">
+      We helpen je graag verder. Neem contact op voor persoonlijke vragen of vraag direct een offerte aan.
+    </p>
+    <div style="display: flex; gap: var(--spacing-sm); justify-content: center; flex-wrap: wrap;">
+      <a href="/contact/" class="btn btn-md btn-secondary" data-content-id="faq-cta-contact">Contact opnemen</a>
+      <a href="/offerte/" class="btn btn-md" data-content-id="faq-cta-quote">Offerte aanvragen</a>
+    </div>
+  </div>
+</section>
