@@ -5,6 +5,11 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('src/js');
   eleventyConfig.addPassthroughCopy('src/videos');
 
+  // Favicons
+  eleventyConfig.addPassthroughCopy('src/favicon-light.svg');
+  eleventyConfig.addPassthroughCopy('src/favicon-dark.svg');
+  eleventyConfig.addPassthroughCopy('src/apple-touch-icon.png');
+
   // Markdown filter
   const markdownIt = require('markdown-it');
   const md = new markdownIt({
