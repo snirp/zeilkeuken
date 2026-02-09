@@ -6,10 +6,11 @@
 .header {
   position: sticky;
   top: var(--spacing-sm);
-  background-color: rgba(229, 229, 229, 0.6);
+  background-color: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 100px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
   z-index: 100;
   max-width: 1200px;
   width: calc(100% - var(--spacing-md) * 2);
@@ -51,13 +52,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 56px;
-  padding-left: var(--spacing-md);
-  padding-right: var(--spacing-md);
+  height: 48px;
 }
 
 .logo {
-  font-weight: 700;
+  font-weight: 400;
   font-size: 18px;
   color: var(--color-earth);
   text-decoration: none;
@@ -66,6 +65,7 @@
   gap: var(--spacing-xs);
   overflow: hidden;
   height: 100%;
+  border-radius: 100px 0 0 100px;
 }
 
 .logo-text {
@@ -127,7 +127,7 @@
   color: var(--color-earth);
   text-decoration: none;
   font-size: var(--font-size-base);
-  font-weight: 700;
+  font-weight: 400;
   transition: color 0.2s;
 }
 
