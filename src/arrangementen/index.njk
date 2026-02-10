@@ -4,52 +4,70 @@ title: De Zeilkeuken - Arrangementen en prijzen
 ---
 
 <!-- Intro Section -->
-<section class="section">
-  <h1 data-content-id="packages-title">Arrangementen & Prijzen</h1>
-  <p data-content-id="packages-intro">
-    Van april tot oktober varen we met groepen van 25 tot 40 personen vanuit Muiden. Alle
-    arrangementen zijn inclusief eten, drinken en een onvergetelijke zeilervaring op het IJsselmeer.
-    Vaste prijs per persoon, geen verrassingen.
-  </p>
+<section class="section section-white">
+  <div class="section-container">
+    <h2 data-content-id="packages-title" style="text-align: center;">Samen genieten op het water</h2>
+    <div class="intro-content">
+      <div class="grid-2">
+      <div>
+        <p data-content-id="packages-hero-intro" class="text-lg">
+          Op onze traditionele tjalk maak je met je groep een onvergetelijke dag mee. Of het nu gaat om een
+          teamuitje, familiefeest of vriendendag: bij ons draait alles om gezelligheid, lekker eten en
+          samen zijn op het IJsselmeer.
+        </p>
+        <p class="text-base" data-content-id="packages-hero-practical">
+          Van april tot oktober varen we met groepen van 25 tot 40 personen vanuit Muiden. Alles is
+          inbegrepen: varen, eten, drinken. Vaste prijs per persoon, geen verrassingen.
+        </p>
+      </div>
+      <div>
+        <ul class="list-check">
+          <li data-content-id="value-prop-kitchen-title">Live keuken aan boord</li>
+          <li data-content-id="value-prop-ship-title">Traditionele tjalk uit 1892</li>
+          <li data-content-id="value-prop-inclusive-title">Alles inclusief</li>
+          <li data-content-id="value-prop-intimate-title">Kleinschalig, max 40 gasten</li>
+        </ul>
+      </div>
+      </div>
+    </div>
 
-  <!-- Package Navigation -->
-  <div class="package-navigation">
-    {% for pkg in packages %} {% if pkg.id == "dagtocht" %}
-    <a href="#dagtocht" class="package-nav-link">
-      <strong>{{ pkg.content.name }}</strong>
-      <span>{{ pkg.defaults.duration }} uur • €{{ pkg.pricing.base }} pp</span>
-    </a>
-    {% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "langevaart" %}
-    <a href="#langevaart" class="package-nav-link">
-      <strong>{{ pkg.content.name }}</strong>
-      <span>{{ pkg.defaults.duration }} uur • €{{ pkg.pricing.base }} pp</span>
-    </a>
-    {% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "dinervaart" %}
-    <a href="#dinervaart" class="package-nav-link">
-      <strong>{{ pkg.content.name }}</strong>
-      <span>{{ pkg.defaults.duration }} uur • €{{ pkg.pricing.base }} pp</span>
-    </a>
-    {% endif %} {% endfor %}
+    <div class="package-cards grid-3">
+      {% for pkg in packages %}
+      {% if pkg.id != "flexibel" %}
+      <div class="card card-package card-clickable">
+        <div class="package-header">
+          <h3>{{ pkg.content.name }}</h3>
+          <span class="package-price">€{{ pkg.pricing.base }} pp</span>
+        </div>
+        <p class="package-description">{{ pkg.content.shortDescription }}</p>
+        <div class="card-actions">
+          <a href="/offerte/?package={{ pkg.slug }}" class="btn btn-sm btn-primary-action">Boek nu</a>
+          <a href="#{{ pkg.slug }}" class="card-link-more btn-card-link">Meer →</a>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
   </div>
 </section>
 
-<!-- Package 1: Dagtocht -->
-{% set dagtocht = packages | selectattr("id", "equalto", "dagtocht") | first %}
-<section id="dagtocht" class="section package-detail">
+<!-- Detailed Package Sections -->
+{% for pkg in packages %}
+<section id="{{ pkg.slug }}" class="section package-detail">
   <div class="package-hero bleed-both">
     <img
-      src="/images/placeholder-dagtocht.jpg"
-      alt="Dagtocht arrangement"
+      src="/images/placeholder-{{ pkg.slug }}.jpg"
+      alt="{{ pkg.content.name }} arrangement"
       class="package-hero-image"
     />
     <div class="package-hero-overlay">
       <div class="package-hero-header">
-        <h2>{{ dagtocht.content.name }}</h2>
-        <span class="package-price-large">€ {{ dagtocht.pricing.base }} pp</span>
+        <h2>{{ pkg.content.name }}</h2>
+        <span class="package-price-large">€{{ pkg.pricing.base }} pp</span>
       </div>
-      <p class="package-subtitle">{{ dagtocht.content.heroSubtitle }}</p>
+      <p class="package-subtitle">{{ pkg.content.heroSubtitle }}</p>
       <div class="badge-group">
-        {% for badge in dagtocht.content.badges %}
+        {% for badge in pkg.content.badges %}
         <span class="badge">{{ badge }}</span>
         {% endfor %}
       </div>
@@ -57,12 +75,17 @@ title: De Zeilkeuken - Arrangementen en prijzen
   </div>
 
   <div class="package-content">
-    <div>{{ dagtocht.content.longDescription | markdown | safe }}</div>
+    <!-- Description -->
+    <div class="package-description">
+      {{ pkg.content.longDescription | markdown | safe }}
+    </div>
 
+    <!-- Timeline (collapsed by default) -->
+    {% if pkg.content.timeline %}
     <details class="timeline-details">
-      <summary>Dagprogramma (indicatief)</summary>
+      <summary>Programma (indicatief)</summary>
       <div class="timeline">
-        {% for item in dagtocht.content.timeline %}
+        {% for item in pkg.content.timeline %}
         <div class="timeline-item">
           <span class="timeline-time">{{ item.time }}</span>
           <div class="timeline-content">
@@ -73,214 +96,64 @@ title: De Zeilkeuken - Arrangementen en prijzen
         {% endfor %}
       </div>
     </details>
+    {% endif %}
 
+    <!-- Inclusions -->
     <div class="package-inclusions">
-      <h3 class="sr-only">Wat krijg je?</h3>
+      <h3>Wat is inbegrepen</h3>
       <ul class="list-check">
-        {% for highlight in dagtocht.content.highlights %}
+        {% for highlight in pkg.content.highlights %}
         <li>{{ highlight }}</li>
         {% endfor %}
       </ul>
     </div>
-  </div>
-</section>
 
-<!-- Package 2: Lange vaart -->
-<section id="langevaart" class="section package-detail">
-  <div class="package-hero bleed-both">
-    <img
-      src="/images/placeholder-langevaart.jpg"
-      alt="Lange vaart arrangement"
-      class="package-hero-image"
-      data-content-id="package-long-image"
-    />
-    <div class="package-hero-overlay">
-      <div class="package-hero-header">
-        <h2 data-content-id="package-long-name">Lange vaart</h2>
-        <span class="package-price-large" data-content-id="package-long-price">€ 145 pp</span>
-      </div>
-      <p class="package-subtitle" data-content-id="package-long-subtitle">
-        Van zonsopkomst tot zonsondergang
-      </p>
-      <div class="badge-group">
-        <span class="badge" data-content-id="package-long-duration">10 uur</span>
-        <span class="badge" data-content-id="package-long-time">08:00 - 18:00</span>
-        <span class="badge" data-content-id="package-long-season">mei - september</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="package-content">
-    <div data-content-id="package-long-description">
+    <!-- Upgrade Option -->
+    {% if pkg.pricing.upgrade %}
+    <div class="package-upgrade">
+      <h3>Upgrade optie</h3>
       <p>
-        Voor echte zeilliefhebbers en culinaire avonturiers. Een volledige dag op het water met alle
-        maaltijden van ontbijt tot diner. We varen een uitgebreide route met meerdere stops in
-        karakteristieke havenstadjes.
-      </p>
-      <p>
-        Verwacht een ontspannen tempo, ruimte voor actief zeilen, en een culinaire reis die de hele
-        dag doorloopt. Perfect voor groepen die een echte beleving willen en niet gehaast zijn.
+        <strong>+€{{ pkg.pricing.upgrade.price }} pp:</strong>
+        {{ pkg.pricing.upgrade.description }}
       </p>
     </div>
+    {% endif %}
 
-    <h3 data-content-id="package-long-included-title">Wat is inbegrepen</h3>
-    <ul class="package-features" data-content-id="package-long-included">
-      <li>Zeiltocht van 10 uur op de Beurtvaartschip</li>
-      <li>Ontbijt met vers brood en streekproducten</li>
-      <li>Uitgebreide lunch aan boord</li>
-      <li>Borrelmoment met lokale specialiteiten</li>
-      <li>Driegangendiner bij zonsondergang</li>
-      <li>Onbeperkt koffie, thee en frisdrank</li>
-      <li>Premium bier- en wijnpakket</li>
-      <li>Meerdere aanlegmogelijkheden (Marken, Volendam, Pampus)</li>
-      <li>Ervaren bemanning en live kokkerij</li>
-    </ul>
-
-    <h3 data-content-id="package-long-route-title">Route en planning</h3>
-    <div data-content-id="package-long-route">
-      <p>
-        We starten vroeg in de ochtend vanuit Amsterdam en varen een uitgebreide route over het
-        Markermeer. Onderweg leggen we aan in minimaal twee havens waar gasten aan wal kunnen voor
-        een wandeling. De route wordt aangepast op weersomstandigheden en groepsvoorkeuren.
-      </p>
-      <p>
-        <strong>Voorbeeldroute:</strong> Amsterdam → Marken (koffie & ontbijt) → Volendam (lunch &
-        wandeling) → Pampus (borrel) → terug naar Amsterdam (diner tijdens varen)
-      </p>
-    </div>
-
-    <h3 data-content-id="package-long-extras-title">Extra opties</h3>
-    <ul class="extras-list" data-content-id="package-long-extras">
-      <li>
-        <strong>Luxury Upgrade (+€35 pp):</strong> Premium wijnselectie, extra gangen, luxe
-        aperitief
-      </li>
-      <li><strong>DJ aan boord (€350):</strong> Achtergrondmuziek en sfeer</li>
-      <li><strong>Fotograaf (€450):</strong> Professionele reportage van de dag</li>
-      <li><strong>Oesters bij borrel (+€12 pp):</strong> Verse Zeeuwse oesters</li>
-    </ul>
-
-    <h3 data-content-id="package-long-practical-title">Praktische informatie</h3>
-    <div class="package-practical" data-content-id="package-long-practical">
-      <div class="practical-item"><strong>Groepsgrootte:</strong> 25-40 personen</div>
-      <div class="practical-item"><strong>Seizoen:</strong> Mei t/m september</div>
-      <div class="practical-item"><strong>Tijden:</strong> 08:00 - 18:00 (flexibel)</div>
-      <div class="practical-item">
-        <strong>Startlocatie:</strong> Amsterdam centrum (op loopafstand CS)
+    <!-- Practical Info -->
+    <div class="package-practical">
+      <h3>Praktische informatie</h3>
+      <div class="practical-grid grid-2">
+        <div class="practical-item">
+          <strong>Duur:</strong> {{ pkg.defaults.duration }} uur
+        </div>
+        <div class="practical-item">
+          <strong>Vertrek:</strong> {{ pkg.defaults.departure }}
+        </div>
+        <div class="practical-item">
+          <strong>Groepsgrootte:</strong> {{ pkg.constraints.minGuests }}-{{ pkg.constraints.maxGuests }} personen
+        </div>
+        <div class="practical-item">
+          <strong>Locatie:</strong> Muiden
+        </div>
       </div>
     </div>
 
-    <a href="/offerte/" class="btn btn-lg" data-content-id="package-long-cta">Vraag offerte aan</a>
-  </div>
-</section>
-
-<!-- Package 3: Dinervaart -->
-<section id="dinervaart" class="section package-detail">
-  <div class="package-hero bleed-both">
-    <img
-      src="/images/placeholder-dinervaart.jpg"
-      alt="Dinervaart arrangement"
-      class="package-hero-image"
-      data-content-id="package-diner-image"
-    />
-    <div class="package-hero-overlay">
-      <div class="package-hero-header">
-        <h2 data-content-id="package-diner-name">Diner & sunset</h2>
-        <span class="package-price-large" data-content-id="package-diner-price">€ 110 pp</span>
-      </div>
-      <p class="package-subtitle" data-content-id="package-diner-subtitle">
-        Avondzeilen met driegangendiner
-      </p>
-      <div class="badge-group">
-        <span class="badge" data-content-id="package-diner-duration">3,5 uur</span>
-        <span class="badge" data-content-id="package-diner-time">18:00 - 21:30</span>
-        <span class="badge" data-content-id="package-diner-season">mei - september</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="package-content">
-    <div data-content-id="package-diner-description">
-      <p>
-        De meest romantische optie. Een korte maar intense zeilervaring in het mooie avondlicht,
-        gecombineerd met een culinair driegangendiner. Perfect voor kleinere groepen, verjaardagen
-        of zakelijke diners met een twist.
-      </p>
-      <p>
-        We varen een korte route zodat er alle tijd is om te genieten van het eten. De chef bereidt
-        alles live in de kombuis, terwijl de zon langzaam ondergaat over het IJsselmeer.
-      </p>
-    </div>
-
-    <details class="timeline-details">
-      <summary data-content-id="package-diner-timeline-title">Avondprogramma (indicatief)</summary>
-      <div class="timeline" data-content-id="package-diner-timeline">
-        <div class="timeline-item">
-          <span class="timeline-time">18:00</span>
-          <div class="timeline-content">
-            <strong>Welkom aan boord</strong>
-            <p>Ontvangst met aperitief en amuses.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-time">18:30</span>
-          <div class="timeline-content">
-            <strong>Afvaren</strong>
-            <p>We zeilen richting Pampus of een rustige ankerplaats op het IJsselmeer.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-time">19:00</span>
-          <div class="timeline-content">
-            <strong>Voorgerecht</strong>
-            <p>Seizoensgebonden voorgerecht, vers bereid.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-time">19:45</span>
-          <div class="timeline-content">
-            <strong>Hoofdgerecht</strong>
-            <p>Vis of vlees van lokale leveranciers, met bijpassende garnituur.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-time">20:30</span>
-          <div class="timeline-content">
-            <strong>Nagerecht & koffie</strong>
-            <p>Afsluiten met iets zoets en een goede kop koffie.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-time">21:30</span>
-          <div class="timeline-content">
-            <strong>Aankomst in Muiden</strong>
-            <p>Terug in de haven, voldaan en met een volle maag.</p>
-          </div>
-        </div>
-      </div>
-    </details>
-
-    <div class="package-inclusions">
-      <h3 class="sr-only" data-content-id="package-diner-inclusions-title">Wat krijg je?</h3>
-      <ul class="list-check" data-content-id="package-diner-inclusions">
-        <li>3,5 uur avondzeilen</li>
-        <li>Driegangendiner, live bereid</li>
-        <li>Aperitief en amuses bij aankomst</li>
-        <li>Twee glazen wijn bij het diner</li>
-        <li>Onbeperkt frisdrank, koffie en thee</li>
-      </ul>
+    <!-- CTA -->
+    <div class="package-cta">
+      <a href="/offerte/?package={{ pkg.slug }}" class="btn btn-lg">Vraag offerte aan</a>
     </div>
   </div>
 </section>
+{% endfor %}
 
 <!-- Add-ons -->
 <section id="extras" class="section">
-  <h2 data-content-id="packages-extras-title">Extra's</h2>
+  <h2 data-content-id="packages-extras-title">Extra's beschikbaar</h2>
   <p data-content-id="packages-extras-intro">
-    Maak uw arrangement compleet met één van deze opties:
+    Maak je arrangement compleet met deze opties. Bespreek de mogelijkheden bij je offerteverzoek.
   </p>
 
-  <div class="extras-grid grid-3">
+  <div class="extras-grid grid-4">
     <div class="extra-item">
       <h3 data-content-id="packages-extra-dj-title">DJ</h3>
       <p data-content-id="packages-extra-dj-description">
@@ -311,6 +184,42 @@ title: De Zeilkeuken - Arrangementen en prijzen
         Sfeervolle live muziek met authentieke zeemansliederen en klassiekers.
       </p>
       <p class="extra-price" data-content-id="packages-extra-accordeon-price">€ 300</p>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section (Future) -->
+<!-- 
+<section class="section testimonials">
+  <h2 data-content-id="packages-testimonials-title">Wat anderen zeggen</h2>
+  <div class="testimonials-grid grid-3">
+    <div class="testimonial">
+      <p class="testimonial-quote" data-content-id="testimonial-1-quote">"[Quote hier]"</p>
+      <p class="testimonial-author" data-content-id="testimonial-1-author">— [Naam], [Bedrijf/Gelegenheid]</p>
+    </div>
+    <div class="testimonial">
+      <p class="testimonial-quote" data-content-id="testimonial-2-quote">"[Quote hier]"</p>
+      <p class="testimonial-author" data-content-id="testimonial-2-author">— [Naam], [Bedrijf/Gelegenheid]</p>
+    </div>
+    <div class="testimonial">
+      <p class="testimonial-quote" data-content-id="testimonial-3-quote">"[Quote hier]"</p>
+      <p class="testimonial-author" data-content-id="testimonial-3-author">— [Naam], [Bedrijf/Gelegenheid]</p>
+    </div>
+  </div>
+</section>
+-->
+
+<!-- Final CTA Section -->
+<section class="section section-cta">
+  <div class="cta-box">
+    <h2 data-content-id="packages-final-cta-title">Klaar om te boeken?</h2>
+    <p data-content-id="packages-final-cta-text">
+      Vertel ons over je groep en gewenste datum. We sturen je binnen 24 uur een vrijblijvende
+      offerte. Vragen? Bel ons direct op <strong>06 12 34 56 78</strong>.
+    </p>
+    <div class="cta-actions">
+      <a href="/offerte/" class="btn btn-lg" data-content-id="packages-final-cta-button">Vraag offerte aan</a>
+      <a href="/contact/" class="link" data-content-id="packages-final-cta-contact">Of neem contact op</a>
     </div>
   </div>
 </section>

@@ -314,17 +314,44 @@ main {
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.08),
     0 4px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
 }
 
-.card-package::before {
+.card-package .package-description {
+  flex-grow: 1;
+}
+
+.card-package .card-actions {
+  margin-top: auto;
+  padding-top: var(--spacing-sm);
+}
+
+/* Clickable card pattern */
+.card-clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-clickable:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Make the card link cover the whole card */
+.btn-card-link::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #badfdb 0%, #ffa4a4 100%);
-  border-radius: 4px 4px 0 0;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Ensure primary action button is above the card link */
+.btn-primary-action {
+  position: relative;
+  z-index: 2;
 }
 
 /* Card testimonial variant */

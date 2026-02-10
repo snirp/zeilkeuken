@@ -385,6 +385,12 @@
   font-size: var(--font-size-sm);
 }
 
+/* Button variant aligns to the left */
+.package-card-link .package-cta.btn {
+  pointer-events: auto;
+  align-self: flex-start;
+}
+
 .package-card-link:hover .package-cta {
   color: var(--color-black);
 }
@@ -394,8 +400,6 @@
   justify-content: space-between;
   align-items: baseline;
   margin-bottom: var(--spacing-sm);
-  padding-bottom: var(--spacing-sm);
-  border-bottom: 1px solid var(--color-gray-200);
 }
 
 .package-header h3 {
