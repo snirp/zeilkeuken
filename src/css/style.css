@@ -583,7 +583,7 @@ main {
 .list-check li {
   padding-left: var(--spacing-md);
   position: relative;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: 2px;
 }
 
 .list-check li::before {
@@ -591,6 +591,7 @@ main {
   position: absolute;
   left: 0;
   font-weight: 700;
+  color: var(--color-secondary-hover);
 }
 
 .section-dark .list-check li::before {

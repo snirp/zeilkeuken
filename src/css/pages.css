@@ -1065,8 +1065,7 @@
 
 .timeline {
   margin-top: var(--spacing-md);
-  padding-left: var(--spacing-md);
-  border-left: 2px solid var(--color-gray-300);
+  padding-left: var(--spacing-lg);
 }
 
 .timeline-item {
@@ -1079,7 +1078,7 @@
 .timeline-item::before {
   content: '';
   position: absolute;
-  left: -21px;
+  left: calc(-1 * var(--spacing-lg));
   top: 6px;
   width: 12px;
   height: 12px;
@@ -1946,10 +1945,55 @@
 }
 
 /* Package CTA */
-.package-cta {
+.package-detail .package-cta {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   margin-top: var(--spacing-lg);
+  gap: var(--spacing-md);
+}
+
+/* Package inclusions list - reduced spacing */
+.package-detail .list-check li {
+  margin-bottom: 12px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Progressive reveal animation - only when JS is enabled */
+.js-enabled .package-detail .list-check li {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+.js-enabled .package-detail .list-check li.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Show immediately if user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .js-enabled .package-detail .list-check li {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.package-detail .package-back-link {
+  color: var(--color-gray-600);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.package-detail .package-back-link:hover {
+  color: var(--color-black);
 }
 
 /* Final CTA Section */

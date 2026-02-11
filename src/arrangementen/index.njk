@@ -4,7 +4,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
 ---
 
 <!-- Intro Section -->
-<section class="section section-white">
+<section id="arrangementen-overzicht" class="section section-white">
   <div class="section-container">
     <h2 data-content-id="packages-title" style="text-align: center;">Samen genieten op het water</h2>
     <div class="intro-content">
@@ -97,7 +97,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
     <!-- Timeline (collapsed by default) -->
     {% if pkg.content.timeline %}
     <details class="timeline-details">
-      <summary>Programma (indicatief)</summary>
+      <summary>Jouw dag (Indicatief)</summary>
       <div class="timeline">
         {% for item in pkg.content.timeline %}
         <div class="timeline-item">
@@ -114,7 +114,6 @@ title: De Zeilkeuken - Arrangementen en prijzen
 
     <!-- Inclusions -->
     <div class="package-inclusions">
-      <h3>Wat is inbegrepen</h3>
       <ul class="list-check">
         {% for highlight in pkg.content.highlights %}
         <li>{{ highlight }}</li>
@@ -154,6 +153,12 @@ title: De Zeilkeuken - Arrangementen en prijzen
 
     <!-- CTA -->
     <div class="package-cta">
+      <a href="#arrangementen-overzicht" class="package-back-link">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+          <path d="M8 12V4M8 4L4 8M8 4L12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Alle arrangementen
+      </a>
       <a href="/offerte/?package={{ pkg.slug }}" class="btn btn-md">Bereken je prijs</a>
     </div>
   </div>
