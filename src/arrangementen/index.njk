@@ -8,7 +8,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
   <div class="section-container">
     <h2 data-content-id="packages-title" style="text-align: center;">Samen genieten op het water</h2>
     <div class="intro-content">
-      <div class="grid-2">
+      <div class="intro-grid">
       <div>
         <p data-content-id="packages-hero-intro" class="text-lg">
           Op onze traditionele tjalk maak je met je groep een onvergetelijke dag mee. Of het nu gaat om een
@@ -48,15 +48,30 @@ title: De Zeilkeuken - Arrangementen en prijzen
       {% endif %}
       {% endfor %}
     </div>
+
+    <!-- Supplementary Cards -->
+    <div class="supplementary-cards grid-2">
+      <a href="#flexibel" class="card card-supplementary">
+        <h3>Flexibel arrangement</h3>
+        <p>Volledig op maat: bepaal zelf de duur, het menu en de route. Voor wie iets unieks wil.</p>
+        <span class="card-link-more">Lees meer →</span>
+      </a>
+      
+      <a href="#extras" class="card card-supplementary">
+        <h3>Extra's</h3>
+        <p>Maak je arrangement compleet met DJ, fotograaf, oestermeisje of accordeonist.</p>
+        <span class="card-link-more">Bekijk opties →</span>
+      </a>
+    </div>
   </div>
 </section>
 
 <!-- Detailed Package Sections -->
 {% for pkg in packages %}
 <section id="{{ pkg.slug }}" class="section package-detail">
-  <div class="package-hero bleed-both">
+  <div class="package-hero">
     <img
-      src="/images/placeholder-{{ pkg.slug }}.jpg"
+      src="/images/vuurtoreneiland.jpg"
       alt="{{ pkg.content.name }} arrangement"
       class="package-hero-image"
     />
@@ -65,7 +80,6 @@ title: De Zeilkeuken - Arrangementen en prijzen
         <h2>{{ pkg.content.name }}</h2>
         <span class="package-price-large">€{{ pkg.pricing.base }} pp</span>
       </div>
-      <p class="package-subtitle">{{ pkg.content.heroSubtitle }}</p>
       <div class="badge-group">
         {% for badge in pkg.content.badges %}
         <span class="badge">{{ badge }}</span>
@@ -140,7 +154,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
 
     <!-- CTA -->
     <div class="package-cta">
-      <a href="/offerte/?package={{ pkg.slug }}" class="btn btn-lg">Vraag offerte aan</a>
+      <a href="/offerte/?package={{ pkg.slug }}" class="btn btn-md">Bereken je prijs</a>
     </div>
   </div>
 </section>

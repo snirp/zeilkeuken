@@ -14,5 +14,13 @@ module.exports = function () {
     }
   });
 
+  // Define custom order: dagtocht, dinervaart, langevaart, flexibel
+  const order = ['dagtocht', 'dinervaart', 'langevaart', 'flexibel'];
+  packages.sort((a, b) => {
+    const indexA = order.indexOf(a.slug);
+    const indexB = order.indexOf(b.slug);
+    return indexA - indexB;
+  });
+
   return packages;
 };
