@@ -10,12 +10,12 @@ title: De Zeilkeuken - Arrangementen en prijzen
     <div class="intro-content">
       <div class="intro-grid">
       <div>
-        <p data-content-id="packages-hero-intro" class="text-lg">
+        <p data-content-id="packages-hero-intro">
           Op onze traditionele tjalk maak je met je groep een onvergetelijke dag mee. Of het nu gaat om een
           teamuitje, familiefeest of vriendendag: bij ons draait alles om gezelligheid, lekker eten en
           samen zijn op het IJsselmeer.
         </p>
-        <p class="text-base" data-content-id="packages-hero-practical">
+        <p data-content-id="packages-hero-practical">
           Van april tot oktober varen we met groepen van 25 tot 40 personen vanuit Muiden. Alles is
           inbegrepen: varen, eten, drinken. Vaste prijs per persoon, geen verrassingen.
         </p>
@@ -31,37 +31,58 @@ title: De Zeilkeuken - Arrangementen en prijzen
       </div>
     </div>
 
-    <div class="package-cards grid-3">
-      {% for pkg in packages %}
-      {% if pkg.id != "flexibel" %}
-      <div class="card card-package card-clickable">
-        <div class="package-header">
-          <h3>{{ pkg.content.name }}</h3>
-          <span class="package-price">€{{ pkg.pricing.base }} pp</span>
-        </div>
-        <p class="package-description">{{ pkg.content.shortDescription }}</p>
-        <div class="card-actions">
-          <a href="/offerte/?package={{ pkg.slug }}" class="btn btn-sm btn-primary-action">Boek nu</a>
-          <a href="#{{ pkg.slug }}" class="card-link-more btn-card-link">Meer →</a>
-        </div>
-      </div>
-      {% endif %}
-      {% endfor %}
+    <!-- Package Comparison Table -->
+    <div class="package-comparison-wrapper">
+      <table class="package-comparison-table">
+        <thead>
+          <tr>
+            <th>Arrangement</th>
+            <th class="th-duration">Duur</th>
+            <th>Prijs pp<sup>*</sup></th>
+            <th>Beste voor</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pkg in packages %}
+          <tr class="package-row" onclick="window.location.href='#{{ pkg.slug }}'">
+            <td class="package-name">
+              <a href="#{{ pkg.slug }}">{{ pkg.content.name }}</a>
+            </td>
+            <td class="package-duration">
+              {% if pkg.defaults.duration %}
+                {{ pkg.defaults.duration }} uur
+              {% else %}
+                Op maat
+              {% endif %}
+            </td>
+            <td class="package-price-cell">
+              {% if pkg.pricing.base %}
+                €{{ pkg.pricing.base }}
+              {% else %}
+                Op aanvraag
+              {% endif %}
+            </td>
+            <td class="package-bestfor">{{ pkg.content.bestFor }}</td>
+            <td class="package-arrow">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p class="table-footnote" data-content-id="packages-table-footnote">
+        *Definitieve prijs is afhankelijk van groepsgrootte en gekozen opties
+      </p>
     </div>
 
-    <!-- Supplementary Cards -->
-    <div class="supplementary-cards grid-2">
-      <a href="#flexibel" class="card card-supplementary">
-        <h3>Flexibel arrangement</h3>
-        <p>Volledig op maat: bepaal zelf de duur, het menu en de route. Voor wie iets unieks wil.</p>
-        <span class="card-link-more">Lees meer →</span>
-      </a>
-      
-      <a href="#extras" class="card card-supplementary">
-        <h3>Extra's</h3>
-        <p>Maak je arrangement compleet met DJ, fotograaf, oestermeisje of accordeonist.</p>
-        <span class="card-link-more">Bekijk opties →</span>
-      </a>
+    <!-- Extras Callout -->
+    <div class="extras-callout">
+      <h3>Extra's beschikbaar</h3>
+      <p>Maak je arrangement compleet met DJ, fotograaf, oestermeisje of accordeonist.</p>
+      <a href="#extras" class="btn btn-sm btn-secondary">Bekijk opties</a>
     </div>
   </div>
 </section>
@@ -71,7 +92,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
 <section id="{{ pkg.slug }}" class="section package-detail">
   <div class="package-hero">
     <img
-      src="/images/vuurtoreneiland.jpg"
+      src="{% if pkg.slug == 'dinervaart' %}/images/pampus-sunset.webp{% elif pkg.slug == 'langevaart' %}/images/marken.jpg{% else %}/images/vuurtoreneiland.jpg{% endif %}"
       alt="{{ pkg.content.name }} arrangement"
       class="package-hero-image"
     />

@@ -22,6 +22,7 @@
   "extras": ["dj", "fotograaf", "oesters"],
   "content": {
     "name": "Diner & sunset",
+    "bestFor": "Avondevents, jubilea, dinertjes",
     "badges": ["± 3,5 uur", "borrel", "diner", "Pampus"],
     "heroSubtitle": "Avondzeilen met driegangendiner",
     "shortDescription": "Geniet van een intieme avondtocht tijdens het mooiste moment van de dag. We zeilen richting Pampus terwijl de chef een driegangendiner voor je bereidt. Met de ondergaande zon als decor en een glas wijn in de hand, sluit je de dag stijlvol af op het water.",

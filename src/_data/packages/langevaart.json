@@ -22,6 +22,7 @@
   "extras": ["dj", "fotograaf", "oesters", "accordeon"],
   "content": {
     "name": "Lange vaart",
+    "bestFor": "Complete beleving, echte zeilers, speciale gelegenheden",
     "badges": ["± 10 uur", "lunch", "diner", "ontdek"],
     "heroSubtitle": "Van zonsopkomst tot zonsondergang",
     "shortDescription": "Beleef een complete zeildag van ontbijt tot diner op het IJsselmeer. We varen een uitgebreide route langs meerdere havenstadjes zoals Volendam en Marken, met alle tijd om te genieten van vers bereide maaltijden. Perfect voor wie een échte zeilervaring wil met culinaire verwennerij de hele dag door.",

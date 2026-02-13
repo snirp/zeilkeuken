@@ -19,6 +19,7 @@
   "extras": ["dj", "fotograaf", "oesters", "accordeon"],
   "content": {
     "name": "Flexibel",
+    "bestFor": "Custom events, thema's, bijzondere wensen",
     "badges": [],
     "heroSubtitle": "Volledig naar jouw wensen",
     "shortDescription": "Heb je een specifiek programma, thema of tijdstip in gedachten? Bij een flexibel arrangement bepaal jij zelf de duur, het menu en de route. We denken graag met je mee om een unieke zeilervaring te creëren die perfect past bij jouw groep en budget.",
