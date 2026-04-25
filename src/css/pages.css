@@ -788,12 +788,12 @@
 }
 
 .package-name a:hover {
-  color: var(--color-purple);
+  color: var(--color-primary);
 }
 
 .package-price-cell {
   font-weight: 600;
-  color: var(--color-purple);
+  color: var(--color-primary);
   white-space: nowrap;
 }
 
@@ -973,7 +973,7 @@
   display: block;
   font-size: var(--font-size-md);
   font-weight: 700;
-  color: var(--color-purple);
+  color: var(--color-primary);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -1247,7 +1247,7 @@
 .extra-price {
   font-size: var(--font-size-xl);
   font-weight: 700;
-  color: var(--color-purple);
+  color: var(--color-primary);
   margin: 0;
 }
 
@@ -1352,7 +1352,7 @@
   height: 40px;
   min-width: 40px;
   border-radius: 50%;
-  background-color: var(--color-purple);
+  background-color: var(--color-primary);
   color: var(--color-white);
   font-weight: 700;
   font-size: var(--font-size-lg);
@@ -1935,7 +1935,7 @@
 .packages-grid .package-price {
   font-size: var(--font-size-lg);
   font-weight: 700;
-  color: var(--color-purple);
+  color: var(--color-primary);
   white-space: nowrap;
 }
 

@@ -1,6 +1,11 @@
 /**
  * Stepped Quote Form
- * Manages a multi-step form with package-based validation and dynamic content
+ * Manages a multi-step form with package-based validation, boat rental pricing,
+ * and time-window-based catering options.
+ *
+ * Steps: 1. Vaart (date, package, departure/arrival, boat price)
+ *        2. Catering (guests, catering options)
+ *        3. Gegevens (personal details, price calculator)
  */
 
 (function () {
@@ -9,29 +14,32 @@
   // Load pricing data from global variable (injected by 11ty)
   const pricingData = window.PRICING_DATA || {};
 
-  // Package configuration - loaded from data file
+  const BOAT_RENTAL = pricingData.boatRental || {};
+  const CHILDREN = pricingData.children || { ageLimit: 12, discount: 0.5 };
+  const DRINKS = pricingData.drinks || {};
+  const LUNCH = pricingData.lunch || {};
+  const BORREL = pricingData.borrel || {};
+  const DINNER = pricingData.dinner || {};
   const PACKAGE_CONFIG = pricingData.packages || {};
-
-  // Fixed-price extras - loaded from data file
-  const FIXED_EXTRAS = pricingData.fixedExtras || {};
-
-  // Per-person extras - loaded from data file
-  const PER_PERSON_EXTRAS = pricingData.perPersonExtras || {};
-
-  // Pricing calculation constants - loaded from data file
-  const PRICING = pricingData.baseRates || {};
 
   // Form state
   const state = {
     currentStep: 1,
-    totalSteps: 4,
+    totalSteps: 3,
+    userOverrodeTimes: false,
     formData: {
       package: null,
       date: null,
-      guests: null,
+      adults: null,
+      children: 0,
       departure: null,
-      duration: null,
-      extras: [],
+      arrival: null,
+      catering: {
+        drinks: 'advanceBilling',
+        lunch: 'none',
+        borrel: 'none',
+        dinner: 'none',
+      },
       personalDetails: {},
     },
   };
@@ -43,7 +51,6 @@
    * Initialize the stepped form
    */
   function init() {
-    // Get DOM elements
     form = document.querySelector('.stepped-form');
     if (!form) return;
 
@@ -55,25 +62,19 @@
     btnNext = form.querySelector('.btn-next');
     btnSubmit = form.querySelector('.btn-submit');
 
-    // Load saved state from sessionStorage
     loadState();
-
-    // Set up event listeners
     setupEventListeners();
-
-    // Render initial state
     renderStep();
+    updateBoatPriceEstimate();
   }
 
   /**
    * Set up all event listeners
    */
   function setupEventListeners() {
-    // Navigation buttons
     btnBack.addEventListener('click', goToPreviousStep);
     btnNext.addEventListener('click', goToNextStep);
 
-    // Progress step navigation
     progressSteps.forEach((step, index) => {
       step.addEventListener('click', () => {
         const targetStep = index + 1;
@@ -87,144 +88,160 @@
       radio.addEventListener('change', handlePackageChange);
     });
 
-    // Date and guests inputs
+    // Date input
     const dateInput = form.querySelector('#date');
-    const guestsInput = form.querySelector('#guests');
+    if (dateInput) dateInput.addEventListener('change', handleDateChange);
+
+    // Time inputs (step 1)
     const departureInput = form.querySelector('#departure');
-    const durationInput = form.querySelector('#duration');
+    const arrivalInput = form.querySelector('#arrival');
+    if (departureInput) departureInput.addEventListener('change', handleDepartureChange);
+    if (arrivalInput) arrivalInput.addEventListener('change', handleArrivalChange);
 
-    if (dateInput) {
-      dateInput.addEventListener('change', handleDateChange);
-    }
+    // Guest inputs (step 2)
+    const adultsInput = form.querySelector('#adults');
+    const childrenInput = form.querySelector('#children');
+    if (adultsInput) adultsInput.addEventListener('input', handleGuestsChange);
+    if (childrenInput) childrenInput.addEventListener('input', handleGuestsChange);
 
-    if (guestsInput) {
-      guestsInput.addEventListener('input', handleGuestsChange);
-    }
-
-    // Departure time select
-    if (departureInput) {
-      departureInput.addEventListener('change', handleDepartureChange);
-    }
-
-    if (durationInput) {
-      durationInput.addEventListener('input', handleDurationChange);
-    }
-
-    // Extras checkboxes
-    const extrasCheckboxes = form.querySelectorAll('.extras-step input[type="checkbox"]');
-    extrasCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', handleExtrasChange);
+    // Catering radios
+    ['drinks', 'lunch', 'borrel', 'dinner'].forEach(category => {
+      const radios = form.querySelectorAll(`input[name="${category}"]`);
+      radios.forEach(radio => {
+        radio.addEventListener('change', handleCateringChange);
+      });
     });
 
     // Personal details inputs
     const nameInput = form.querySelector('#name');
     const emailInput = form.querySelector('#email');
-
     if (nameInput) nameInput.addEventListener('input', handlePersonalDetailsChange);
     if (emailInput) emailInput.addEventListener('input', handlePersonalDetailsChange);
 
     // Form submission
     form.addEventListener('submit', handleSubmit);
-
-    // Auto-save state on input
     form.addEventListener('input', saveState);
   }
 
-  /**
-   * Handle package selection
-   */
+  // --- Event Handlers ---
+
   function handlePackageChange(e) {
     state.formData.package = e.target.value;
+    validateDateAgainstPackage();
     updateDateConstraints();
     updateGuestsConstraints();
-    updatePackageDefaults();
-    updateAvailableExtras();
-    updatePriceCalculator();
+    if (!state.userOverrodeTimes) {
+      updatePackageDefaults();
+    }
+    updateBoatPriceEstimate();
     updateNavigationState();
     saveState();
   }
 
-  /**
-   * Handle date change
-   */
   function handleDateChange(e) {
     state.formData.date = e.target.value;
+    validateDateAgainstPackage();
+    updateNavigationState();
+    saveState();
+  }
+
+  /**
+   * Validate date against selected package's season constraints.
+   * Warns and clears date if it falls outside the season range.
+   */
+  function validateDateAgainstPackage() {
+    if (!state.formData.date || !state.formData.package) return;
+
+    const config = PACKAGE_CONFIG[state.formData.package];
+    if (!config || !config.dateRange) return;
+
+    const selectedDate = new Date(state.formData.date);
+    const startDate = new Date(config.dateRange.start);
+    const endDate = new Date(config.dateRange.end);
+
+    if (selectedDate < startDate || selectedDate > endDate) {
+      showError(
+        'De gekozen datum valt buiten het seizoen voor dit arrangement (april - oktober). Kies een andere datum.'
+      );
+      const dateInput = form.querySelector('#date');
+      if (dateInput) dateInput.value = '';
+      state.formData.date = null;
+    }
+  }
+
+  function handleGuestsChange() {
+    const adultsInput = form.querySelector('#adults');
+    const childrenInput = form.querySelector('#children');
+    state.formData.adults = parseInt(adultsInput?.value) || null;
+    state.formData.children = parseInt(childrenInput?.value) || 0;
+
+    // Enforce max 40 total
+    const total = (state.formData.adults || 0) + state.formData.children;
+    if (total > 40 && childrenInput) {
+      state.formData.children = 40 - (state.formData.adults || 0);
+      if (state.formData.children < 0) state.formData.children = 0;
+      childrenInput.value = state.formData.children;
+    }
+
+    updateGuestsConstraints();
+    updateCateringTotal();
     updatePriceCalculator();
     updateNavigationState();
     saveState();
   }
 
   /**
-   * Handle guests change
+   * Get total pax and effective pax (adults + discounted children)
    */
-  function handleGuestsChange(e) {
-    state.formData.guests = parseInt(e.target.value) || null;
-    updatePriceEstimate();
-    updatePriceCalculator();
-    updateNavigationState();
-    saveState();
+  function getTotalPax() {
+    return (state.formData.adults || 0) + (state.formData.children || 0);
   }
 
-  /**
-   * Handle departure time change
-   */
+  function getEffectivePax() {
+    const adults = state.formData.adults || 0;
+    const children = state.formData.children || 0;
+    return adults + children * (1 - CHILDREN.discount);
+  }
+
   function handleDepartureChange(e) {
     state.formData.departure = e.target.value || null;
+    state.userOverrodeTimes = true;
+    updateBoatPriceEstimate();
+    updateNavigationState();
+    saveState();
+  }
+
+  function handleArrivalChange(e) {
+    state.formData.arrival = e.target.value || null;
+    state.userOverrodeTimes = true;
+    updateBoatPriceEstimate();
     updateNavigationState();
     saveState();
   }
 
   /**
-   * Handle duration change
+   * Derive duration in hours from departure and arrival times
    */
-  function handleDurationChange(e) {
-    const input = e.target;
-    let value = parseFloat(input.value);
-
-    if (isNaN(value)) {
-      state.formData.duration = null;
-      updatePriceEstimate();
-      updateNavigationState();
-      return;
-    }
-
-    // Enforce min/max
-    if (value < 2) value = 2;
-    if (value > 12) value = 12;
-
-    // Round to nearest 0.5
-    value = Math.round(value * 2) / 2;
-
-    if (parseFloat(input.value) !== value) {
-      input.value = value;
-    }
-
-    state.formData.duration = value;
-    updatePriceEstimate();
-    updateNavigationState();
-    saveState();
+  function getDuration() {
+    if (!state.formData.departure || !state.formData.arrival) return null;
+    const depMinutes = parseTime(state.formData.departure);
+    const arrMinutes = parseTime(state.formData.arrival);
+    const diff = arrMinutes - depMinutes;
+    if (diff <= 0) return null;
+    return diff / 60;
   }
 
-  /**
-   * Handle extras checkbox change
-   */
-  function handleExtrasChange() {
-    const checkedExtras = Array.from(
-      form.querySelectorAll('.extras-step input[type="checkbox"]:checked')
-    ).map(cb => cb.name);
-
-    state.formData.extras = checkedExtras;
+  function handleCateringChange(e) {
+    const category = e.target.name;
+    state.formData.catering[category] = e.target.value;
+    updateCateringTotal();
     updatePriceCalculator();
     saveState();
   }
 
-  /**
-   * Handle personal details change
-   */
   function handlePersonalDetailsChange() {
     const nameInput = form.querySelector('#name');
     const emailInput = form.querySelector('#email');
-
     state.formData.personalDetails = {
       name: nameInput ? nameInput.value : '',
       email: emailInput ? emailInput.value : '',
@@ -233,15 +250,250 @@
     saveState();
   }
 
+  // --- Time Window Helpers ---
+
   /**
-   * Update date input constraints based on selected package
+   * Parse "HH:MM" to minutes since midnight
    */
+  function parseTime(timeStr) {
+    const [h, m] = timeStr.split(':').map(Number);
+    return h * 60 + m;
+  }
+
+  /**
+   * Convert minutes since midnight to "HH:MM" string
+   */
+  function minutesToTime(minutes) {
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+  }
+
+  /**
+   * Get the trip start/end in minutes since midnight
+   */
+  function getTripWindow() {
+    if (!state.formData.departure || !state.formData.arrival) return null;
+    const start = parseTime(state.formData.departure);
+    const end = parseTime(state.formData.arrival);
+    if (end <= start) return null;
+    return { start, end };
+  }
+
+  /**
+   * Check if trip window overlaps with a time window
+   */
+  function overlaps(trip, window) {
+    const wStart = parseTime(window.start);
+    const wEnd = parseTime(window.end);
+    return trip.start < wEnd && trip.end > wStart;
+  }
+
+  // --- Boat Rental Price ---
+
+  function calculateBoatRental() {
+    const duration = getDuration();
+    if (!duration || duration < 2) return null;
+    let price = BOAT_RENTAL.base;
+    if (duration > BOAT_RENTAL.tresholdHours) {
+      price += (duration - BOAT_RENTAL.tresholdHours) * BOAT_RENTAL.perHour;
+    }
+    return price;
+  }
+
+  function updateBoatPriceEstimate() {
+    const estimateEl = form.querySelector('#price-estimate');
+    if (!estimateEl) return;
+
+    const price = calculateBoatRental();
+    if (price === null) {
+      estimateEl.textContent = '—';
+      return;
+    }
+    estimateEl.textContent = '€' + price.toLocaleString('nl-NL');
+  }
+
+  // --- Catering Logic ---
+
+  /**
+   * Calculate the catering price for a single category
+   */
+  function calculateCateringPrice(category, selection) {
+    if (selection === 'none') return 0;
+    const pax = getEffectivePax();
+    const duration = getDuration() || 0;
+
+    switch (category) {
+      case 'drinks':
+        // ppph pricing
+        if (selection === 'dutchBar') return DRINKS.dutchBarPpPh * pax * duration;
+        if (selection === 'winePackage') return DRINKS.winePackagePpPh * pax * duration;
+        if (selection === 'advanceBilling') return DRINKS.advanceBillingPpPh * pax * duration;
+        return 0;
+      case 'lunch':
+        return LUNCH.pp * pax;
+      case 'borrel':
+        if (selection === 'dutch') return BORREL.dutchPp * pax;
+        if (selection === 'luxury') return BORREL.luxuryPp * pax;
+        return 0;
+      case 'dinner':
+        if (selection === 'walking') return DINNER.walkingPp * pax;
+        if (selection === 'shared') return DINNER.sharedPp * pax;
+        return 0;
+      default:
+        return 0;
+    }
+  }
+
+  function calculateTotalCatering() {
+    let total = 0;
+    for (const [category, selection] of Object.entries(state.formData.catering)) {
+      total += calculateCateringPrice(category, selection);
+    }
+    return total;
+  }
+
+  /**
+   * Update catering section visibility and defaults based on trip time window.
+   * - defaultWindow overlap → show and select cheapest option
+   * - offerWindow overlap (not default) → show but select "none"
+   * - no overlap → hide entire fieldset
+   */
+  function updateCateringVisibility() {
+    const trip = getTripWindow();
+
+    const categories = [
+      {
+        id: 'drinks',
+        config: {
+          defaultWindow: { start: '00:00', end: '24:00' }, // drinks always available if trip exists
+          offerWindow: { start: '00:00', end: '24:00' },
+        },
+        cheapest: 'advanceBilling',
+      },
+      {
+        id: 'lunch',
+        config: LUNCH,
+        cheapest: 'standard',
+      },
+      {
+        id: 'borrel',
+        config: BORREL,
+        cheapest: 'dutch',
+      },
+      {
+        id: 'dinner',
+        config: DINNER,
+        cheapest: 'walking',
+      },
+    ];
+
+    categories.forEach(({ id, config, cheapest }) => {
+      const fieldset = form.querySelector(`#catering-${id}`);
+      if (!fieldset) return;
+
+      if (!trip) {
+        // No trip window yet, show all disabled
+        fieldset.style.display = '';
+        fieldset.classList.remove('catering-hidden');
+        return;
+      }
+
+      const inDefault = config.defaultWindow && overlaps(trip, config.defaultWindow);
+      const inOffer = config.offerWindow && overlaps(trip, config.offerWindow);
+
+      if (!inOffer) {
+        // Hide entirely
+        fieldset.style.display = 'none';
+        fieldset.classList.add('catering-hidden');
+        // Reset to none
+        const noneRadio = fieldset.querySelector('input[value="none"]');
+        if (noneRadio) {
+          noneRadio.checked = true;
+          state.formData.catering[id] = 'none';
+        }
+      } else {
+        fieldset.style.display = '';
+        fieldset.classList.remove('catering-hidden');
+
+        if (inDefault) {
+          // Auto-select cheapest option
+          const cheapestRadio = fieldset.querySelector(`input[value="${cheapest}"]`);
+          if (cheapestRadio && state.formData.catering[id] === 'none') {
+            cheapestRadio.checked = true;
+            state.formData.catering[id] = cheapest;
+          }
+        } else {
+          // In offer window but not default → available, but off by default
+          // Only reset if user hasn't explicitly chosen something
+          // (we leave the current selection alone)
+        }
+      }
+    });
+
+    updateCateringTotal();
+  }
+
+  function updateCateringTotal() {
+    const totalEl = form.querySelector('#catering-total');
+    if (!totalEl) return;
+
+    const totalPax = getTotalPax();
+    const duration = getDuration();
+
+    if (!totalPax || !duration) {
+      totalEl.textContent = '—';
+      return;
+    }
+
+    const total = calculateTotalCatering();
+    totalEl.textContent = '€' + total.toLocaleString('nl-NL');
+  }
+
+  // --- Price Calculator (Step 4) ---
+
+  function updatePriceCalculator() {
+    const boatPriceEl = form.querySelector('#boat-price');
+    const cateringPriceEl = form.querySelector('#catering-price');
+    const cateringLineEl = form.querySelector('#catering-line');
+    const totalPriceEl = form.querySelector('#total-price');
+    const exvatPriceEl = form.querySelector('#exvat-price');
+
+    if (!boatPriceEl) return;
+
+    const boatPrice = calculateBoatRental();
+    if (boatPrice === null) {
+      boatPriceEl.textContent = '—';
+      if (totalPriceEl) totalPriceEl.textContent = '—';
+      if (exvatPriceEl) exvatPriceEl.textContent = '—';
+      if (cateringLineEl) cateringLineEl.style.display = 'none';
+      return;
+    }
+
+    boatPriceEl.textContent = '€' + boatPrice.toLocaleString('nl-NL');
+
+    const cateringTotal = calculateTotalCatering();
+    if (cateringTotal > 0) {
+      cateringPriceEl.textContent = '€' + cateringTotal.toLocaleString('nl-NL');
+      cateringLineEl.style.display = 'flex';
+    } else {
+      if (cateringLineEl) cateringLineEl.style.display = 'none';
+    }
+
+    const total = boatPrice + cateringTotal;
+    totalPriceEl.textContent = '€' + total.toLocaleString('nl-NL');
+
+    const exVat = total / 1.21;
+    exvatPriceEl.textContent = '€' + Math.round(exVat).toLocaleString('nl-NL');
+  }
+
+  // --- Package Constraints ---
+
   function updateDateConstraints() {
     const dateInput = form.querySelector('#date');
     if (!dateInput || !state.formData.package) return;
 
     const config = PACKAGE_CONFIG[state.formData.package];
-
     if (config.dateRange) {
       dateInput.min = config.dateRange.start;
       dateInput.max = config.dateRange.end;
@@ -251,297 +503,177 @@
     }
   }
 
-  /**
-   * Update guests input constraints based on selected package
-   */
   function updateGuestsConstraints() {
-    const guestsInput = form.querySelector('#guests');
-    if (!guestsInput || !state.formData.package) return;
+    const adultsInput = form.querySelector('#adults');
+    const childrenInput = form.querySelector('#children');
+    if (!adultsInput) return;
 
-    const config = PACKAGE_CONFIG[state.formData.package];
-    guestsInput.min = config.minGuests;
-    guestsInput.max = config.maxGuests;
-    guestsInput.placeholder = `${config.minGuests}-${config.maxGuests}`;
+    if (state.formData.package) {
+      const config = PACKAGE_CONFIG[state.formData.package];
+      adultsInput.min = config.minGuests;
+    }
+
+    // Cap children max so total doesn't exceed 40
+    const adults = state.formData.adults || 0;
+    const maxChildren = Math.max(0, 40 - adults);
+    if (childrenInput) childrenInput.max = maxChildren;
+
+    // Cap adults max
+    const children = state.formData.children || 0;
+    adultsInput.max = 40 - children;
   }
 
-  /**
-   * Update departure and duration inputs with package defaults
-   */
   function updatePackageDefaults() {
     if (!state.formData.package) return;
 
     const config = PACKAGE_CONFIG[state.formData.package];
     const departureInput = form.querySelector('#departure');
-    const durationInput = form.querySelector('#duration');
+    const arrivalInput = form.querySelector('#arrival');
 
-    // Set departure time default
     if (departureInput && config.defaultDeparture) {
       departureInput.value = config.defaultDeparture;
       state.formData.departure = config.defaultDeparture;
     } else if (departureInput && !config.defaultDeparture) {
-      // Clear for packages without defaults (flexibel)
       departureInput.value = '';
       state.formData.departure = null;
     }
 
-    // Set duration default
-    if (durationInput && config.defaultDuration) {
-      durationInput.value = config.defaultDuration;
-      state.formData.duration = config.defaultDuration;
-    } else if (durationInput && !config.defaultDuration) {
-      // Clear for packages without defaults (flexibel)
-      durationInput.value = '';
-      state.formData.duration = null;
-    }
-
-    // Update price estimate with new defaults
-    updatePriceEstimate();
-  }
-
-  /**
-   * Update available extras based on selected package
-   */
-  function updateAvailableExtras() {
-    if (!state.formData.package) return;
-
-    const config = PACKAGE_CONFIG[state.formData.package];
-    const allExtrasContainers = form.querySelectorAll('.extra-option');
-
-    allExtrasContainers.forEach(container => {
-      const checkbox = container.querySelector('input[type="checkbox"]');
-      if (!checkbox) return;
-
-      const extraName = checkbox.name;
-      const isAvailable = config.extras.includes(extraName);
-
-      if (isAvailable) {
-        container.style.display = '';
-        checkbox.disabled = false;
+    if (arrivalInput && config.defaultDeparture && config.defaultDuration) {
+      const depMinutes = parseTime(config.defaultDeparture);
+      const arrMinutes = depMinutes + config.defaultDuration * 60;
+      const arrivalTime = minutesToTime(arrMinutes);
+      // Select the matching option if it exists
+      const option = arrivalInput.querySelector(`option[value="${arrivalTime}"]`);
+      if (option) {
+        arrivalInput.value = arrivalTime;
+        state.formData.arrival = arrivalTime;
       } else {
-        container.style.display = 'none';
-        checkbox.disabled = true;
-        checkbox.checked = false;
+        arrivalInput.value = '';
+        state.formData.arrival = null;
       }
-    });
-
-    // Update luxury upgrade text if available
-    if (config.extras.includes('luxury-upgrade')) {
-      const upgradeLabel = form.querySelector('#upgrade-label');
-      const upgradeDescription = form.querySelector('#upgrade-description');
-
-      if (upgradeLabel && config.upgradeText) {
-        upgradeLabel.innerHTML = `Luxe upgrade <strong>${config.upgradeText}</strong>`;
-      }
-      if (upgradeDescription && config.upgradeDescription) {
-        upgradeDescription.textContent = config.upgradeDescription;
-      }
+    } else if (arrivalInput && (!config.defaultDeparture || !config.defaultDuration)) {
+      arrivalInput.value = '';
+      state.formData.arrival = null;
     }
+
+    updateBoatPriceEstimate();
   }
 
-  /**
-   * Calculate and update price estimate
-   */
-  function updatePriceEstimate() {
-    const estimateEl = form.querySelector('#price-estimate');
-    if (!estimateEl) return;
+  // --- Navigation ---
 
-    // Check if all required fields are present
-    if (!state.formData.duration || !state.formData.guests) {
-      estimateEl.textContent = '—';
-      return;
-    }
-
-    // Calculate base: pvrt + duration * pu + guests * pppu * duration
-    let total =
-      PRICING.pvrt +
-      state.formData.duration * PRICING.pu +
-      state.formData.guests * PRICING.pppu * state.formData.duration;
-
-    // Add dinner extra if dinervaart package is selected
-    if (state.formData.package === 'dinervaart') {
-      total += PRICING.dnr * state.formData.guests;
-    }
-
-    const perPerson = total / state.formData.guests;
-
-    // Round to nearest 0.5
-    const rounded = Math.round(perPerson * 2) / 2;
-
-    estimateEl.textContent = '€' + rounded.toFixed(2).replace('.', ',') + ' pp';
-  }
-
-  /**
-   * Update price calculator
-   */
-  function updatePriceCalculator() {
-    const basePriceEl = form.querySelector('#base-price');
-    const extrasPriceEl = form.querySelector('#extras-price');
-    const extrasLineEl = form.querySelector('#extras-line');
-    const totalPriceEl = form.querySelector('#total-price');
-    const exvatPriceEl = form.querySelector('#exvat-price');
-
-    if (!basePriceEl || !state.formData.package || !state.formData.guests) {
-      if (basePriceEl) basePriceEl.textContent = '—';
-      if (totalPriceEl) totalPriceEl.textContent = '—';
-      if (exvatPriceEl) exvatPriceEl.textContent = '—';
-      if (extrasLineEl) extrasLineEl.style.display = 'none';
-      return;
-    }
-
-    const config = PACKAGE_CONFIG[state.formData.package];
-
-    // If flexibel or no price, show custom pricing
-    if (!config.price) {
-      basePriceEl.textContent = 'Op maat';
-      totalPriceEl.textContent = 'Op maat';
-      exvatPriceEl.textContent = 'Op maat';
-      if (extrasLineEl) extrasLineEl.style.display = 'none';
-      return;
-    }
-
-    // Calculate base price
-    let basePrice = config.price * state.formData.guests;
-
-    // Add luxury upgrade if checked
-    const luxuryCheckbox = form.querySelector('input[name="luxury-upgrade"]');
-    if (luxuryCheckbox && luxuryCheckbox.checked && config.upgradePrice) {
-      basePrice += config.upgradePrice * state.formData.guests;
-    }
-
-    // Calculate extras
-    let extrasTotal = 0;
-    state.formData.extras.forEach(extraName => {
-      if (FIXED_EXTRAS[extraName]) {
-        extrasTotal += FIXED_EXTRAS[extraName];
-      } else if (PER_PERSON_EXTRAS[extraName]) {
-        extrasTotal += PER_PERSON_EXTRAS[extraName] * state.formData.guests;
-      }
-    });
-
-    // Update display
-    basePriceEl.textContent = '€' + basePrice.toLocaleString('nl-NL');
-
-    if (extrasTotal > 0) {
-      extrasPriceEl.textContent = '€' + extrasTotal.toLocaleString('nl-NL');
-      extrasLineEl.style.display = 'flex';
-    } else {
-      if (extrasLineEl) extrasLineEl.style.display = 'none';
-    }
-
-    const total = basePrice + extrasTotal;
-    totalPriceEl.textContent = '€' + total.toLocaleString('nl-NL');
-
-    const exVat = total / 1.21;
-    exvatPriceEl.textContent = '€' + Math.round(exVat).toLocaleString('nl-NL');
-  }
-
-  /**
-   * Update navigation button states
-   */
   function updateNavigationState() {
     if (!btnNext) return;
-
-    const isValid = validateCurrentStepSilent();
-    btnNext.disabled = !isValid;
+    btnNext.disabled = !validateCurrentStepSilent();
   }
 
-  /**
-   * Validate current step silently (no error messages)
-   */
   function validateCurrentStepSilent() {
     switch (state.currentStep) {
-      case 1: // Package selection
-        return state.formData.package !== null;
+      case 1: {
+        if (!state.formData.package || !state.formData.date) return false;
+        if (!state.formData.departure || !state.formData.arrival) return false;
 
-      case 2: // Date, guests, departure, duration
-        if (
-          !state.formData.date ||
-          !state.formData.guests ||
-          !state.formData.departure ||
-          !state.formData.duration
-        )
-          return false;
+        const duration = getDuration();
+        if (!duration || duration < 2 || duration > 12) return false;
 
         const config = PACKAGE_CONFIG[state.formData.package];
         if (config.dateRange) {
           const selectedDate = new Date(state.formData.date);
           const startDate = new Date(config.dateRange.start);
           const endDate = new Date(config.dateRange.end);
-
           if (selectedDate < startDate || selectedDate > endDate) return false;
         }
 
-        if (state.formData.guests < config.minGuests || state.formData.guests > config.maxGuests) {
-          return false;
-        }
+        return true;
+      }
+
+      case 2: {
+        const totalPax = getTotalPax();
+        if (!state.formData.adults) return false;
+        if (totalPax > 40) return false;
+
+        const config = PACKAGE_CONFIG[state.formData.package];
+        if (totalPax < config.minGuests || totalPax > config.maxGuests) return false;
 
         return true;
+      }
 
-      case 3: // Extras (optional, always valid)
-        return true;
-
-      case 4: // Personal details
+      case 3: {
         const nameInput = form.querySelector('#name');
         const emailInput = form.querySelector('#email');
-
         if (!nameInput || !emailInput) return false;
         if (!nameInput.value.trim()) return false;
         if (!emailInput.value.trim() || !isValidEmail(emailInput.value)) return false;
-
         return true;
+      }
 
       default:
         return false;
     }
   }
 
-  /**
-   * Validate current step
-   */
   function validateCurrentStep() {
     switch (state.currentStep) {
-      case 1: // Package selection
-        return state.formData.package !== null;
-
-      case 2: // Date, guests, departure, duration
-        if (
-          !state.formData.date ||
-          !state.formData.guests ||
-          !state.formData.departure ||
-          !state.formData.duration
-        ) {
-          showError('Vul alle verplichte velden in');
+      case 1: {
+        if (!state.formData.date) {
+          showError('Kies een gewenste datum');
+          return false;
+        }
+        if (!state.formData.package) {
+          showError('Selecteer een arrangement');
+          return false;
+        }
+        if (!state.formData.departure || !state.formData.arrival) {
+          showError('Kies een vertrek- en aankomsttijd');
+          return false;
+        }
+        const duration = getDuration();
+        if (!duration || duration < 2) {
+          showError('Aankomsttijd moet minstens 2 uur na vertrektijd zijn');
+          return false;
+        }
+        if (duration > 12) {
+          showError('Vaartijd mag maximaal 12 uur zijn');
           return false;
         }
 
-        // Validate date range if applicable
         const config = PACKAGE_CONFIG[state.formData.package];
         if (config.dateRange) {
           const selectedDate = new Date(state.formData.date);
           const startDate = new Date(config.dateRange.start);
           const endDate = new Date(config.dateRange.end);
-
           if (selectedDate < startDate || selectedDate > endDate) {
             showError('Kies een datum binnen het seizoen (april - oktober)');
             return false;
           }
         }
+        return true;
+      }
 
-        // Validate guest count
-        if (state.formData.guests < config.minGuests || state.formData.guests > config.maxGuests) {
-          showError(`Aantal personen moet tussen ${config.minGuests} en ${config.maxGuests} zijn`);
+      case 2: {
+        const totalPax = getTotalPax();
+        if (!state.formData.adults) {
+          showError('Vul het aantal volwassenen in');
           return false;
         }
 
-        return true;
+        if (totalPax > 40) {
+          showError('Totaal aantal personen mag niet meer dan 40 zijn');
+          return false;
+        }
 
-      case 3: // Extras (optional, always valid)
+        const config = PACKAGE_CONFIG[state.formData.package];
+        if (totalPax < config.minGuests || totalPax > config.maxGuests) {
+          showError(
+            `Totaal aantal personen moet tussen ${config.minGuests} en ${config.maxGuests} zijn`
+          );
+          return false;
+        }
         return true;
+      }
 
-      case 4: // Personal details
+      case 3: {
         const nameInput = form.querySelector('#name');
         const emailInput = form.querySelector('#email');
-
         if (!nameInput || !emailInput) return false;
         if (!nameInput.value.trim()) {
           showError('Vul je naam in');
@@ -551,73 +683,56 @@
           showError('Vul een geldig e-mailadres in');
           return false;
         }
-
         return true;
+      }
 
       default:
         return false;
     }
   }
 
-  /**
-   * Validate email format
-   */
   function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
-  /**
-   * Show error message
-   */
   function showError(message) {
-    // Create or update error message element
     let errorEl = form.querySelector('.form-error');
     if (!errorEl) {
       errorEl = document.createElement('div');
       errorEl.className = 'form-error';
       form.insertBefore(errorEl, form.querySelector('.form-navigation'));
     }
-
     errorEl.textContent = message;
     errorEl.style.display = 'block';
-
-    // Auto-hide after 5 seconds
     setTimeout(() => {
       errorEl.style.display = 'none';
     }, 5000);
   }
 
-  /**
-   * Hide error message
-   */
   function hideError() {
     const errorEl = form.querySelector('.form-error');
-    if (errorEl) {
-      errorEl.style.display = 'none';
-    }
+    if (errorEl) errorEl.style.display = 'none';
   }
 
-  /**
-   * Go to next step
-   */
   function goToNextStep() {
     if (!validateCurrentStep()) return;
-
     hideError();
 
     if (state.currentStep < state.totalSteps) {
       state.currentStep++;
+
+      // When entering catering step, update visibility based on trip window
+      if (state.currentStep === 2) {
+        updateCateringVisibility();
+      }
+
       renderStep();
       saveState();
     }
   }
 
-  /**
-   * Go to previous step
-   */
   function goToPreviousStep() {
     hideError();
-
     if (state.currentStep > 1) {
       state.currentStep--;
       renderStep();
@@ -625,72 +740,41 @@
     }
   }
 
-  /**
-   * Go to specific step
-   */
   function goToStep(targetStep) {
-    // Only allow going to current step or completed steps
-    if (targetStep > state.currentStep) {
-      return; // Cannot jump forward
-    }
-
+    if (targetStep > state.currentStep) return;
     hideError();
     state.currentStep = targetStep;
     renderStep();
     saveState();
   }
 
-  /**
-   * Render current step
-   */
   function renderStep() {
-    // Update progress bar (0% at step 1, 100% at step 4)
     const progressPercent = ((state.currentStep - 1) / (state.totalSteps - 1)) * 100;
-    if (progressBar) {
-      progressBar.style.width = progressPercent + '%';
-    }
+    if (progressBar) progressBar.style.width = progressPercent + '%';
 
-    // Update sailboat position (moves within the 75% width bar)
     if (progressBoat) {
       progressBoat.style.left = progressPercent + '%';
-
-      // Trigger wobble animation
       progressBoat.classList.remove('wobble');
-      // Force reflow to restart animation
       void progressBoat.offsetWidth;
       progressBoat.classList.add('wobble');
-
-      // Remove wobble class after animation completes to return to bobbing
-      setTimeout(() => {
-        progressBoat.classList.remove('wobble');
-      }, 600); // Match animation duration
+      setTimeout(() => progressBoat.classList.remove('wobble'), 600);
     }
 
-    // Update progress steps
     progressSteps.forEach((step, index) => {
       const stepNumber = index + 1;
-
-      // Remove all classes first
       step.classList.remove('active', 'completed', 'clickable');
 
       if (stepNumber < state.currentStep) {
         step.classList.add('completed', 'clickable');
+        step.style.cursor = 'pointer';
       } else if (stepNumber === state.currentStep) {
         step.classList.add('active', 'clickable');
-      } else {
-        // Future steps - not clickable
-        step.style.cursor = 'default';
-      }
-
-      // Set cursor style
-      if (stepNumber <= state.currentStep) {
         step.style.cursor = 'pointer';
       } else {
         step.style.cursor = 'default';
       }
     });
 
-    // Show/hide step containers
     stepContainers.forEach((container, index) => {
       const stepNumber = index + 1;
       if (stepNumber === state.currentStep) {
@@ -702,38 +786,29 @@
       }
     });
 
-    // Update navigation buttons
     btnBack.style.display = state.currentStep === 1 ? 'none' : 'inline-block';
 
     if (state.currentStep === state.totalSteps) {
       btnNext.style.display = 'none';
       btnSubmit.style.display = 'inline-block';
+      updatePriceCalculator();
     } else {
       btnNext.style.display = 'inline-block';
       btnSubmit.style.display = 'none';
     }
 
-    // Show/hide conditional sections based on step
     const conditionalSections = document.querySelectorAll('[data-show-on-step]');
     conditionalSections.forEach(section => {
       const showOnStep = parseInt(section.getAttribute('data-show-on-step'));
-      if (showOnStep === state.currentStep) {
-        section.style.display = 'block';
-      } else {
-        section.style.display = 'none';
-      }
+      section.style.display = showOnStep === state.currentStep ? 'block' : 'none';
     });
 
-    // Update navigation button state
     updateNavigationState();
-
-    // Scroll to top of form
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  /**
-   * Save state to sessionStorage
-   */
+  // --- State Persistence ---
+
   function saveState() {
     try {
       sessionStorage.setItem('quoteFormState', JSON.stringify(state));
@@ -742,15 +817,32 @@
     }
   }
 
-  /**
-   * Load state from sessionStorage
-   */
   function loadState() {
     try {
       const saved = sessionStorage.getItem('quoteFormState');
       if (saved) {
         const savedState = JSON.parse(saved);
         Object.assign(state, savedState);
+
+        // Ensure totalSteps matches current form structure
+        state.totalSteps = 3;
+        if (state.currentStep > state.totalSteps) {
+          state.currentStep = state.totalSteps;
+        }
+
+        // Migrate from old state format: guests → adults
+        if (state.formData.guests && !state.formData.adults) {
+          state.formData.adults = state.formData.guests;
+          delete state.formData.guests;
+        }
+
+        // Migrate from old state format: duration → arrival
+        if (state.formData.duration && state.formData.departure && !state.formData.arrival) {
+          const depMinutes = parseTime(state.formData.departure);
+          const arrMinutes = depMinutes + state.formData.duration * 60;
+          state.formData.arrival = minutesToTime(arrMinutes);
+          delete state.formData.duration;
+        }
 
         // Restore form values
         if (state.formData.package) {
@@ -760,7 +852,6 @@
           if (packageRadio) packageRadio.checked = true;
           updateDateConstraints();
           updateGuestsConstraints();
-          updateAvailableExtras();
         }
 
         if (state.formData.date) {
@@ -768,16 +859,41 @@
           if (dateInput) dateInput.value = state.formData.date;
         }
 
-        if (state.formData.guests) {
-          const guestsInput = form.querySelector('#guests');
-          if (guestsInput) guestsInput.value = state.formData.guests;
+        if (state.formData.adults) {
+          const adultsInput = form.querySelector('#adults');
+          if (adultsInput) adultsInput.value = state.formData.adults;
         }
 
-        // Restore extras
-        state.formData.extras.forEach(extraName => {
-          const checkbox = form.querySelector(`input[name="${extraName}"]`);
-          if (checkbox) checkbox.checked = true;
-        });
+        if (state.formData.children) {
+          const childrenInput = form.querySelector('#children');
+          if (childrenInput) childrenInput.value = state.formData.children;
+        }
+
+        if (state.formData.departure) {
+          const departureInput = form.querySelector('#departure');
+          if (departureInput) departureInput.value = state.formData.departure;
+        }
+
+        if (state.formData.arrival) {
+          const arrivalInput = form.querySelector('#arrival');
+          if (arrivalInput) arrivalInput.value = state.formData.arrival;
+        }
+
+        // Restore catering selections
+        if (state.formData.catering) {
+          for (const [category, selection] of Object.entries(state.formData.catering)) {
+            const radio = form.querySelector(`input[name="${category}"][value="${selection}"]`);
+            if (radio) radio.checked = true;
+          }
+        } else {
+          // Migrate from old state format
+          state.formData.catering = {
+            drinks: 'advanceBilling',
+            lunch: 'none',
+            borrel: 'none',
+            dinner: 'none',
+          };
+        }
 
         // Restore personal details
         if (state.formData.personalDetails.name) {
@@ -790,6 +906,7 @@
           if (emailInput) emailInput.value = state.formData.personalDetails.email;
         }
 
+        updateBoatPriceEstimate();
         updatePriceCalculator();
       }
     } catch (e) {
@@ -797,23 +914,17 @@
     }
   }
 
-  /**
-   * Handle form submission
-   */
   function handleSubmit(e) {
     if (!validateCurrentStep()) {
       e.preventDefault();
       return false;
     }
 
-    // Clear saved state on successful submission
     try {
       sessionStorage.removeItem('quoteFormState');
     } catch (e) {
       console.warn('Could not clear form state:', e);
     }
-
-    // Form will submit normally to Cloudflare Worker
   }
 
   // Initialize on DOM ready

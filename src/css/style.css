@@ -296,7 +296,7 @@ main {
 }
 
 .card-interactive.active {
-  border-color: var(--color-purple);
+  border-color: var(--color-primary);
 }
 
 /* Card hover effect (for clickable cards) */
@@ -361,7 +361,7 @@ main {
   display: flex;
   gap: var(--spacing-sm);
   background-color: var(--color-gray-100);
-  box-shadow: 0 0 0 1px var(--color-purple);
+  box-shadow: 0 0 0 1px var(--color-primary);
 }
 
 /* Badges */

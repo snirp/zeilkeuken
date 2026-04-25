@@ -43,6 +43,16 @@ module.exports = function (eleventyConfig) {
     return `${String(endHours).padStart(2, '0')}:${String(endMinutes).padStart(2, '0')}`;
   });
 
+  // Compute duration in hours between two "HH:MM" time strings
+  eleventyConfig.addFilter('durationHours', (departure, endTime) => {
+    if (!departure || !endTime) return null;
+    const [dH, dM] = departure.split(':').map(Number);
+    const [eH, eM] = endTime.split(':').map(Number);
+    const diff = eH * 60 + eM - (dH * 60 + dM);
+    if (diff <= 0) return null;
+    return diff / 60;
+  });
+
   // Filter FAQs by page tag and sort by priority
   eleventyConfig.addFilter('filterFaqs', function (faqs, page) {
     if (!faqs || !Array.isArray(faqs)) return [];

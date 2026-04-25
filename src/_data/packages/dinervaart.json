@@ -1,17 +1,10 @@
 {
   "id": "dinervaart",
   "slug": "dinervaart",
-  "pricing": {
-    "base": 93,
-    "upgrade": {
-      "price": 30,
-      "description": "Premium wijnarrangement, amuse & pre-dessert, specialty cocktails"
-    }
-  },
+  "price": 93,
   "defaults": {
     "departure": "18:00",
-    "duration": 3.5,
-    "guests": 40
+    "endTime": "21:30"
   },
   "constraints": {
     "minGuests": 10,
@@ -19,7 +12,6 @@
     "seasonStart": "2026-04-01",
     "seasonEnd": "2026-10-31"
   },
-  "extras": ["dj", "fotograaf", "oesters"],
   "content": {
     "name": "Diner & sunset",
     "bestFor": "Avondevents, jubilea, dinertjes",

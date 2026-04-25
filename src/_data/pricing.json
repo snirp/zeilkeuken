@@ -1,16 +1,51 @@
 {
-  "baseRates": {
-    "pvrt": 620,
-    "pu": 163.96,
-    "pppu": 7.44,
-    "dnr": 37.2
+  "boatRental": {
+    "base": 1600,
+    "perHour": 220,
+    "tresholdHours": 4
   },
-  "fixedExtras": {
-    "dj": 350,
-    "fotograaf": 450,
-    "accordeon": 300
+  "children": {
+    "ageLimit": 12,
+    "discount": 0.5
   },
-  "ppExtras": {
-    "oesters": 15
+  "drinks": {
+    "dutchBarPpPh": 10,
+    "winePackagePpPh": 15,
+    "advanceBillingPpPh": 3.5
+  },
+  "lunch": {
+    "pp": 25,
+    "defaultWindow": {
+      "start": "12:00",
+      "end": "14:00"
+    },
+    "offerWindow": {
+      "start": "12:00",
+      "end": "15:00"
+    }
+  },
+  "borrel": {
+    "dutchPp": 18,
+    "luxuryPp": 25,
+    "defaultWindow": {
+      "start": "15:00",
+      "end": "18:00"
+    },
+    "offerWindow": {
+      "start": "14:00",
+      "end": "19:00"
+    }
+  },
+  "dinner": {
+    "walkingPp": 40,
+    "sharedPp": 35,
+    "defaultWindow": {
+      "start": "18:00",
+      "end": "24:00"
+    },
+    "offerWindow": {
+      "start": "18:00",
+      "end": "24:00"
+    }
   }
 }

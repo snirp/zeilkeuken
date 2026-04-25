@@ -1,14 +1,10 @@
 {
   "id": "flexibel",
   "slug": "flexibel",
-  "pricing": {
-    "base": null,
-    "upgrade": null
-  },
+  "price": null,
   "defaults": {
     "departure": null,
-    "duration": null,
-    "guests": null
+    "endTime": null
   },
   "constraints": {
     "minGuests": 10,
@@ -16,7 +12,6 @@
     "seasonStart": null,
     "seasonEnd": null
   },
-  "extras": ["dj", "fotograaf", "oesters", "accordeon"],
   "content": {
     "name": "Flexibel",
     "bestFor": "Custom events, thema's, bijzondere wensen",

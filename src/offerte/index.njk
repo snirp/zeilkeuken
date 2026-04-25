@@ -6,23 +6,22 @@ title: De Zeilkeuken - Vraag een offerte aan
 <script>
   // Inject pricing data from 11ty build - MUST load before stepped-form.js
   window.PRICING_DATA = {
-    baseRates: {{ pricing.baseRates | dump | safe }},
-    fixedExtras: {{ pricing.fixedExtras | dump | safe }},
-    perPersonExtras: {{ pricing.ppExtras | dump | safe }},
+    boatRental: {{ pricing.boatRental | dump | safe }},
+    children: {{ pricing.children | dump | safe }},
+    drinks: {{ pricing.drinks | dump | safe }},
+    lunch: {{ pricing.lunch | dump | safe }},
+    borrel: {{ pricing.borrel | dump | safe }},
+    dinner: {{ pricing.dinner | dump | safe }},
     packages: {
       {% for pkg in packages %}
       {{ pkg.id }}: {
         name: {{ pkg.content.name | dump | safe }},
-        price: {% if pkg.pricing.base %}{{ pkg.pricing.base }}{% else %}null{% endif %},
         minGuests: {{ pkg.constraints.minGuests }},
         maxGuests: {{ pkg.constraints.maxGuests }},
         defaultDeparture: {% if pkg.defaults.departure %}{{ pkg.defaults.departure | dump | safe }}{% else %}null{% endif %},
-        defaultDuration: {% if pkg.defaults.duration %}{{ pkg.defaults.duration }}{% else %}null{% endif %},
-        dateRange: {% if pkg.constraints.seasonStart %}{ start: {{ pkg.constraints.seasonStart | dump | safe }}, end: {{ pkg.constraints.seasonEnd | dump | safe }} }{% else %}null{% endif %},
-        extras: {{ pkg.extras | dump | safe }},
-        upgradePrice: {% if pkg.pricing.upgrade %}{{ pkg.pricing.upgrade.price }}{% else %}null{% endif %},
-        upgradeText: {% if pkg.pricing.upgrade %}"(+€{{ pkg.pricing.upgrade.price }} pp)"{% else %}null{% endif %},
-        upgradeDescription: {% if pkg.pricing.upgrade %}{{ pkg.pricing.upgrade.description | dump | safe }}{% else %}null{% endif %}
+        defaultEndTime: {% if pkg.defaults.endTime %}{{ pkg.defaults.endTime | dump | safe }}{% else %}null{% endif %},
+        defaultDuration: {% if pkg.defaults.departure and pkg.defaults.endTime %}{{ pkg.defaults.departure | durationHours(pkg.defaults.endTime) }}{% else %}null{% endif %},
+        dateRange: {% if pkg.constraints.seasonStart %}{ start: {{ pkg.constraints.seasonStart | dump | safe }}, end: {{ pkg.constraints.seasonEnd | dump | safe }} }{% else %}null{% endif %}
       }{% if not loop.last %},{% endif %}
       {% endfor %}
     }
@@ -44,158 +43,85 @@ title: De Zeilkeuken - Vraag een offerte aan
         <span class="progress-boat">⛵</span>
       </div>
       <div class="progress-steps">
-        <span class="progress-step active" data-step="1">1. Arrangement</span>
-        <span class="progress-step" data-step="2">2. Datum & gasten</span>
-        <span class="progress-step" data-step="3">3. Extra's</span>
-        <span class="progress-step" data-step="4">4. Gegevens</span>
+        <span class="progress-step active" data-step="1">1. Vaart</span>
+        <span class="progress-step" data-step="2">2. Catering</span>
+        <span class="progress-step" data-step="3">3. Gegevens</span>
       </div>
     </div>
 
-    <!-- Step 1: Package Selection -->
-    <div class="form-step packages-step" data-step="1" aria-hidden="false">
-      <div class="form-section" data-content-id="quote-section-packages">
-        <p data-content-id="quote-packages-subtitle">
-          Selecteer het arrangement dat het beste bij je past. Je kunt later nog aanpassingen
-          aangeven.
-        </p>
-
-        <div class="package-selection">
-          <!-- Dagtocht Package -->
-          {% for pkg in packages %} {% if pkg.id == "dagtocht" %} {% set endTime =
-          pkg.defaults.departure | addHours(pkg.defaults.duration) %}
-          <label class="package-option">
-            <input type="radio" name="package" value="dagtocht" required />
-            <div class="package-card-radio">
-              <div class="package-header-radio">
-                <div>
-                  <h3>
-                    {{ pkg.content.name }}{% if endTime %}
-                    <span class="package-time">{{ pkg.defaults.departure }} - {{ endTime }}</span>{%
-                    endif %}
-                  </h3>
-                </div>
-                <span class="package-price-badge">€{{ pkg.pricing.base }} pp</span>
-              </div>
-              <p class="package-summary">
-                {{ pkg.content.shortDescription }}
-                <button type="button" class="inline-details-link" data-modal="dagtocht-modal">
-                  ⓘ Bekijk details
-                </button>
-              </p>
-            </div>
-          </label>
-          {% endif %} {% endfor %}
-
-          <!-- Lange vaart Package -->
-          {% for pkg in packages %} {% if pkg.id == "langevaart" %} {% set endTime =
-          pkg.defaults.departure | addHours(pkg.defaults.duration) %}
-          <label class="package-option">
-            <input type="radio" name="package" value="langevaart" required />
-            <div class="package-card-radio">
-              <div class="package-header-radio">
-                <div>
-                  <h3>
-                    {{ pkg.content.name }}{% if endTime %}
-                    <span class="package-time">{{ pkg.defaults.departure }} - {{ endTime }}</span>{%
-                    endif %}
-                  </h3>
-                </div>
-                <span class="package-price-badge">€{{ pkg.pricing.base }} pp</span>
-              </div>
-              <p class="package-summary">
-                {{ pkg.content.shortDescription }}
-                <button type="button" class="inline-details-link" data-modal="langevaart-modal">
-                  ⓘ Bekijk details
-                </button>
-              </p>
-            </div>
-          </label>
-          {% endif %} {% endfor %}
-
-          <!-- Dinervaart Package -->
-          {% for pkg in packages %} {% if pkg.id == "dinervaart" %} {% set endTime =
-          pkg.defaults.departure | addHours(pkg.defaults.duration) %}
-          <label class="package-option">
-            <input type="radio" name="package" value="dinervaart" required />
-            <div class="package-card-radio">
-              <div class="package-header-radio">
-                <div>
-                  <h3>
-                    {{ pkg.content.name }}{% if endTime %}
-                    <span class="package-time">{{ pkg.defaults.departure }} - {{ endTime }}</span>{%
-                    endif %}
-                  </h3>
-                </div>
-                <span class="package-price-badge">€{{ pkg.pricing.base }} pp</span>
-              </div>
-              <p class="package-summary">
-                {{ pkg.content.shortDescription }}
-                <button type="button" class="inline-details-link" data-modal="dinervaart-modal">
-                  ⓘ Bekijk details
-                </button>
-              </p>
-            </div>
-          </label>
-          {% endif %} {% endfor %}
-
-          <!-- Flexibel Package -->
-          {% for pkg in packages %} {% if pkg.id == "flexibel" %} {% set endTime =
-          pkg.defaults.departure | addHours(pkg.defaults.duration) %}
-          <label class="package-option">
-            <input type="radio" name="package" value="flexibel" required />
-            <div class="package-card-radio">
-              <div class="package-header-radio">
-                <div>
-                  <h3>
-                    {{ pkg.content.name }}{% if endTime %}
-                    <span class="package-time">{{ pkg.defaults.departure }} - {{ endTime }}</span>{%
-                    else %} <span class="package-time">Op aanvraag</span>{% endif %}
-                  </h3>
-                </div>
-                <span class="package-price-badge"
-                  >{% if pkg.pricing.base %}€{{ pkg.pricing.base }} pp{% else %}Op maat{% endif
-                  %}</span
-                >
-              </div>
-              <p class="package-summary">
-                {{ pkg.content.shortDescription }}
-                <button type="button" class="inline-details-link" data-modal="flexibel-modal">
-                  ⓘ Bekijk details
-                </button>
-              </p>
-            </div>
-          </label>
-          {% endif %} {% endfor %}
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 2: Date & Guests -->
-    <div class="form-step event-step" data-step="2" aria-hidden="true">
-      <div class="form-section" data-content-id="quote-section-event">
+    <!-- Step 1: Vaart -->
+    <div class="form-step vaart-step" data-step="1" aria-hidden="false">
+      <div class="form-section" data-content-id="quote-section-vaart">
         <div class="form-row">
-          <div class="form-group">
-            <label for="guests" data-content-id="quote-label-guests">Aantal personen *</label>
-            <input
-              type="number"
-              id="guests"
-              name="guests"
-              min="25"
-              max="40"
-              required
-              placeholder="max 40"
-            />
-          </div>
           <div class="form-group">
             <label for="date" data-content-id="quote-label-date">Gewenste datum *</label>
             <input type="date" id="date" name="date" required />
           </div>
         </div>
 
+        <p data-content-id="quote-packages-subtitle">
+          Selecteer het arrangement dat het beste bij je past. Je kunt later nog aanpassingen
+          aangeven.
+        </p>
+
+        <div class="package-selection">
+          {% for pkg in packages %} {% if pkg.id == "dagtocht" %}
+          <label class="package-option">
+            <input type="radio" name="package" value="dagtocht" required />
+            <span>{{ pkg.content.name }} <strong>{% if pkg.price %}€{{ pkg.price }} pp{% endif %}</strong></span>
+            <p class="package-description">
+              {{ pkg.content.shortDescription }}
+              <button type="button" class="inline-details-link" data-modal="dagtocht-modal">
+                ⓘ Bekijk details
+              </button>
+            </p>
+          </label>
+          {% endif %} {% endfor %}
+
+          {% for pkg in packages %} {% if pkg.id == "langevaart" %}
+          <label class="package-option">
+            <input type="radio" name="package" value="langevaart" required />
+            <span>{{ pkg.content.name }} <strong>{% if pkg.price %}€{{ pkg.price }} pp{% endif %}</strong></span>
+            <p class="package-description">
+              {{ pkg.content.shortDescription }}
+              <button type="button" class="inline-details-link" data-modal="langevaart-modal">
+                ⓘ Bekijk details
+              </button>
+            </p>
+          </label>
+          {% endif %} {% endfor %}
+
+          {% for pkg in packages %} {% if pkg.id == "dinervaart" %}
+          <label class="package-option">
+            <input type="radio" name="package" value="dinervaart" required />
+            <span>{{ pkg.content.name }} <strong>{% if pkg.price %}€{{ pkg.price }} pp{% endif %}</strong></span>
+            <p class="package-description">
+              {{ pkg.content.shortDescription }}
+              <button type="button" class="inline-details-link" data-modal="dinervaart-modal">
+                ⓘ Bekijk details
+              </button>
+            </p>
+          </label>
+          {% endif %} {% endfor %}
+
+          {% for pkg in packages %} {% if pkg.id == "flexibel" %}
+          <label class="package-option">
+            <input type="radio" name="package" value="flexibel" required />
+            <span>{{ pkg.content.name }} <strong>{% if pkg.price %}€{{ pkg.price }} pp{% else %}Op maat{% endif %}</strong></span>
+            <p class="package-description">
+              {{ pkg.content.shortDescription }}
+              <button type="button" class="inline-details-link" data-modal="flexibel-modal">
+                ⓘ Bekijk details
+              </button>
+            </p>
+          </label>
+          {% endif %} {% endfor %}
+        </div>
+
         <div class="form-row">
           <div class="form-group">
             <label for="departure" data-content-id="quote-label-departure"
-              >Gewenste vertrektijd *</label
+              >Vertrektijd *</label
             >
             <select id="departure" name="departure" required>
               <option value="" data-content-id="quote-departure-placeholder">Selecteer tijd</option>
@@ -228,88 +154,176 @@ title: De Zeilkeuken - Vraag een offerte aan
           </div>
 
           <div class="form-group">
-            <label for="duration" data-content-id="quote-label-duration">Duur *</label>
-            <div class="duration-input">
-              <input
-                type="number"
-                id="duration"
-                name="duration"
-                min="2"
-                max="12"
-                step="0.5"
-                required
-              />
-              <span data-content-id="quote-duration-unit">uur</span>
-            </div>
-            <p class="form-help" data-content-id="quote-help-duration">Tussen 2 en 12 uur</p>
+            <label for="arrival" data-content-id="quote-label-arrival">Aankomsttijd *</label>
+            <select id="arrival" name="arrival" required>
+              <option value="" data-content-id="quote-arrival-placeholder">Selecteer tijd</option>
+              <option value="10:00">10:00</option>
+              <option value="10:30">10:30</option>
+              <option value="11:00">11:00</option>
+              <option value="11:30">11:30</option>
+              <option value="12:00">12:00</option>
+              <option value="12:30">12:30</option>
+              <option value="13:00">13:00</option>
+              <option value="13:30">13:30</option>
+              <option value="14:00">14:00</option>
+              <option value="14:30">14:30</option>
+              <option value="15:00">15:00</option>
+              <option value="15:30">15:30</option>
+              <option value="16:00">16:00</option>
+              <option value="16:30">16:30</option>
+              <option value="17:00">17:00</option>
+              <option value="17:30">17:30</option>
+              <option value="18:00">18:00</option>
+              <option value="18:30">18:30</option>
+              <option value="19:00">19:00</option>
+              <option value="19:30">19:30</option>
+              <option value="20:00">20:00</option>
+              <option value="20:30">20:30</option>
+              <option value="21:00">21:00</option>
+              <option value="21:30">21:30</option>
+              <option value="22:00">22:00</option>
+              <option value="22:30">22:30</option>
+              <option value="23:00">23:00</option>
+              <option value="23:30">23:30</option>
+            </select>
+            <p class="form-help" data-content-id="quote-help-arrival">Min. 2 uur, max. 12 uur vaartijd</p>
           </div>
         </div>
 
-        <!-- Price Estimate -->
+        <!-- Boat Rental Price Estimate -->
         <div class="price-estimate">
-          <strong>Geschatte prijs:</strong>
+          <strong>Scheepshuur:</strong>
           <span id="price-estimate">—</span>
         </div>
       </div>
     </div>
 
-    <!-- Step 3: Extras -->
-    <div class="form-step extras-step" data-step="3" aria-hidden="true">
-      <div class="form-section" data-content-id="quote-section-upgrade">
-        <p data-content-id="quote-upgrade-intro">
-          Maak je dag extra bijzonder met één of meerdere van deze opties.
+    <!-- Step 2: Catering -->
+    <div class="form-step catering-step" data-step="2" aria-hidden="true">
+      <div class="form-section" data-content-id="quote-section-catering">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="adults" data-content-id="quote-label-adults">Aantal volwassenen *</label>
+            <input
+              type="number"
+              id="adults"
+              name="adults"
+              min="1"
+              max="40"
+              required
+              placeholder="1-40"
+            />
+          </div>
+          <div class="form-group">
+            <label for="children" data-content-id="quote-label-children">Aantal kinderen (t/m 12)</label>
+            <input
+              type="number"
+              id="children"
+              name="children"
+              min="0"
+              max="39"
+              value="0"
+              placeholder="0"
+            />
+            <p class="form-help">Totaal max. 40 personen</p>
+          </div>
+        </div>
+
+        <p data-content-id="quote-catering-intro">
+          Stel je catering samen op basis van je vaartijd. Opties worden automatisch aan- of
+          uitgezet op basis van het tijdstip van je tocht.
         </p>
 
-        <div class="form-group extra-option">
-          <label class="checkbox-label">
-            <input type="checkbox" id="luxury-upgrade" name="luxury-upgrade" value="yes" />
-            <span id="upgrade-label"
-              >Luxe upgrade <strong id="upgrade-price-display">(+€25 pp)</strong></span
-            >
-          </label>
-          <p class="checkbox-description" id="upgrade-description">
-            Premium wijnen, craft bieren, exclusieve kazen en extra gang
-          </p>
-        </div>
+        <!-- Drinks -->
+        <fieldset class="catering-group" id="catering-drinks">
+          <legend>Dranken</legend>
+          <div class="catering-options">
+            <label class="catering-option">
+              <input type="radio" name="drinks" value="advanceBilling" checked />
+              <span>Voorschot <strong id="drinks-advance-price">(€3,50 pppu)</strong></span>
+              <p class="catering-description">Laag voorschot, nacalculatie op werkelijk verbruik</p>
+            </label>
+            <label class="catering-option">
+              <input type="radio" name="drinks" value="dutchBar" />
+              <span>Nederlandse bar <strong id="drinks-dutch-price">(€10 pppu)</strong></span>
+              <p class="catering-description">Bier, wijn, fris en warme dranken onbeperkt</p>
+            </label>
+            <label class="catering-option">
+              <input type="radio" name="drinks" value="winePackage" />
+              <span>Wijnpakket <strong id="drinks-wine-price">(€15 pppu)</strong></span>
+              <p class="catering-description">Premium wijnselectie met bijpassende dranken</p>
+            </label>
+          </div>
+        </fieldset>
 
-        <div class="form-group extra-option">
-          <label class="checkbox-label">
-            <input type="checkbox" name="dj" value="yes" />
-            <span>DJ <strong>(€350)</strong></span>
-          </label>
-          <p class="checkbox-description">Live muziek en entertainment aan boord</p>
-        </div>
+        <!-- Lunch -->
+        <fieldset class="catering-group" id="catering-lunch">
+          <legend>Lunch</legend>
+          <div class="catering-options">
+            <label class="catering-option">
+              <input type="radio" name="lunch" value="none" checked />
+              <span>Geen lunch</span>
+            </label>
+            <label class="catering-option">
+              <input type="radio" name="lunch" value="standard" />
+              <span>Lunch <strong id="lunch-price">(€25 pp)</strong></span>
+              <p class="catering-description">Uitgebreide lunch met verse lokale ingrediënten</p>
+            </label>
+          </div>
+        </fieldset>
 
-        <div class="form-group extra-option">
-          <label class="checkbox-label">
-            <input type="checkbox" name="fotograaf" value="yes" />
-            <span>Fotograaf <strong>(€450)</strong></span>
-          </label>
-          <p class="checkbox-description">
-            Professionele reportage van je dag, alle foto's digitaal
-          </p>
-        </div>
+        <!-- Borrel -->
+        <fieldset class="catering-group" id="catering-borrel">
+          <legend>Borrel</legend>
+          <div class="catering-options">
+            <label class="catering-option">
+              <input type="radio" name="borrel" value="none" checked />
+              <span>Geen borrel</span>
+            </label>
+            <label class="catering-option">
+              <input type="radio" name="borrel" value="dutch" />
+              <span>Hollandse borrel <strong id="borrel-dutch-price">(€18 pp)</strong></span>
+              <p class="catering-description">Klassieke borrelhapjes en kaasplank</p>
+            </label>
+            <label class="catering-option">
+              <input type="radio" name="borrel" value="luxury" />
+              <span>Luxe borrel <strong id="borrel-luxury-price">(€25 pp)</strong></span>
+              <p class="catering-description">Premium borrelpakket met verse oesters en delicatessen</p>
+            </label>
+          </div>
+        </fieldset>
 
-        <div class="form-group extra-option">
-          <label class="checkbox-label">
-            <input type="checkbox" name="oesters" value="yes" />
-            <span>Oestermeisje <strong>(€15 pp)</strong></span>
-          </label>
-          <p class="checkbox-description">Verse oesters gekraakt aan boord met champagne</p>
-        </div>
+        <!-- Dinner -->
+        <fieldset class="catering-group" id="catering-dinner">
+          <legend>Diner</legend>
+          <div class="catering-options">
+            <label class="catering-option">
+              <input type="radio" name="dinner" value="none" checked />
+              <span>Geen diner</span>
+            </label>
+            <label class="catering-option">
+              <input type="radio" name="dinner" value="walking" />
+              <span>Walking dinner <strong id="dinner-walking-price">(€18 pp)</strong></span>
+              <p class="catering-description">Staand diner met diverse kleine gerechten</p>
+            </label>
+            <label class="catering-option">
+              <input type="radio" name="dinner" value="shared" />
+              <span>Shared dinner <strong id="dinner-shared-price">(€25 pp)</strong></span>
+              <p class="catering-description">Gezamenlijk dineren met gedeelde schotels</p>
+            </label>
+          </div>
+        </fieldset>
 
-        <div class="form-group extra-option">
-          <label class="checkbox-label">
-            <input type="checkbox" name="accordeon" value="yes" />
-            <span>Accordeonist <strong>(€300)</strong></span>
-          </label>
-          <p class="checkbox-description">Sfeervolle live muziek met zeemansliederen</p>
+        <!-- Catering Price Summary -->
+        <div class="price-estimate">
+          <strong>Catering totaal:</strong>
+          <span id="catering-total">—</span>
         </div>
       </div>
     </div>
 
-    <!-- Step 4: Personal Details & Preferences -->
-    <div class="form-step details-step" data-step="4" aria-hidden="true">
+    <!-- Step 3: Personal Details & Preferences -->
+    <div class="form-step details-step" data-step="3" aria-hidden="true">
       <div class="form-section" data-content-id="quote-section-contact">
         <div class="form-group">
           <label for="organization" data-content-id="quote-label-organization"
@@ -355,12 +369,12 @@ title: De Zeilkeuken - Vraag een offerte aan
         <h2 data-content-id="quote-calculator-title">Indicatieve prijs</h2>
         <div class="price-breakdown">
           <div class="price-line">
-            <span data-content-id="quote-price-base-label">Basisprijs</span>
-            <span class="price-value" id="base-price">—</span>
+            <span data-content-id="quote-price-boat-label">Scheepshuur</span>
+            <span class="price-value" id="boat-price">—</span>
           </div>
-          <div class="price-line" id="extras-line" style="display: none">
-            <span data-content-id="quote-price-extras-label">Extra's</span>
-            <span class="price-value" id="extras-price">€0</span>
+          <div class="price-line" id="catering-line" style="display: none">
+            <span data-content-id="quote-price-catering-label">Catering</span>
+            <span class="price-value" id="catering-price">€0</span>
           </div>
           <div class="price-line price-total">
             <span data-content-id="quote-price-total-label">Totaal (indicatief)</span>
@@ -392,8 +406,8 @@ title: De Zeilkeuken - Vraag een offerte aan
     </div>
   </form>
 
-  <!-- What Happens Next Timeline - Only visible on Step 4 -->
-  <div class="next-steps-container" style="display: none" data-show-on-step="4">
+  <!-- What Happens Next Timeline - Only visible on Step 3 -->
+  <div class="next-steps-container" style="display: none" data-show-on-step="3">
     <h2 data-content-id="quote-next-title">Wat gebeurt er nu?</h2>
 
     <div class="timeline">
@@ -488,14 +502,13 @@ title: De Zeilkeuken - Vraag een offerte aan
 </section>
 
 <!-- Package Detail Modals -->
-{% for pkg in packages %} {% if pkg.id == "dagtocht" %} {% set endTime = pkg.defaults.departure |
-addHours(pkg.defaults.duration) %}
+{% for pkg in packages %} {% if pkg.id == "dagtocht" %}
 <div id="dagtocht-modal" class="modal">
   <div class="modal-content">
     <button class="modal-close" aria-label="Sluiten">&times;</button>
     <h2>{{ pkg.content.heroSubtitle }}</h2>
     <p class="modal-meta">
-      {% if endTime %}{{ pkg.defaults.departure }} - {{ endTime }} • {% endif %}€{{ pkg.pricing.base
+      {% if pkg.defaults.endTime %}{{ pkg.defaults.departure }} - {{ pkg.defaults.endTime }} • {% endif %}€{{ pkg.price
       }} pp
     </p>
 
@@ -509,14 +522,13 @@ addHours(pkg.defaults.duration) %}
     </ul>
   </div>
 </div>
-{% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "langevaart" %} {% set endTime =
-pkg.defaults.departure | addHours(pkg.defaults.duration) %}
+{% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "langevaart" %}
 <div id="langevaart-modal" class="modal">
   <div class="modal-content">
     <button class="modal-close" aria-label="Sluiten">&times;</button>
     <h2>{{ pkg.content.heroSubtitle }}</h2>
     <p class="modal-meta">
-      {% if endTime %}{{ pkg.defaults.departure }} - {{ endTime }} • {% endif %}€{{ pkg.pricing.base
+      {% if pkg.defaults.endTime %}{{ pkg.defaults.departure }} - {{ pkg.defaults.endTime }} • {% endif %}€{{ pkg.price
       }} pp
     </p>
 
@@ -530,14 +542,13 @@ pkg.defaults.departure | addHours(pkg.defaults.duration) %}
     </ul>
   </div>
 </div>
-{% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "dinervaart" %} {% set endTime =
-pkg.defaults.departure | addHours(pkg.defaults.duration) %}
+{% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "dinervaart" %}
 <div id="dinervaart-modal" class="modal">
   <div class="modal-content">
     <button class="modal-close" aria-label="Sluiten">&times;</button>
     <h2>{{ pkg.content.heroSubtitle }}</h2>
     <p class="modal-meta">
-      {% if endTime %}{{ pkg.defaults.departure }} - {{ endTime }} • {% endif %}€{{ pkg.pricing.base
+      {% if pkg.defaults.endTime %}{{ pkg.defaults.departure }} - {{ pkg.defaults.endTime }} • {% endif %}€{{ pkg.price
       }} pp
     </p>
 

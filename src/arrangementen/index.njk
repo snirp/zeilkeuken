@@ -50,15 +50,15 @@ title: De Zeilkeuken - Arrangementen en prijzen
               <a href="#{{ pkg.slug }}">{{ pkg.content.name }}</a>
             </td>
             <td class="package-duration">
-              {% if pkg.defaults.duration %}
-                {{ pkg.defaults.duration }} uur
+              {% if pkg.defaults.departure and pkg.defaults.endTime %}
+                {{ pkg.defaults.departure | durationHours(pkg.defaults.endTime) }} uur
               {% else %}
                 Op maat
               {% endif %}
             </td>
             <td class="package-price-cell">
-              {% if pkg.pricing.base %}
-                €{{ pkg.pricing.base }}
+              {% if pkg.price %}
+                €{{ pkg.price }}
               {% else %}
                 Op aanvraag
               {% endif %}
@@ -99,7 +99,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
     <div class="package-hero-overlay">
       <div class="package-hero-header">
         <h2>{{ pkg.content.name }}</h2>
-        <span class="package-price-large">€{{ pkg.pricing.base }} pp</span>
+        <span class="package-price-large">€{{ pkg.price }} pp</span>
       </div>
       <div class="badge-group">
         {% for badge in pkg.content.badges %}
@@ -142,23 +142,12 @@ title: De Zeilkeuken - Arrangementen en prijzen
       </ul>
     </div>
 
-    <!-- Upgrade Option -->
-    {% if pkg.pricing.upgrade %}
-    <div class="package-upgrade">
-      <h3>Upgrade optie</h3>
-      <p>
-        <strong>+€{{ pkg.pricing.upgrade.price }} pp:</strong>
-        {{ pkg.pricing.upgrade.description }}
-      </p>
-    </div>
-    {% endif %}
-
     <!-- Practical Info -->
     <div class="package-practical">
       <h3>Praktische informatie</h3>
       <div class="practical-grid grid-2">
         <div class="practical-item">
-          <strong>Duur:</strong> {{ pkg.defaults.duration }} uur
+          <strong>Duur:</strong> {% if pkg.defaults.departure and pkg.defaults.endTime %}{{ pkg.defaults.departure | durationHours(pkg.defaults.endTime) }} uur{% else %}Op maat{% endif %}
         </div>
         <div class="practical-item">
           <strong>Vertrek:</strong> {{ pkg.defaults.departure }}

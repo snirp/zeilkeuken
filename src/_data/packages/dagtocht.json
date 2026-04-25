@@ -1,17 +1,10 @@
 {
   "id": "dagtocht",
   "slug": "dagtocht",
-  "pricing": {
-    "base": 96,
-    "upgrade": {
-      "price": 25,
-      "description": "Premium wijnen, craft bieren, exclusieve kazen en extra gang"
-    }
-  },
+  "price": 96,
   "defaults": {
     "departure": "10:00",
-    "duration": 7,
-    "guests": 40
+    "endTime": "17:00"
   },
   "constraints": {
     "minGuests": 10,
@@ -19,7 +12,6 @@
     "seasonStart": "2026-04-01",
     "seasonEnd": "2026-10-31"
   },
-  "extras": ["fotograaf", "oesters", "accordeon", "diner"],
   "content": {
     "name": "Dagtocht",
     "bestFor": "Teamuitjes, familiefeesten, ontspannen dag",
