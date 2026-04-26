@@ -28,101 +28,92 @@ title: De Zeilkeuken - Vraag een offerte aan
   };
 </script>
 
-<!-- Hero Section -->
-<section class="section quote-hero">
-  <h1 data-content-id="quote-hero-title">Binnen 24 uur een vrijblijvende offerte op maat</h1>
-</section>
-
 <!-- Quote Form -->
 <section class="section quote-form-section">
   <form class="stepped-form" action="/api/quote-request" method="POST">
-    <!-- Progress Indicator -->
-    <div class="form-progress">
-      <div class="progress-bar">
-        <div class="progress-fill"></div>
-        <span class="progress-boat">⛵</span>
-      </div>
-      <div class="progress-steps">
-        <span class="progress-step active" data-step="1">1. Vaart</span>
-        <span class="progress-step" data-step="2">2. Catering</span>
-        <span class="progress-step" data-step="3">3. Gegevens</span>
-      </div>
-    </div>
+    <!-- Compact Form Header & Step Indicator -->
+    <header class="form-header">
+      <p class="form-eyebrow" data-content-id="quote-eyebrow">
+        Vrijblijvende offerte • reactie binnen 24 uur
+      </p>
+      <ol class="step-indicator" aria-label="Voortgang">
+        <li class="step-item is-active" data-step="1">
+          <span class="step-circle"><span class="step-num">1</span></span>
+          <span class="step-label">Vaart</span>
+        </li>
+        <li class="step-item" data-step="2">
+          <span class="step-circle"><span class="step-num">2</span></span>
+          <span class="step-label">Catering</span>
+        </li>
+        <li class="step-item" data-step="3">
+          <span class="step-circle"><span class="step-num">3</span></span>
+          <span class="step-label">Gegevens</span>
+        </li>
+      </ol>
+    </header>
 
     <!-- Step 1: Vaart -->
     <div class="form-step vaart-step" data-step="1" aria-hidden="false">
       <div class="form-section" data-content-id="quote-section-vaart">
+        <p class="form-group-label" data-content-id="quote-packages-label">Kies arrangement</p>
+
+        <div class="package-selection">
+          {% for pkg in packages %} {% if pkg.id == "dagtocht" %}
+          <div class="package-option">
+            <label class="package-option-main">
+              <input type="radio" name="package" value="dagtocht" required />
+              <span class="package-name">{{ pkg.content.name }}</span>
+              <span class="package-price">{% if pkg.price %}€{{ pkg.price }}{% endif %}</span>
+              <p class="package-description">{{ pkg.content.shortDescription }}</p>
+            </label>
+          </div>
+          {% endif %} {% endfor %}
+
+          {% for pkg in packages %} {% if pkg.id == "langevaart" %}
+          <div class="package-option">
+            <label class="package-option-main">
+              <input type="radio" name="package" value="langevaart" required />
+              <span class="package-name">{{ pkg.content.name }}</span>
+              <span class="package-price">{% if pkg.price %}€{{ pkg.price }}{% endif %}</span>
+              <p class="package-description">{{ pkg.content.shortDescription }}</p>
+            </label>
+          </div>
+          {% endif %} {% endfor %}
+
+          {% for pkg in packages %} {% if pkg.id == "dinervaart" %}
+          <div class="package-option">
+            <label class="package-option-main">
+              <input type="radio" name="package" value="dinervaart" required />
+              <span class="package-name">{{ pkg.content.name }}</span>
+              <span class="package-price">{% if pkg.price %}€{{ pkg.price }}{% endif %}</span>
+              <p class="package-description">{{ pkg.content.shortDescription }}</p>
+            </label>
+          </div>
+          {% endif %} {% endfor %}
+
+          {% for pkg in packages %} {% if pkg.id == "flexibel" %}
+          <div class="package-option">
+            <label class="package-option-main">
+              <input type="radio" name="package" value="flexibel" required />
+              <span class="package-name">{{ pkg.content.name }}</span>
+              <span class="package-price">{% if pkg.price %}€{{ pkg.price }}{% else %}Op maat{% endif %}</span>
+              <p class="package-description">{{ pkg.content.shortDescription }}</p>
+            </label>
+          </div>
+          {% endif %} {% endfor %}
+        </div>
+        <p class="form-help package-selection-note" data-content-id="quote-packages-note">Prijzen bij benadering, per persoon</p>
+
         <div class="form-row">
           <div class="form-group">
-            <label for="date" data-content-id="quote-label-date">Gewenste datum *</label>
+            <label for="date" data-content-id="quote-label-date">Datum</label>
             <input type="date" id="date" name="date" required />
           </div>
         </div>
 
-        <p data-content-id="quote-packages-subtitle">
-          Selecteer het arrangement dat het beste bij je past. Je kunt later nog aanpassingen
-          aangeven.
-        </p>
-
-        <div class="package-selection">
-          {% for pkg in packages %} {% if pkg.id == "dagtocht" %}
-          <label class="package-option">
-            <input type="radio" name="package" value="dagtocht" required />
-            <span>{{ pkg.content.name }} <strong>{% if pkg.price %}€{{ pkg.price }} pp{% endif %}</strong></span>
-            <p class="package-description">
-              {{ pkg.content.shortDescription }}
-              <button type="button" class="inline-details-link" data-modal="dagtocht-modal">
-                ⓘ Bekijk details
-              </button>
-            </p>
-          </label>
-          {% endif %} {% endfor %}
-
-          {% for pkg in packages %} {% if pkg.id == "langevaart" %}
-          <label class="package-option">
-            <input type="radio" name="package" value="langevaart" required />
-            <span>{{ pkg.content.name }} <strong>{% if pkg.price %}€{{ pkg.price }} pp{% endif %}</strong></span>
-            <p class="package-description">
-              {{ pkg.content.shortDescription }}
-              <button type="button" class="inline-details-link" data-modal="langevaart-modal">
-                ⓘ Bekijk details
-              </button>
-            </p>
-          </label>
-          {% endif %} {% endfor %}
-
-          {% for pkg in packages %} {% if pkg.id == "dinervaart" %}
-          <label class="package-option">
-            <input type="radio" name="package" value="dinervaart" required />
-            <span>{{ pkg.content.name }} <strong>{% if pkg.price %}€{{ pkg.price }} pp{% endif %}</strong></span>
-            <p class="package-description">
-              {{ pkg.content.shortDescription }}
-              <button type="button" class="inline-details-link" data-modal="dinervaart-modal">
-                ⓘ Bekijk details
-              </button>
-            </p>
-          </label>
-          {% endif %} {% endfor %}
-
-          {% for pkg in packages %} {% if pkg.id == "flexibel" %}
-          <label class="package-option">
-            <input type="radio" name="package" value="flexibel" required />
-            <span>{{ pkg.content.name }} <strong>{% if pkg.price %}€{{ pkg.price }} pp{% else %}Op maat{% endif %}</strong></span>
-            <p class="package-description">
-              {{ pkg.content.shortDescription }}
-              <button type="button" class="inline-details-link" data-modal="flexibel-modal">
-                ⓘ Bekijk details
-              </button>
-            </p>
-          </label>
-          {% endif %} {% endfor %}
-        </div>
-
         <div class="form-row">
           <div class="form-group">
-            <label for="departure" data-content-id="quote-label-departure"
-              >Vertrektijd *</label
-            >
+            <label for="departure" data-content-id="quote-label-departure">Vertrektijd</label>
             <select id="departure" name="departure" required>
               <option value="" data-content-id="quote-departure-placeholder">Selecteer tijd</option>
               <option value="08:00">08:00</option>
@@ -154,7 +145,7 @@ title: De Zeilkeuken - Vraag een offerte aan
           </div>
 
           <div class="form-group">
-            <label for="arrival" data-content-id="quote-label-arrival">Aankomsttijd *</label>
+            <label for="arrival" data-content-id="quote-label-arrival">Eindtijd</label>
             <select id="arrival" name="arrival" required>
               <option value="" data-content-id="quote-arrival-placeholder">Selecteer tijd</option>
               <option value="10:00">10:00</option>
@@ -189,12 +180,6 @@ title: De Zeilkeuken - Vraag een offerte aan
             <p class="form-help" data-content-id="quote-help-arrival">Min. 2 uur, max. 12 uur vaartijd</p>
           </div>
         </div>
-
-        <!-- Boat Rental Price Estimate -->
-        <div class="price-estimate">
-          <strong>Scheepshuur:</strong>
-          <span id="price-estimate">—</span>
-        </div>
       </div>
     </div>
 
@@ -203,7 +188,7 @@ title: De Zeilkeuken - Vraag een offerte aan
       <div class="form-section" data-content-id="quote-section-catering">
         <div class="form-row">
           <div class="form-group">
-            <label for="adults" data-content-id="quote-label-adults">Aantal volwassenen *</label>
+            <label for="adults" data-content-id="quote-label-adults">Aantal volwassenen</label>
             <input
               type="number"
               id="adults"
@@ -215,7 +200,7 @@ title: De Zeilkeuken - Vraag een offerte aan
             />
           </div>
           <div class="form-group">
-            <label for="children" data-content-id="quote-label-children">Aantal kinderen (t/m 12)</label>
+            <label for="children" data-content-id="quote-label-children">Aantal kinderen t/m 12 <span class="label-optional">(optioneel)</span></label>
             <input
               type="number"
               id="children"
@@ -313,12 +298,6 @@ title: De Zeilkeuken - Vraag een offerte aan
             </label>
           </div>
         </fieldset>
-
-        <!-- Catering Price Summary -->
-        <div class="price-estimate">
-          <strong>Catering totaal:</strong>
-          <span id="catering-total">—</span>
-        </div>
       </div>
     </div>
 
@@ -327,25 +306,25 @@ title: De Zeilkeuken - Vraag een offerte aan
       <div class="form-section" data-content-id="quote-section-contact">
         <div class="form-group">
           <label for="organization" data-content-id="quote-label-organization"
-            >Bedrijf/organisatie (optioneel)</label
+            >Bedrijf/organisatie <span class="label-optional">(optioneel)</span></label
           >
           <input type="text" id="organization" name="organization" placeholder="Bedrijfsnaam" />
         </div>
 
         <div class="form-group">
-          <label for="name" data-content-id="quote-label-name">Naam *</label>
+          <label for="name" data-content-id="quote-label-name">Naam</label>
           <input type="text" id="name" name="name" required placeholder="Voor- en achternaam" />
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="email" data-content-id="quote-label-email">E-mailadres *</label>
+            <label for="email" data-content-id="quote-label-email">E-mailadres</label>
             <input type="email" id="email" name="email" required placeholder="naam@voorbeeld.nl" />
           </div>
 
           <div class="form-group">
             <label for="phone" data-content-id="quote-label-phone"
-              >Telefoonnummer <span style="color: var(--color-gray-600)">(optioneel)</span></label
+              >Telefoonnummer <span class="label-optional">(optioneel)</span></label
             >
             <input type="tel" id="phone" name="phone" placeholder="06 12345678" />
           </div>
@@ -353,7 +332,7 @@ title: De Zeilkeuken - Vraag een offerte aan
 
         <div class="form-group">
           <label for="requests" data-content-id="quote-label-requests"
-            >Heb je specifieke wensen of vragen?</label
+            >Heb je specifieke wensen of vragen? <span class="label-optional">(optioneel)</span></label
           >
           <textarea
             id="requests"
@@ -363,31 +342,23 @@ title: De Zeilkeuken - Vraag een offerte aan
           ></textarea>
         </div>
       </div>
+    </div>
 
-      <!-- Price Calculator -->
-      <div class="form-section price-calculator" data-content-id="quote-section-calculator">
-        <h2 data-content-id="quote-calculator-title">Indicatieve prijs</h2>
-        <div class="price-breakdown">
-          <div class="price-line">
-            <span data-content-id="quote-price-boat-label">Scheepshuur</span>
-            <span class="price-value" id="boat-price">—</span>
-          </div>
-          <div class="price-line" id="catering-line" style="display: none">
-            <span data-content-id="quote-price-catering-label">Catering</span>
-            <span class="price-value" id="catering-price">€0</span>
-          </div>
-          <div class="price-line price-total">
-            <span data-content-id="quote-price-total-label">Totaal (indicatief)</span>
-            <span class="price-value" id="total-price">—</span>
-          </div>
-          <div class="price-line price-ex-vat">
-            <span data-content-id="quote-price-exvat-label">Excl. 21% BTW</span>
-            <span class="price-value" id="exvat-price">—</span>
-          </div>
+    <!-- Shared Price Calculator (sticky on steps 1 & 2, static on step 3) -->
+    <div class="price-calculator" data-content-id="quote-section-calculator">
+      <div class="price-breakdown">
+        <div class="price-line">
+          <span class="price-label" data-content-id="quote-price-boat-label">Scheepshuur</span>
+          <span class="price-value" id="boat-price">—</span>
         </div>
-        <p class="price-note" data-content-id="quote-price-note">
-          Dit is een indicatie. Je ontvangt de definitieve offerte binnen 24 uur.
-        </p>
+        <div class="price-line" id="catering-line">
+          <span class="price-label" data-content-id="quote-price-catering-label">Catering</span>
+          <span class="price-value" id="catering-price">—</span>
+        </div>
+        <div class="price-line price-total">
+          <span class="price-label" data-content-id="quote-price-total-label">Totaal (indicatief)</span>
+          <span class="price-value" id="total-price">—</span>
+        </div>
       </div>
     </div>
 
@@ -501,128 +472,3 @@ title: De Zeilkeuken - Vraag een offerte aan
   </div>
 </section>
 
-<!-- Package Detail Modals -->
-{% for pkg in packages %} {% if pkg.id == "dagtocht" %}
-<div id="dagtocht-modal" class="modal">
-  <div class="modal-content">
-    <button class="modal-close" aria-label="Sluiten">&times;</button>
-    <h2>{{ pkg.content.heroSubtitle }}</h2>
-    <p class="modal-meta">
-      {% if pkg.defaults.endTime %}{{ pkg.defaults.departure }} - {{ pkg.defaults.endTime }} • {% endif %}€{{ pkg.price
-      }} pp
-    </p>
-
-    <div>{{ pkg.content.longDescription | markdown | safe }}</div>
-
-    <h3>Wat is inbegrepen</h3>
-    <ul class="list-check">
-      {% for highlight in pkg.content.highlights %}
-      <li>{{ highlight }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
-{% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "langevaart" %}
-<div id="langevaart-modal" class="modal">
-  <div class="modal-content">
-    <button class="modal-close" aria-label="Sluiten">&times;</button>
-    <h2>{{ pkg.content.heroSubtitle }}</h2>
-    <p class="modal-meta">
-      {% if pkg.defaults.endTime %}{{ pkg.defaults.departure }} - {{ pkg.defaults.endTime }} • {% endif %}€{{ pkg.price
-      }} pp
-    </p>
-
-    <div>{{ pkg.content.longDescription | markdown | safe }}</div>
-
-    <h3>Wat is inbegrepen</h3>
-    <ul class="list-check">
-      {% for highlight in pkg.content.highlights %}
-      <li>{{ highlight }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
-{% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "dinervaart" %}
-<div id="dinervaart-modal" class="modal">
-  <div class="modal-content">
-    <button class="modal-close" aria-label="Sluiten">&times;</button>
-    <h2>{{ pkg.content.heroSubtitle }}</h2>
-    <p class="modal-meta">
-      {% if pkg.defaults.endTime %}{{ pkg.defaults.departure }} - {{ pkg.defaults.endTime }} • {% endif %}€{{ pkg.price
-      }} pp
-    </p>
-
-    <div>{{ pkg.content.longDescription | markdown | safe }}</div>
-
-    <h3>Wat is inbegrepen</h3>
-    <ul class="list-check">
-      {% for highlight in pkg.content.highlights %}
-      <li>{{ highlight }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
-{% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "flexibel" %}
-<div id="flexibel-modal" class="modal">
-  <div class="modal-content">
-    <button class="modal-close" aria-label="Sluiten">&times;</button>
-    <h2>{{ pkg.content.heroSubtitle }}</h2>
-    <p class="modal-meta">Op aanvraag • Prijs op maat</p>
-
-    <h3>Volledig naar jouw wensen</h3>
-    <div>{{ pkg.content.longDescription | markdown | safe }}</div>
-    <ul class="list-check">
-      {% for highlight in pkg.content.highlights %}
-      <li>{{ highlight }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
-{% endif %} {% endfor %}
-
-<script>
-  // Modal handling for package details
-  (function () {
-    const modalTriggers = document.querySelectorAll('[data-modal]');
-    const modals = document.querySelectorAll('.modal');
-    const modalCloses = document.querySelectorAll('.modal-close');
-
-    modalTriggers.forEach(trigger => {
-      trigger.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const modalId = this.getAttribute('data-modal');
-        const modal = document.getElementById(modalId);
-        if (modal) {
-          modal.classList.add('modal-open');
-          document.body.style.overflow = 'hidden';
-        }
-      });
-    });
-
-    function closeModal(modal) {
-      modal.classList.remove('modal-open');
-      document.body.style.overflow = '';
-    }
-
-    modalCloses.forEach(closeBtn => {
-      closeBtn.addEventListener('click', function () {
-        closeModal(this.closest('.modal'));
-      });
-    });
-
-    modals.forEach(modal => {
-      modal.addEventListener('click', function (e) {
-        if (e.target === this) closeModal(this);
-      });
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
-        modals.forEach(modal => {
-          if (modal.classList.contains('modal-open')) closeModal(modal);
-        });
-      }
-    });
-  })();
-</script>

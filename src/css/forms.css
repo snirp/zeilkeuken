@@ -12,123 +12,127 @@
   scroll-margin-top: 100px; /* Keep header visible when scrolling */
 }
 
-/* Progress Indicator */
-.form-progress {
-  margin-bottom: var(--spacing-xl);
-  margin-top: var(--spacing-lg); /* Extra space for sailboat */
+/* Compact Form Header */
+.form-header {
+  margin-bottom: var(--spacing-lg);
 }
 
-.progress-bar {
-  position: relative;
-  width: 75%; /* Shortened to match step centers */
-  height: 4px;
-  background-color: var(--color-gray-200);
-  border-radius: 2px;
-  overflow: visible;
-  margin: 0 auto var(--spacing-md); /* Center the bar */
+.form-eyebrow {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+  margin: 0 0 var(--spacing-md);
+  text-align: center;
 }
 
-.progress-fill {
-  height: 100%;
-  background-color: var(--color-primary);
-  transition: width 0.3s ease;
-  width: 0%; /* Default step 1 - no progress */
-}
-
-.progress-boat {
-  position: absolute;
-  top: -58px; /* Positioned to rest on top of bar */
-  left: 0%; /* Default: start position */
-  transform: translateX(-50%) scaleX(-1); /* Center on progress and flip horizontally */
-  font-size: 48px;
-  transition: left 0.3s ease;
-  pointer-events: none;
-  animation: boat-bob 2s ease-in-out infinite; /* Gentle bobbing at rest */
-}
-
-.progress-boat.wobble {
-  animation: boat-wobble 0.6s ease-in-out;
-}
-
-@keyframes boat-bob {
-  0%,
-  100% {
-    transform: translateX(-50%) scaleX(-1) translateY(0);
-  }
-  50% {
-    transform: translateX(-50%) scaleX(-1) translateY(-2px); /* Bob up 2px */
-  }
-}
-
-@keyframes boat-wobble {
-  0% {
-    transform: translateX(-50%) scaleX(-1) rotate(0deg);
-  }
-  15% {
-    transform: translateX(-50%) scaleX(-1) rotate(-8deg); /* Tilt back at start */
-  }
-  50% {
-    transform: translateX(-50%) scaleX(-1) rotate(0deg); /* Neutral during motion */
-  }
-  70% {
-    transform: translateX(-50%) scaleX(-1) rotate(5deg); /* Rock forward */
-  }
-  85% {
-    transform: translateX(-50%) scaleX(-1) rotate(-2deg); /* Slight back */
-  }
-  100% {
-    transform: translateX(-50%) scaleX(-1) rotate(0deg); /* Back to neutral */
-  }
-}
-
-.progress-steps {
+/* Step Indicator (numbered circles + labels) */
+.step-indicator {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--spacing-sm);
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: var(--spacing-xs);
-  flex-wrap: wrap;
+  position: relative;
 }
 
-.progress-step {
+.step-item {
   flex: 1;
-  min-width: 120px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  position: relative;
+  min-width: 0;
+}
+
+/* Connector line between circles (sits behind circles) */
+.step-item::after {
+  content: '';
+  position: absolute;
+  top: 11px; /* center of 24px circle minus half line */
+  left: calc(50% + 16px);
+  right: calc(-50% + 16px);
+  height: 2px;
+  background-color: var(--color-gray-200);
+  z-index: 0;
+  transition: background-color 0.3s ease;
+}
+
+.step-item:last-child::after {
+  display: none;
+}
+
+.step-item.is-completed::after {
+  background-color: var(--color-primary);
+}
+
+.step-circle {
+  position: relative;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-gray-300);
+  color: var(--color-gray-500);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.step-label {
   font-size: var(--font-size-sm);
   color: var(--color-gray-500);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  cursor: default;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
-.progress-step.clickable {
+.step-item.is-active .step-circle {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.step-item.is-active .step-label {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.step-item.is-completed .step-circle {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.step-item.is-completed .step-num {
+  font-size: 0;
+}
+
+.step-item.is-completed .step-num::before {
+  content: '✓';
+  font-size: var(--font-size-sm);
+}
+
+.step-item.is-clickable {
   cursor: pointer;
 }
 
-.progress-step.clickable:hover {
-  background-color: rgba(128, 0, 128, 0.05);
+.step-item.is-clickable:hover .step-circle {
+  transform: scale(1.08);
 }
 
-.progress-step.active {
-  color: var(--color-primary);
-  font-weight: 600;
-  background-color: rgba(128, 0, 128, 0.1);
-}
-
-.progress-step.active.clickable:hover {
-  background-color: rgba(128, 0, 128, 0.15);
-}
-
-.progress-step.completed {
-  color: var(--color-gray-700);
-}
-
-@media (min-width: 768px) {
-  .progress-steps {
-    flex-wrap: nowrap;
-  }
-
-  .progress-step {
-    min-width: auto;
+/* Mobile: hide labels of inactive steps to save space */
+@media (max-width: 480px) {
+  .step-item:not(.is-active) .step-label {
+    display: none;
   }
 }
 
@@ -210,40 +214,6 @@
   font-size: var(--font-size-sm);
 }
 
-/* Quote Hero */
-.quote-hero {
-  text-align: center;
-  padding: var(--spacing-xl) var(--spacing-md) var(--spacing-md);
-}
-
-.quote-hero h1 {
-  font-size: var(--font-size-xl);
-  font-weight: 700;
-  color: var(--color-black);
-  margin-bottom: 0;
-}
-
-.quote-hero p {
-  max-width: 700px;
-  margin: 0 auto var(--spacing-lg);
-  color: var(--color-gray-600);
-}
-
-.quote-reassurance {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--spacing-sm) var(--spacing-md);
-  font-size: var(--font-size-sm);
-  color: var(--color-gray-600);
-}
-
-@media (min-width: 768px) {
-  .quote-hero h1 {
-    font-size: var(--font-size-2xl);
-  }
-}
-
 /* Form Sections */
 .quote-form-section {
   max-width: 1200px;
@@ -277,12 +247,15 @@
   border: 1px solid var(--color-gray-200);
   border-radius: 4px;
   overflow: hidden;
+  margin-bottom: var(--spacing-xs);
+}
+
+.package-selection-note {
+  text-align: right;
 }
 
 .package-option {
   display: block;
-  cursor: pointer;
-  padding: var(--spacing-sm);
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-gray-200);
   transition:
@@ -294,7 +267,15 @@
   border-bottom: none;
 }
 
-.package-option:hover {
+.package-option-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  cursor: pointer;
+  padding: var(--spacing-sm);
+}
+
+.package-option-main:hover {
   background-color: var(--color-gray-100);
 }
 
@@ -303,8 +284,18 @@
   accent-color: var(--color-primary);
 }
 
-.package-option input[type='radio']:checked ~ span,
-.package-option input[type='radio']:checked ~ span strong {
+.package-name {
+  flex: 1;
+}
+
+.package-price {
+  margin-left: auto;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.package-option input[type='radio']:checked ~ .package-name,
+.package-option input[type='radio']:checked ~ .package-price {
   color: var(--color-black);
 }
 
@@ -318,25 +309,10 @@
 }
 
 .package-description {
+  flex-basis: 100%;
   font-size: var(--font-size-sm);
   color: var(--color-gray-600);
   margin: 2px 0 0 24px;
-}
-
-.inline-details-link {
-  background: none;
-  border: none;
-  color: var(--color-primary);
-  font-size: var(--font-size-sm);
-  text-decoration: underline;
-  cursor: pointer;
-  padding: 0;
-  margin-left: 4px;
-  transition: opacity 0.2s ease;
-}
-
-.inline-details-link:hover {
-  opacity: 0.8;
 }
 
 /* Form Elements */
@@ -472,56 +448,68 @@
   margin-bottom: 0;
 }
 
-/* Price Calculator */
+/* Price Calculator (compact, sticky bottom by default) */
 .price-calculator {
-  background-color: var(--color-gray-100);
-  border: 2px solid var(--color-gray-300);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-300);
   border-radius: 8px;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin-top: var(--spacing-md);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
 }
 
-.price-calculator h2 {
-  margin-bottom: var(--spacing-md);
+/* Static variant (used on the final step) */
+.price-calculator.is-static {
+  position: static;
+  box-shadow: none;
 }
 
 .price-breakdown {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-md);
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--spacing-md);
+  margin: 0;
 }
 
 .price-line {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--spacing-xs) 0;
+  align-items: baseline;
+  gap: var(--spacing-xs);
   color: var(--color-gray-700);
+  font-size: var(--font-size-sm);
 }
 
-.price-total {
-  padding-top: var(--spacing-sm);
-  border-top: 2px solid var(--color-gray-300);
-  font-weight: 700;
-  font-size: var(--font-size-lg);
-  color: var(--color-black);
+.price-line .price-label {
+  color: var(--color-gray-600);
 }
 
-.price-value {
-  font-weight: 700;
-  font-size: var(--font-size-lg);
+.price-line .price-value {
+  font-weight: 400;
   color: var(--color-gray-800);
 }
 
-.price-total .price-value {
-  color: var(--color-primary);
-  font-size: var(--font-size-xl);
+.price-total {
+  margin-left: auto;
+  font-size: var(--font-size-base);
 }
 
-.price-note {
-  font-size: var(--font-size-sm);
-  color: var(--color-gray-600);
-  margin: 0;
+.price-total .price-value {
+  font-weight: 700;
+  color: var(--color-black);
+  font-size: var(--font-size-lg);
+}
+
+@media (max-width: 600px) {
+  .price-breakdown {
+    gap: var(--spacing-sm);
+  }
+  .price-total {
+    margin-left: auto;
+  }
 }
 
 /* Form Actions */
@@ -639,4 +627,19 @@
   font-size: var(--font-size-sm);
   color: var(--color-gray-600);
   margin: 2px 0 0 24px;
+}
+
+/* Optional-field marker (used inside <label> when most fields are required) */
+.label-optional {
+  color: var(--color-gray-600);
+  font-weight: 400;
+}
+
+/* Group label (used for radio groups that aren't tied to a single input) */
+.form-group-label {
+  display: block;
+  font-weight: 600;
+  color: var(--color-gray-800);
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-base);
 }

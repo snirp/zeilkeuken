@@ -45,7 +45,7 @@
   };
 
   // DOM elements
-  let form, progressBar, progressBoat, progressSteps, stepContainers, btnBack, btnNext, btnSubmit;
+  let form, stepItems, stepContainers, btnBack, btnNext, btnSubmit;
 
   /**
    * Initialize the stepped form
@@ -54,18 +54,30 @@
     form = document.querySelector('.stepped-form');
     if (!form) return;
 
-    progressBar = form.querySelector('.progress-fill');
-    progressBoat = form.querySelector('.progress-boat');
-    progressSteps = form.querySelectorAll('.progress-step');
+    stepItems = form.querySelectorAll('.step-item');
     stepContainers = form.querySelectorAll('.form-step');
     btnBack = form.querySelector('.btn-back');
     btnNext = form.querySelector('.btn-next');
     btnSubmit = form.querySelector('.btn-submit');
 
+    setDateMinToToday();
     loadState();
     setupEventListeners();
     renderStep();
-    updateBoatPriceEstimate();
+    updatePriceCalculator();
+  }
+
+  /**
+   * Prevent picking a date in the past.
+   */
+  function setDateMinToToday() {
+    const dateInput = form.querySelector('#date');
+    if (!dateInput) return;
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    dateInput.min = `${yyyy}-${mm}-${dd}`;
   }
 
   /**
@@ -75,10 +87,11 @@
     btnBack.addEventListener('click', goToPreviousStep);
     btnNext.addEventListener('click', goToNextStep);
 
-    progressSteps.forEach((step, index) => {
-      step.addEventListener('click', () => {
-        const targetStep = index + 1;
-        goToStep(targetStep);
+    stepItems.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        if (item.classList.contains('is-clickable')) {
+          goToStep(index + 1);
+        }
       });
     });
 
@@ -127,13 +140,13 @@
 
   function handlePackageChange(e) {
     state.formData.package = e.target.value;
+    // A new package picks new defaults; treat as a fresh start so its defaults apply.
+    state.userOverrodeTimes = false;
     validateDateAgainstPackage();
     updateDateConstraints();
     updateGuestsConstraints();
-    if (!state.userOverrodeTimes) {
-      updatePackageDefaults();
-    }
-    updateBoatPriceEstimate();
+    updatePackageDefaults();
+    updatePriceCalculator();
     updateNavigationState();
     saveState();
   }
@@ -184,7 +197,7 @@
     }
 
     updateGuestsConstraints();
-    updateCateringTotal();
+    updatePriceCalculator();
     updatePriceCalculator();
     updateNavigationState();
     saveState();
@@ -206,7 +219,7 @@
   function handleDepartureChange(e) {
     state.formData.departure = e.target.value || null;
     state.userOverrodeTimes = true;
-    updateBoatPriceEstimate();
+    updatePriceCalculator();
     updateNavigationState();
     saveState();
   }
@@ -214,7 +227,7 @@
   function handleArrivalChange(e) {
     state.formData.arrival = e.target.value || null;
     state.userOverrodeTimes = true;
-    updateBoatPriceEstimate();
+    updatePriceCalculator();
     updateNavigationState();
     saveState();
   }
@@ -234,7 +247,7 @@
   function handleCateringChange(e) {
     const category = e.target.name;
     state.formData.catering[category] = e.target.value;
-    updateCateringTotal();
+    updatePriceCalculator();
     updatePriceCalculator();
     saveState();
   }
@@ -299,18 +312,6 @@
       price += (duration - BOAT_RENTAL.tresholdHours) * BOAT_RENTAL.perHour;
     }
     return price;
-  }
-
-  function updateBoatPriceEstimate() {
-    const estimateEl = form.querySelector('#price-estimate');
-    if (!estimateEl) return;
-
-    const price = calculateBoatRental();
-    if (price === null) {
-      estimateEl.textContent = '—';
-      return;
-    }
-    estimateEl.textContent = '€' + price.toLocaleString('nl-NL');
   }
 
   // --- Catering Logic ---
@@ -431,60 +432,44 @@
       }
     });
 
-    updateCateringTotal();
+    updatePriceCalculator();
   }
 
-  function updateCateringTotal() {
-    const totalEl = form.querySelector('#catering-total');
-    if (!totalEl) return;
+  // --- Unified Price Calculator (visible on all steps) ---
 
-    const totalPax = getTotalPax();
-    const duration = getDuration();
-
-    if (!totalPax || !duration) {
-      totalEl.textContent = '—';
-      return;
-    }
-
-    const total = calculateTotalCatering();
-    totalEl.textContent = '€' + total.toLocaleString('nl-NL');
+  function formatEuro(value) {
+    return '€' + value.toLocaleString('nl-NL');
   }
-
-  // --- Price Calculator (Step 4) ---
 
   function updatePriceCalculator() {
     const boatPriceEl = form.querySelector('#boat-price');
     const cateringPriceEl = form.querySelector('#catering-price');
-    const cateringLineEl = form.querySelector('#catering-line');
     const totalPriceEl = form.querySelector('#total-price');
-    const exvatPriceEl = form.querySelector('#exvat-price');
 
     if (!boatPriceEl) return;
 
     const boatPrice = calculateBoatRental();
-    if (boatPrice === null) {
-      boatPriceEl.textContent = '—';
-      if (totalPriceEl) totalPriceEl.textContent = '—';
-      if (exvatPriceEl) exvatPriceEl.textContent = '—';
-      if (cateringLineEl) cateringLineEl.style.display = 'none';
-      return;
+    boatPriceEl.textContent = boatPrice === null ? '—' : formatEuro(boatPrice);
+
+    // Catering needs guests and a duration to be meaningful.
+    const totalPax = getTotalPax();
+    const duration = getDuration();
+    let cateringTotal = null;
+    if (totalPax && duration) {
+      cateringTotal = calculateTotalCatering();
+    }
+    if (cateringPriceEl) {
+      cateringPriceEl.textContent = cateringTotal === null ? '—' : formatEuro(cateringTotal);
     }
 
-    boatPriceEl.textContent = '€' + boatPrice.toLocaleString('nl-NL');
-
-    const cateringTotal = calculateTotalCatering();
-    if (cateringTotal > 0) {
-      cateringPriceEl.textContent = '€' + cateringTotal.toLocaleString('nl-NL');
-      cateringLineEl.style.display = 'flex';
-    } else {
-      if (cateringLineEl) cateringLineEl.style.display = 'none';
+    if (totalPriceEl) {
+      if (boatPrice === null && cateringTotal === null) {
+        totalPriceEl.textContent = '—';
+      } else {
+        const total = (boatPrice || 0) + (cateringTotal || 0);
+        totalPriceEl.textContent = formatEuro(total);
+      }
     }
-
-    const total = boatPrice + cateringTotal;
-    totalPriceEl.textContent = '€' + total.toLocaleString('nl-NL');
-
-    const exVat = total / 1.21;
-    exvatPriceEl.textContent = '€' + Math.round(exVat).toLocaleString('nl-NL');
   }
 
   // --- Package Constraints ---
@@ -556,7 +541,7 @@
       state.formData.arrival = null;
     }
 
-    updateBoatPriceEstimate();
+    updatePriceCalculator();
   }
 
   // --- Navigation ---
@@ -623,12 +608,12 @@
           return false;
         }
         if (!state.formData.departure || !state.formData.arrival) {
-          showError('Kies een vertrek- en aankomsttijd');
+          showError('Kies een vertrek- en eindtijd');
           return false;
         }
         const duration = getDuration();
         if (!duration || duration < 2) {
-          showError('Aankomsttijd moet minstens 2 uur na vertrektijd zijn');
+          showError('Eindtijd moet minstens 2 uur na vertrektijd zijn');
           return false;
         }
         if (duration > 12) {
@@ -749,29 +734,14 @@
   }
 
   function renderStep() {
-    const progressPercent = ((state.currentStep - 1) / (state.totalSteps - 1)) * 100;
-    if (progressBar) progressBar.style.width = progressPercent + '%';
-
-    if (progressBoat) {
-      progressBoat.style.left = progressPercent + '%';
-      progressBoat.classList.remove('wobble');
-      void progressBoat.offsetWidth;
-      progressBoat.classList.add('wobble');
-      setTimeout(() => progressBoat.classList.remove('wobble'), 600);
-    }
-
-    progressSteps.forEach((step, index) => {
+    stepItems.forEach((item, index) => {
       const stepNumber = index + 1;
-      step.classList.remove('active', 'completed', 'clickable');
+      item.classList.remove('is-active', 'is-completed', 'is-clickable');
 
       if (stepNumber < state.currentStep) {
-        step.classList.add('completed', 'clickable');
-        step.style.cursor = 'pointer';
+        item.classList.add('is-completed', 'is-clickable');
       } else if (stepNumber === state.currentStep) {
-        step.classList.add('active', 'clickable');
-        step.style.cursor = 'pointer';
-      } else {
-        step.style.cursor = 'default';
+        item.classList.add('is-active');
       }
     });
 
@@ -802,6 +772,13 @@
       const showOnStep = parseInt(section.getAttribute('data-show-on-step'));
       section.style.display = showOnStep === state.currentStep ? 'block' : 'none';
     });
+
+    // Price calculator: sticky on input-driven steps, static on the final step
+    // where the user has already finished pricing decisions.
+    const calculator = form.querySelector('.price-calculator');
+    if (calculator) {
+      calculator.classList.toggle('is-static', state.currentStep === state.totalSteps);
+    }
 
     updateNavigationState();
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -906,7 +883,7 @@
           if (emailInput) emailInput.value = state.formData.personalDetails.email;
         }
 
-        updateBoatPriceEstimate();
+        updatePriceCalculator();
         updatePriceCalculator();
       }
     } catch (e) {
