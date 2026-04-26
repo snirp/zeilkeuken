@@ -17,123 +17,94 @@
   margin-bottom: var(--spacing-lg);
 }
 
-.form-eyebrow {
-  font-size: var(--font-size-sm);
-  color: var(--color-gray-600);
-  margin: 0 0 var(--spacing-md);
+/* Submit reassurance */
+.form-reassurance {
   text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+  margin-top: var(--spacing-xs);
 }
 
-/* Step Indicator (numbered circles + labels) */
+/* Step Indicator (inline labels with separators) */
 .step-indicator {
   list-style: none;
   margin: 0;
-  padding: 0 var(--spacing-sm);
+  padding: 0;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--spacing-xs);
-  position: relative;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
 }
 
 .step-item {
-  flex: 1;
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: var(--spacing-xs);
-  position: relative;
-  min-width: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-400);
+  white-space: nowrap;
 }
 
-/* Connector line between circles (sits behind circles) */
-.step-item::after {
+.step-item:not(:last-child)::after {
   content: '';
-  position: absolute;
-  top: 11px; /* center of 24px circle minus half line */
-  left: calc(50% + 16px);
-  right: calc(-50% + 16px);
+  display: block;
+  width: 40px;
   height: 2px;
-  background-color: var(--color-gray-200);
-  z-index: 0;
-  transition: background-color 0.3s ease;
+  margin: 0 var(--spacing-xs);
+  background-color: var(--color-gray-300);
 }
 
-.step-item:last-child::after {
-  display: none;
-}
-
-.step-item.is-completed::after {
+.step-item.is-completed:not(:last-child)::after {
   background-color: var(--color-primary);
 }
 
-.step-circle {
-  position: relative;
-  z-index: 1;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background-color: var(--color-white);
-  border: 2px solid var(--color-gray-300);
-  color: var(--color-gray-500);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  display: inline-flex;
+.step-number {
+  display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
-  transition: all 0.2s ease;
-}
-
-.step-label {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--color-gray-300);
   font-size: var(--font-size-sm);
-  color: var(--color-gray-500);
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
+  font-weight: 600;
+  color: var(--color-gray-400);
+  background: transparent;
+  flex-shrink: 0;
 }
 
-.step-item.is-active .step-circle {
+.step-item.is-active .step-number {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
   color: var(--color-white);
 }
 
 .step-item.is-active .step-label {
-  color: var(--color-primary);
+  color: var(--color-black);
   font-weight: 600;
 }
 
-.step-item.is-completed .step-circle {
+.step-item.is-completed .step-number {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
   color: var(--color-white);
 }
 
-.step-item.is-completed .step-num {
-  font-size: 0;
-}
-
-.step-item.is-completed .step-num::before {
-  content: '✓';
-  font-size: var(--font-size-sm);
+.step-item.is-completed .step-label {
+  color: var(--color-gray-600);
 }
 
 .step-item.is-clickable {
   cursor: pointer;
 }
 
-.step-item.is-clickable:hover .step-circle {
-  transform: scale(1.08);
+.step-item.is-clickable:hover .step-number {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
-/* Mobile: hide labels of inactive steps to save space */
-@media (max-width: 480px) {
-  .step-item:not(.is-active) .step-label {
-    display: none;
-  }
+.step-item.is-clickable:hover .step-label {
+  color: var(--color-primary);
 }
 
 /* Form Steps */
@@ -212,6 +183,22 @@
   color: #c33;
   margin-bottom: var(--spacing-md);
   font-size: var(--font-size-sm);
+}
+
+/* Inline Field Errors */
+.field-error {
+  color: #c33;
+  font-size: var(--font-size-sm);
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+
+.form-help.is-error {
+  color: #c33;
+}
+
+input.is-invalid {
+  border-color: #c33;
 }
 
 /* Form Sections */
@@ -448,23 +435,25 @@
   margin-bottom: 0;
 }
 
-/* Price Calculator (compact, sticky bottom by default) */
+/* Price summary footer (flush bottom of form container, sticky to viewport) */
 .price-calculator {
   position: sticky;
   bottom: 0;
   z-index: 10;
-  background-color: var(--color-white);
-  border: 1px solid var(--color-gray-300);
-  border-radius: 8px;
+  background-color: var(--color-gray-100);
+  border-radius: 0 0 8px 8px;
   padding: var(--spacing-sm) var(--spacing-md);
-  margin-top: var(--spacing-md);
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
+  margin: var(--spacing-md) calc(-1 * var(--spacing-md)) calc(-1 * var(--spacing-lg));
 }
 
-/* Static variant (used on the final step) */
+/* Shadow only when actually stuck to the viewport */
+.price-calculator.is-stuck {
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Static variant (kept for backwards-compat with existing JS toggle) */
 .price-calculator.is-static {
   position: static;
-  box-shadow: none;
 }
 
 .price-breakdown {
@@ -479,28 +468,20 @@
   display: flex;
   align-items: baseline;
   gap: var(--spacing-xs);
-  color: var(--color-gray-700);
-  font-size: var(--font-size-sm);
-}
-
-.price-line .price-label {
   color: var(--color-gray-600);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
 }
 
+.price-line .price-label,
 .price-line .price-value {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-sm);
   font-weight: 400;
-  color: var(--color-gray-800);
 }
 
 .price-total {
   margin-left: auto;
-  font-size: var(--font-size-base);
-}
-
-.price-total .price-value {
-  font-weight: 700;
-  color: var(--color-black);
-  font-size: var(--font-size-lg);
 }
 
 @media (max-width: 600px) {
@@ -586,7 +567,9 @@
 }
 
 .catering-option {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
   cursor: pointer;
   padding: var(--spacing-sm);
   background-color: var(--color-white);
@@ -609,8 +592,16 @@
   accent-color: var(--color-primary);
 }
 
-.catering-option input[type='radio']:checked ~ span,
-.catering-option input[type='radio']:checked ~ span strong {
+.catering-name {
+  flex: 1;
+}
+
+.catering-price {
+  margin-left: auto;
+}
+
+.catering-option input[type='radio']:checked ~ .catering-name,
+.catering-option input[type='radio']:checked ~ .catering-price {
   color: var(--color-black);
 }
 
@@ -624,6 +615,7 @@
 }
 
 .catering-description {
+  flex-basis: 100%;
   font-size: var(--font-size-sm);
   color: var(--color-gray-600);
   margin: 2px 0 0 24px;

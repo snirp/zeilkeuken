@@ -1,7 +1,7 @@
 {
   "id": "langevaart",
   "slug": "langevaart",
-  "price": 131,
+  "price": 191,
   "defaults": {
     "departure": "10:00",
     "endTime": "20:00"

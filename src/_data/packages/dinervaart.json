@@ -1,7 +1,7 @@
 {
   "id": "dinervaart",
   "slug": "dinervaart",
-  "price": 93,
+  "price": 88,
   "defaults": {
     "departure": "18:00",
     "endTime": "21:30"

@@ -33,20 +33,17 @@ title: De Zeilkeuken - Vraag een offerte aan
   <form class="stepped-form" action="/api/quote-request" method="POST">
     <!-- Compact Form Header & Step Indicator -->
     <header class="form-header">
-      <p class="form-eyebrow" data-content-id="quote-eyebrow">
-        Vrijblijvende offerte • reactie binnen 24 uur
-      </p>
       <ol class="step-indicator" aria-label="Voortgang">
         <li class="step-item is-active" data-step="1">
-          <span class="step-circle"><span class="step-num">1</span></span>
+          <span class="step-number">1</span>
           <span class="step-label">Vaart</span>
         </li>
         <li class="step-item" data-step="2">
-          <span class="step-circle"><span class="step-num">2</span></span>
+          <span class="step-number">2</span>
           <span class="step-label">Catering</span>
         </li>
         <li class="step-item" data-step="3">
-          <span class="step-circle"><span class="step-num">3</span></span>
+          <span class="step-number">3</span>
           <span class="step-label">Gegevens</span>
         </li>
       </ol>
@@ -55,15 +52,15 @@ title: De Zeilkeuken - Vraag een offerte aan
     <!-- Step 1: Vaart -->
     <div class="form-step vaart-step" data-step="1" aria-hidden="false">
       <div class="form-section" data-content-id="quote-section-vaart">
-        <p class="form-group-label" data-content-id="quote-packages-label">Kies arrangement</p>
+        <p class="form-group-label" data-content-id="quote-packages-label">Start met een arrangement <span class="form-help" data-content-id="quote-packages-helper">— en pas aan naar jouw wensen</span></p>
 
         <div class="package-selection">
           {% for pkg in packages %} {% if pkg.id == "dagtocht" %}
           <div class="package-option">
             <label class="package-option-main">
-              <input type="radio" name="package" value="dagtocht" required />
+              <input type="radio" name="package" value="dagtocht" required checked />
               <span class="package-name">{{ pkg.content.name }}</span>
-              <span class="package-price">{% if pkg.price %}€{{ pkg.price }}{% endif %}</span>
+              <span class="package-price">{% if pkg.price %}€{{ pkg.price }} pp{% endif %}</span>
               <p class="package-description">{{ pkg.content.shortDescription }}</p>
             </label>
           </div>
@@ -74,7 +71,7 @@ title: De Zeilkeuken - Vraag een offerte aan
             <label class="package-option-main">
               <input type="radio" name="package" value="langevaart" required />
               <span class="package-name">{{ pkg.content.name }}</span>
-              <span class="package-price">{% if pkg.price %}€{{ pkg.price }}{% endif %}</span>
+              <span class="package-price">{% if pkg.price %}€{{ pkg.price }} pp{% endif %}</span>
               <p class="package-description">{{ pkg.content.shortDescription }}</p>
             </label>
           </div>
@@ -85,7 +82,7 @@ title: De Zeilkeuken - Vraag een offerte aan
             <label class="package-option-main">
               <input type="radio" name="package" value="dinervaart" required />
               <span class="package-name">{{ pkg.content.name }}</span>
-              <span class="package-price">{% if pkg.price %}€{{ pkg.price }}{% endif %}</span>
+              <span class="package-price">{% if pkg.price %}€{{ pkg.price }} pp{% endif %}</span>
               <p class="package-description">{{ pkg.content.shortDescription }}</p>
             </label>
           </div>
@@ -102,7 +99,7 @@ title: De Zeilkeuken - Vraag een offerte aan
           </div>
           {% endif %} {% endfor %}
         </div>
-        <p class="form-help package-selection-note" data-content-id="quote-packages-note">Prijzen bij benadering, per persoon</p>
+        <p class="form-help package-selection-note" data-content-id="quote-packages-note">Prijzen bij benadering</p>
 
         <div class="form-row">
           <div class="form-group">
@@ -207,35 +204,32 @@ title: De Zeilkeuken - Vraag een offerte aan
               name="children"
               min="0"
               max="39"
-              value="0"
               placeholder="0"
             />
-            <p class="form-help">Totaal max. 40 personen</p>
           </div>
         </div>
-
-        <p data-content-id="quote-catering-intro">
-          Stel je catering samen op basis van je vaartijd. Opties worden automatisch aan- of
-          uitgezet op basis van het tijdstip van je tocht.
-        </p>
+        <p class="form-help" id="guests-status">Totaal max. 40 personen</p>
 
         <!-- Drinks -->
         <fieldset class="catering-group" id="catering-drinks">
-          <legend>Dranken</legend>
+          <legend>Dranken <span class="form-help">— prijzen per persoon per uur</span></legend>
           <div class="catering-options">
             <label class="catering-option">
               <input type="radio" name="drinks" value="advanceBilling" checked />
-              <span>Voorschot <strong id="drinks-advance-price">(€3,50 pppu)</strong></span>
+              <span class="catering-name">Voorschot</span>
+              <span class="catering-price" id="drinks-advance-price">€3,50</span>
               <p class="catering-description">Laag voorschot, nacalculatie op werkelijk verbruik</p>
             </label>
             <label class="catering-option">
               <input type="radio" name="drinks" value="dutchBar" />
-              <span>Nederlandse bar <strong id="drinks-dutch-price">(€10 pppu)</strong></span>
+              <span class="catering-name">Nederlandse bar</span>
+              <span class="catering-price" id="drinks-dutch-price">€10</span>
               <p class="catering-description">Bier, wijn, fris en warme dranken onbeperkt</p>
             </label>
             <label class="catering-option">
               <input type="radio" name="drinks" value="winePackage" />
-              <span>Wijnpakket <strong id="drinks-wine-price">(€15 pppu)</strong></span>
+              <span class="catering-name">Wijnpakket</span>
+              <span class="catering-price" id="drinks-wine-price">€15</span>
               <p class="catering-description">Premium wijnselectie met bijpassende dranken</p>
             </label>
           </div>
@@ -247,11 +241,12 @@ title: De Zeilkeuken - Vraag een offerte aan
           <div class="catering-options">
             <label class="catering-option">
               <input type="radio" name="lunch" value="none" checked />
-              <span>Geen lunch</span>
+              <span class="catering-name">Geen lunch</span>
             </label>
             <label class="catering-option">
               <input type="radio" name="lunch" value="standard" />
-              <span>Lunch <strong id="lunch-price">(€25 pp)</strong></span>
+              <span class="catering-name">Lunch</span>
+              <span class="catering-price" id="lunch-price">€25 pp</span>
               <p class="catering-description">Uitgebreide lunch met verse lokale ingrediënten</p>
             </label>
           </div>
@@ -263,16 +258,18 @@ title: De Zeilkeuken - Vraag een offerte aan
           <div class="catering-options">
             <label class="catering-option">
               <input type="radio" name="borrel" value="none" checked />
-              <span>Geen borrel</span>
+              <span class="catering-name">Geen borrel</span>
             </label>
             <label class="catering-option">
               <input type="radio" name="borrel" value="dutch" />
-              <span>Hollandse borrel <strong id="borrel-dutch-price">(€18 pp)</strong></span>
+              <span class="catering-name">Hollandse borrel</span>
+              <span class="catering-price" id="borrel-dutch-price">€18 pp</span>
               <p class="catering-description">Klassieke borrelhapjes en kaasplank</p>
             </label>
             <label class="catering-option">
               <input type="radio" name="borrel" value="luxury" />
-              <span>Luxe borrel <strong id="borrel-luxury-price">(€25 pp)</strong></span>
+              <span class="catering-name">Luxe borrel</span>
+              <span class="catering-price" id="borrel-luxury-price">€25 pp</span>
               <p class="catering-description">Premium borrelpakket met verse oesters en delicatessen</p>
             </label>
           </div>
@@ -284,16 +281,18 @@ title: De Zeilkeuken - Vraag een offerte aan
           <div class="catering-options">
             <label class="catering-option">
               <input type="radio" name="dinner" value="none" checked />
-              <span>Geen diner</span>
+              <span class="catering-name">Geen diner</span>
             </label>
             <label class="catering-option">
               <input type="radio" name="dinner" value="walking" />
-              <span>Walking dinner <strong id="dinner-walking-price">(€18 pp)</strong></span>
+              <span class="catering-name">Walking dinner</span>
+              <span class="catering-price" id="dinner-walking-price">€18 pp</span>
               <p class="catering-description">Staand diner met diverse kleine gerechten</p>
             </label>
             <label class="catering-option">
               <input type="radio" name="dinner" value="shared" />
-              <span>Shared dinner <strong id="dinner-shared-price">(€25 pp)</strong></span>
+              <span class="catering-name">Shared dinner</span>
+              <span class="catering-price" id="dinner-shared-price">€25 pp</span>
               <p class="catering-description">Gezamenlijk dineren met gedeelde schotels</p>
             </label>
           </div>
@@ -344,7 +343,24 @@ title: De Zeilkeuken - Vraag een offerte aan
       </div>
     </div>
 
-    <!-- Shared Price Calculator (sticky on steps 1 & 2, static on step 3) -->
+    <!-- Navigation -->
+    <div class="form-navigation">
+      <button type="button" class="btn btn-back">Vorige</button>
+      <button type="button" class="btn btn-next">Volgende</button>
+      <button
+        type="submit"
+        class="btn btn-lg btn-submit"
+        style="display: none"
+        data-content-id="quote-submit-button"
+      >
+        Vrijblijvende offerte ontvangen
+      </button>
+      <p class="form-reassurance" style="display: none" data-content-id="quote-reassurance">
+        Vrijblijvend • reactie binnen 24 uur
+      </p>
+    </div>
+
+    <!-- Price summary footer -->
     <div class="price-calculator" data-content-id="quote-section-calculator">
       <div class="price-breakdown">
         <div class="price-line">
@@ -360,20 +376,6 @@ title: De Zeilkeuken - Vraag een offerte aan
           <span class="price-value" id="total-price">—</span>
         </div>
       </div>
-    </div>
-
-    <!-- Navigation -->
-    <div class="form-navigation">
-      <button type="button" class="btn btn-back">Vorige</button>
-      <button type="button" class="btn btn-next">Volgende</button>
-      <button
-        type="submit"
-        class="btn btn-lg btn-submit"
-        style="display: none"
-        data-content-id="quote-submit-button"
-      >
-        Vrijblijvende offerte ontvangen
-      </button>
     </div>
   </form>
 

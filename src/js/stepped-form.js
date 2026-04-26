@@ -11,6 +11,37 @@
 (function () {
   'use strict';
 
+  // --- Sticky detection for price calculator ---
+  let stickyObserver = null;
+  let stickySentinel = null;
+
+  function observeSticky(calculator) {
+    // Clean up previous observer
+    if (stickyObserver) stickyObserver.disconnect();
+    if (stickySentinel) stickySentinel.remove();
+
+    // Don't observe when static (last step)
+    if (calculator.classList.contains('is-static')) {
+      calculator.classList.remove('is-stuck');
+      return;
+    }
+
+    // Insert a sentinel element right before the calculator
+    stickySentinel = document.createElement('div');
+    stickySentinel.style.height = '1px';
+    stickySentinel.style.marginBottom = '-1px';
+    calculator.parentNode.insertBefore(stickySentinel, calculator);
+
+    stickyObserver = new IntersectionObserver(
+      ([entry]) => {
+        // When sentinel scrolls out of view at the bottom, calculator is stuck
+        calculator.classList.toggle('is-stuck', !entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+    stickyObserver.observe(stickySentinel);
+  }
+
   // Load pricing data from global variable (injected by 11ty)
   const pricingData = window.PRICING_DATA || {};
 
@@ -45,7 +76,7 @@
   };
 
   // DOM elements
-  let form, stepItems, stepContainers, btnBack, btnNext, btnSubmit;
+  let form, stepItems, stepContainers, btnBack, btnNext, btnSubmit, reassurance;
 
   /**
    * Initialize the stepped form
@@ -59,12 +90,27 @@
     btnBack = form.querySelector('.btn-back');
     btnNext = form.querySelector('.btn-next');
     btnSubmit = form.querySelector('.btn-submit');
+    reassurance = form.querySelector('.form-reassurance');
 
     setDateMinToToday();
     loadState();
+    // If no package was restored from saved state, sync from pre-checked radio
+    if (!state.formData.package) {
+      const checkedPackage = form.querySelector('input[name="package"]:checked');
+      if (checkedPackage) {
+        state.formData.package = checkedPackage.value;
+        updateDateConstraints();
+        updateGuestsConstraints();
+        updatePackageDefaults();
+      }
+    }
     setupEventListeners();
     renderStep();
     updatePriceCalculator();
+
+    // Start observing sticky state for price calculator
+    const calculator = form.querySelector('.price-calculator');
+    if (calculator) observeSticky(calculator);
   }
 
   /**
@@ -114,8 +160,14 @@
     // Guest inputs (step 2)
     const adultsInput = form.querySelector('#adults');
     const childrenInput = form.querySelector('#children');
-    if (adultsInput) adultsInput.addEventListener('input', handleGuestsChange);
-    if (childrenInput) childrenInput.addEventListener('input', handleGuestsChange);
+    if (adultsInput) {
+      adultsInput.addEventListener('input', handleGuestsChange);
+      adultsInput.addEventListener('blur', validateGuestsOnBlur);
+    }
+    if (childrenInput) {
+      childrenInput.addEventListener('input', handleGuestsChange);
+      childrenInput.addEventListener('blur', validateGuestsOnBlur);
+    }
 
     // Catering radios
     ['drinks', 'lunch', 'borrel', 'dinner'].forEach(category => {
@@ -188,19 +240,133 @@
     state.formData.adults = parseInt(adultsInput?.value) || null;
     state.formData.children = parseInt(childrenInput?.value) || 0;
 
-    // Enforce max 40 total
-    const total = (state.formData.adults || 0) + state.formData.children;
-    if (total > 40 && childrenInput) {
-      state.formData.children = 40 - (state.formData.adults || 0);
-      if (state.formData.children < 0) state.formData.children = 0;
-      childrenInput.value = state.formData.children;
-    }
+    // Clear per-field errors while typing
+    if (adultsInput) hideFieldError(adultsInput);
+    if (childrenInput) hideFieldError(childrenInput);
+
+    // Update shared guest status
+    updateGuestsStatus();
 
     updateGuestsConstraints();
     updatePriceCalculator();
     updatePriceCalculator();
     updateNavigationState();
     saveState();
+  }
+
+  function updateGuestsStatus() {
+    const statusEl = form.querySelector('#guests-status');
+    if (!statusEl) return;
+
+    const adultsInput = form.querySelector('#adults');
+    const childrenInput = form.querySelector('#children');
+    const adults = parseInt(adultsInput?.value) || 0;
+    const children = parseInt(childrenInput?.value) || 0;
+    const total = adults + children;
+    const config = PACKAGE_CONFIG[state.formData.package];
+
+    // No input yet — show default help
+    if (!adultsInput?.value && !childrenInput?.value) {
+      statusEl.textContent = 'Totaal max. 40 personen';
+      statusEl.classList.remove('is-error');
+      if (adultsInput) adultsInput.classList.remove('is-invalid');
+      if (childrenInput) childrenInput.classList.remove('is-invalid');
+      return;
+    }
+
+    // Check total constraint
+    if (total > 40) {
+      statusEl.textContent = 'Totaal ' + total + ' personen — maximaal 40';
+      statusEl.classList.add('is-error');
+      if (adultsInput) adultsInput.classList.add('is-invalid');
+      if (childrenInput && children > 0) childrenInput.classList.add('is-invalid');
+      return;
+    }
+
+    // Check package-specific range
+    if (config && total > 0) {
+      if (total < config.minGuests) {
+        statusEl.textContent =
+          'Minimaal ' + config.minGuests + ' gasten voor dit arrangement (nu ' + total + ')';
+        statusEl.classList.add('is-error');
+        if (adultsInput) adultsInput.classList.add('is-invalid');
+        return;
+      }
+      if (total > config.maxGuests) {
+        statusEl.textContent =
+          'Maximaal ' + config.maxGuests + ' gasten voor dit arrangement (nu ' + total + ')';
+        statusEl.classList.add('is-error');
+        if (adultsInput) adultsInput.classList.add('is-invalid');
+        if (childrenInput && children > 0) childrenInput.classList.add('is-invalid');
+        return;
+      }
+    }
+
+    // Valid — show current total
+    if (total > 0) {
+      statusEl.textContent = total + ' van max. 40 personen';
+    } else {
+      statusEl.textContent = 'Totaal max. 40 personen';
+    }
+    statusEl.classList.remove('is-error');
+    if (adultsInput) adultsInput.classList.remove('is-invalid');
+    if (childrenInput) childrenInput.classList.remove('is-invalid');
+  }
+
+  function validateGuestsOnBlur(e) {
+    const adultsInput = form.querySelector('#adults');
+    const childrenInput = form.querySelector('#children');
+
+    // Clamp adults to 1–40 on blur
+    if (e.target === adultsInput) {
+      if (adultsInput.value.trim() === '') {
+        showFieldError(adultsInput, 'Vul het aantal volwassenen in');
+        updateGuestsStatus();
+        return;
+      }
+      const val = parseInt(adultsInput.value);
+      const clamped = Math.min(40, Math.max(1, val));
+      if (val !== clamped) {
+        adultsInput.value = clamped;
+        state.formData.adults = clamped;
+      }
+    }
+
+    // Clamp children to 0–max on blur, auto-fill empty to 0
+    if (e.target === childrenInput) {
+      if (childrenInput.value.trim() === '') {
+        childrenInput.value = '0';
+      }
+      const adults = parseInt(adultsInput?.value) || 0;
+      const maxChildren = Math.max(0, 40 - adults);
+      const val = parseInt(childrenInput.value);
+      const clamped = Math.min(maxChildren, Math.max(0, val));
+      if (val !== clamped) {
+        childrenInput.value = clamped;
+      }
+      state.formData.children = clamped;
+    }
+
+    updateGuestsConstraints();
+    updatePriceCalculator();
+    updateNavigationState();
+    updateGuestsStatus();
+    saveState();
+  }
+
+  function showFieldError(input, message) {
+    hideFieldError(input);
+    const error = document.createElement('p');
+    error.className = 'field-error';
+    error.textContent = message;
+    input.classList.add('is-invalid');
+    input.parentNode.appendChild(error);
+  }
+
+  function hideFieldError(input) {
+    input.classList.remove('is-invalid');
+    const existing = input.parentNode.querySelector('.field-error');
+    if (existing) existing.remove();
   }
 
   /**
@@ -479,11 +645,13 @@
     if (!dateInput || !state.formData.package) return;
 
     const config = PACKAGE_CONFIG[state.formData.package];
+    const today = new Date().toISOString().split('T')[0];
+
     if (config.dateRange) {
-      dateInput.min = config.dateRange.start;
+      dateInput.min = config.dateRange.start > today ? config.dateRange.start : today;
       dateInput.max = config.dateRange.end;
     } else {
-      dateInput.removeAttribute('min');
+      dateInput.min = today;
       dateInput.removeAttribute('max');
     }
   }
@@ -761,10 +929,12 @@
     if (state.currentStep === state.totalSteps) {
       btnNext.style.display = 'none';
       btnSubmit.style.display = 'inline-block';
+      if (reassurance) reassurance.style.display = 'block';
       updatePriceCalculator();
     } else {
       btnNext.style.display = 'inline-block';
       btnSubmit.style.display = 'none';
+      if (reassurance) reassurance.style.display = 'none';
     }
 
     const conditionalSections = document.querySelectorAll('[data-show-on-step]');
@@ -778,6 +948,8 @@
     const calculator = form.querySelector('.price-calculator');
     if (calculator) {
       calculator.classList.toggle('is-static', state.currentStep === state.totalSteps);
+      // Re-evaluate stuck state after step change
+      observeSticky(calculator);
     }
 
     updateNavigationState();

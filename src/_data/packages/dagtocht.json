@@ -1,7 +1,7 @@
 {
   "id": "dagtocht",
   "slug": "dagtocht",
-  "price": 96,
+  "price": 124,
   "defaults": {
     "departure": "10:00",
     "endTime": "17:00"
