@@ -28,7 +28,7 @@
 /* Step Indicator (inline labels with separators) */
 .step-indicator {
   list-style: none;
-  margin: 0;
+  margin: 0 0 var(--spacing-md) 0;
   padding: 0;
   display: flex;
   justify-content: center;
@@ -133,7 +133,7 @@
   display: flex;
   gap: var(--spacing-md);
   justify-content: space-between;
-  margin-top: var(--spacing-xl);
+  margin-top: var(--spacing-md);
 }
 
 .btn-back,
@@ -205,6 +205,17 @@ input.is-invalid {
 .quote-form-section {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.quote-form-section > h1 {
+  text-align: center;
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-xs);
+}
+
+.quote-form-section > .form-help {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
 }
 
 .form-section {
@@ -441,19 +452,16 @@ input.is-invalid {
   bottom: 0;
   z-index: 10;
   background-color: var(--color-gray-100);
+  border-top: 1px solid var(--color-gray-300);
   border-radius: 0 0 8px 8px;
   padding: var(--spacing-sm) var(--spacing-md);
   margin: var(--spacing-md) calc(-1 * var(--spacing-md)) calc(-1 * var(--spacing-lg));
+  transition: box-shadow 0.2s ease;
 }
 
 /* Shadow only when actually stuck to the viewport */
 .price-calculator.is-stuck {
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Static variant (kept for backwards-compat with existing JS toggle) */
-.price-calculator.is-static {
-  position: static;
 }
 
 .price-breakdown {
@@ -484,6 +492,12 @@ input.is-invalid {
   margin-left: auto;
 }
 
+.price-total .price-label,
+.price-total .price-value {
+  color: var(--color-gray-800);
+  font-weight: 600;
+}
+
 @media (max-width: 600px) {
   .price-breakdown {
     gap: var(--spacing-sm);
@@ -497,6 +511,61 @@ input.is-invalid {
 .form-actions {
   text-align: center;
   padding: var(--spacing-lg) 0;
+}
+
+/* Next Steps Timeline (quote form, step 3) */
+.next-steps-container {
+  margin: calc(-1 * var(--spacing-sm)) 0 var(--spacing-md);
+}
+
+.next-steps-container h2 {
+  display: block;
+  font-weight: 600;
+  color: var(--color-gray-800);
+  margin: 0 0 var(--spacing-xs);
+  font-size: var(--font-size-base);
+  text-align: left;
+}
+
+.next-steps-container .timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.next-steps-container .timeline-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 0;
+  margin: 0;
+}
+
+.next-steps-container .timeline-item::before {
+  display: none;
+}
+
+.next-steps-container .timeline-number {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  background-color: var(--color-gray-200);
+  color: var(--color-gray-700);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.next-steps-container .timeline-content {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+  line-height: 1.4;
 }
 
 /* ==========================================================================

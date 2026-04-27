@@ -12,29 +12,25 @@
   'use strict';
 
   // --- Sticky detection for price calculator ---
+  // Shadow shows only while the calculator is pinned to the viewport bottom.
+  // A 1px sentinel placed just AFTER the calculator (i.e. at its natural-rest
+  // bottom edge) is observed: while the sentinel is below the viewport, the
+  // calculator hasn't reached natural rest yet and is still pinned/hovering.
+  // Once the sentinel enters the viewport, the calculator has fully landed.
   let stickyObserver = null;
   let stickySentinel = null;
 
   function observeSticky(calculator) {
-    // Clean up previous observer
     if (stickyObserver) stickyObserver.disconnect();
     if (stickySentinel) stickySentinel.remove();
 
-    // Don't observe when static (last step)
-    if (calculator.classList.contains('is-static')) {
-      calculator.classList.remove('is-stuck');
-      return;
-    }
-
-    // Insert a sentinel element right before the calculator
     stickySentinel = document.createElement('div');
     stickySentinel.style.height = '1px';
-    stickySentinel.style.marginBottom = '-1px';
-    calculator.parentNode.insertBefore(stickySentinel, calculator);
+    stickySentinel.style.marginTop = '-1px';
+    calculator.parentNode.insertBefore(stickySentinel, calculator.nextSibling);
 
     stickyObserver = new IntersectionObserver(
       ([entry]) => {
-        // When sentinel scrolls out of view at the bottom, calculator is stuck
         calculator.classList.toggle('is-stuck', !entry.isIntersecting);
       },
       { threshold: 0 }
@@ -85,7 +81,11 @@
     form = document.querySelector('.stepped-form');
     if (!form) return;
 
-    stepItems = form.querySelectorAll('.step-item');
+    // Step indicator is outside the form, in the parent section
+    const section = form.closest('.quote-form-section');
+    stepItems = section
+      ? section.querySelectorAll('.step-item')
+      : form.querySelectorAll('.step-item');
     stepContainers = form.querySelectorAll('.form-step');
     btnBack = form.querySelector('.btn-back');
     btnNext = form.querySelector('.btn-next');
@@ -106,9 +106,9 @@
     }
     setupEventListeners();
     renderStep();
+    updateTimeStatus();
     updatePriceCalculator();
 
-    // Start observing sticky state for price calculator
     const calculator = form.querySelector('.price-calculator');
     if (calculator) observeSticky(calculator);
   }
@@ -249,7 +249,6 @@
 
     updateGuestsConstraints();
     updatePriceCalculator();
-    updatePriceCalculator();
     updateNavigationState();
     saveState();
   }
@@ -385,6 +384,7 @@
   function handleDepartureChange(e) {
     state.formData.departure = e.target.value || null;
     state.userOverrodeTimes = true;
+    updateTimeStatus();
     updatePriceCalculator();
     updateNavigationState();
     saveState();
@@ -393,9 +393,46 @@
   function handleArrivalChange(e) {
     state.formData.arrival = e.target.value || null;
     state.userOverrodeTimes = true;
+    updateTimeStatus();
     updatePriceCalculator();
     updateNavigationState();
     saveState();
+  }
+
+  function updateTimeStatus() {
+    const statusEl = form.querySelector('#time-status');
+    if (!statusEl) return;
+
+    const departureInput = form.querySelector('#departure');
+    const arrivalInput = form.querySelector('#arrival');
+
+    // Not both selected yet
+    if (!state.formData.departure || !state.formData.arrival) {
+      statusEl.textContent = '';
+      statusEl.classList.remove('is-error');
+      if (departureInput) departureInput.classList.remove('is-invalid');
+      if (arrivalInput) arrivalInput.classList.remove('is-invalid');
+      return;
+    }
+
+    const duration = getDuration();
+    if (!duration) {
+      statusEl.textContent = 'Eindtijd moet na vertrektijd liggen';
+      statusEl.classList.add('is-error');
+      if (departureInput) departureInput.classList.add('is-invalid');
+      if (arrivalInput) arrivalInput.classList.add('is-invalid');
+      return;
+    }
+
+    // Valid — show duration
+    const hours = Math.floor(duration);
+    const minutes = (duration % 1) * 60;
+    let label = hours + ' uur';
+    if (minutes > 0) label += ' ' + minutes + ' min';
+    statusEl.textContent = 'Vaartijd: ' + label;
+    statusEl.classList.remove('is-error');
+    if (departureInput) departureInput.classList.remove('is-invalid');
+    if (arrivalInput) arrivalInput.classList.remove('is-invalid');
   }
 
   /**
@@ -413,7 +450,6 @@
   function handleCateringChange(e) {
     const category = e.target.name;
     state.formData.catering[category] = e.target.value;
-    updatePriceCalculator();
     updatePriceCalculator();
     saveState();
   }
@@ -472,7 +508,7 @@
 
   function calculateBoatRental() {
     const duration = getDuration();
-    if (!duration || duration < 2) return null;
+    if (!duration) return null;
     let price = BOAT_RENTAL.base;
     if (duration > BOAT_RENTAL.tresholdHours) {
       price += (duration - BOAT_RENTAL.tresholdHours) * BOAT_RENTAL.perHour;
@@ -709,14 +745,16 @@
       state.formData.arrival = null;
     }
 
+    updateTimeStatus();
     updatePriceCalculator();
   }
 
   // --- Navigation ---
 
   function updateNavigationState() {
-    if (!btnNext) return;
-    btnNext.disabled = !validateCurrentStepSilent();
+    const isValid = validateCurrentStepSilent();
+    if (btnNext) btnNext.disabled = !isValid;
+    if (btnSubmit && state.currentStep === state.totalSteps) btnSubmit.disabled = !isValid;
   }
 
   function validateCurrentStepSilent() {
@@ -726,7 +764,7 @@
         if (!state.formData.departure || !state.formData.arrival) return false;
 
         const duration = getDuration();
-        if (!duration || duration < 2 || duration > 12) return false;
+        if (!duration) return false;
 
         const config = PACKAGE_CONFIG[state.formData.package];
         if (config.dateRange) {
@@ -780,12 +818,8 @@
           return false;
         }
         const duration = getDuration();
-        if (!duration || duration < 2) {
-          showError('Eindtijd moet minstens 2 uur na vertrektijd zijn');
-          return false;
-        }
-        if (duration > 12) {
-          showError('Vaartijd mag maximaal 12 uur zijn');
+        if (!duration) {
+          showError('Eindtijd moet na vertrektijd zijn');
           return false;
         }
 
@@ -943,15 +977,6 @@
       section.style.display = showOnStep === state.currentStep ? 'block' : 'none';
     });
 
-    // Price calculator: sticky on input-driven steps, static on the final step
-    // where the user has already finished pricing decisions.
-    const calculator = form.querySelector('.price-calculator');
-    if (calculator) {
-      calculator.classList.toggle('is-static', state.currentStep === state.totalSteps);
-      // Re-evaluate stuck state after step change
-      observeSticky(calculator);
-    }
-
     updateNavigationState();
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -1055,7 +1080,6 @@
           if (emailInput) emailInput.value = state.formData.personalDetails.email;
         }
 
-        updatePriceCalculator();
         updatePriceCalculator();
       }
     } catch (e) {

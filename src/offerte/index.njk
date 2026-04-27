@@ -30,25 +30,26 @@ title: De Zeilkeuken - Vraag een offerte aan
 
 <!-- Quote Form -->
 <section class="section quote-form-section">
-  <form class="stepped-form" action="/api/quote-request" method="POST">
-    <!-- Compact Form Header & Step Indicator -->
-    <header class="form-header">
-      <ol class="step-indicator" aria-label="Voortgang">
-        <li class="step-item is-active" data-step="1">
-          <span class="step-number">1</span>
-          <span class="step-label">Vaart</span>
-        </li>
-        <li class="step-item" data-step="2">
-          <span class="step-number">2</span>
-          <span class="step-label">Catering</span>
-        </li>
-        <li class="step-item" data-step="3">
-          <span class="step-number">3</span>
-          <span class="step-label">Gegevens</span>
-        </li>
-      </ol>
-    </header>
+  <h1 data-content-id="quote-title">Stel jouw vaartocht samen</h1>
+  <p class="form-help" data-content-id="quote-subtitle">Binnen 24 uur ontvang je een vrijblijvende offerte op maat.</p>
 
+  <!-- Step Indicator -->
+  <ol class="step-indicator" aria-label="Voortgang">
+    <li class="step-item is-active" data-step="1">
+      <span class="step-number">1</span>
+      <span class="step-label">Vaart</span>
+    </li>
+    <li class="step-item" data-step="2">
+      <span class="step-number">2</span>
+      <span class="step-label">Catering</span>
+    </li>
+    <li class="step-item" data-step="3">
+      <span class="step-number">3</span>
+      <span class="step-label">Gegevens</span>
+    </li>
+  </ol>
+
+  <form class="stepped-form" action="/api/quote-request" method="POST">
     <!-- Step 1: Vaart -->
     <div class="form-step vaart-step" data-step="1" aria-hidden="false">
       <div class="form-section" data-content-id="quote-section-vaart">
@@ -106,9 +107,7 @@ title: De Zeilkeuken - Vraag een offerte aan
             <label for="date" data-content-id="quote-label-date">Datum</label>
             <input type="date" id="date" name="date" required />
           </div>
-        </div>
 
-        <div class="form-row">
           <div class="form-group">
             <label for="departure" data-content-id="quote-label-departure">Vertrektijd</label>
             <select id="departure" name="departure" required>
@@ -174,13 +173,11 @@ title: De Zeilkeuken - Vraag een offerte aan
               <option value="23:00">23:00</option>
               <option value="23:30">23:30</option>
             </select>
-            <p class="form-help" data-content-id="quote-help-arrival">Min. 2 uur, max. 12 uur vaartijd</p>
           </div>
         </div>
+        <p class="form-help" id="time-status"></p>
       </div>
     </div>
-
-    <!-- Step 2: Catering -->
     <div class="form-step catering-step" data-step="2" aria-hidden="true">
       <div class="form-section" data-content-id="quote-section-catering">
         <div class="form-row">
@@ -303,16 +300,18 @@ title: De Zeilkeuken - Vraag een offerte aan
     <!-- Step 3: Personal Details & Preferences -->
     <div class="form-step details-step" data-step="3" aria-hidden="true">
       <div class="form-section" data-content-id="quote-section-contact">
-        <div class="form-group">
-          <label for="organization" data-content-id="quote-label-organization"
-            >Bedrijf/organisatie <span class="label-optional">(optioneel)</span></label
-          >
-          <input type="text" id="organization" name="organization" placeholder="Bedrijfsnaam" />
-        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name" data-content-id="quote-label-name">Naam</label>
+            <input type="text" id="name" name="name" required placeholder="Voor- en achternaam" />
+          </div>
 
-        <div class="form-group">
-          <label for="name" data-content-id="quote-label-name">Naam</label>
-          <input type="text" id="name" name="name" required placeholder="Voor- en achternaam" />
+          <div class="form-group">
+            <label for="organization" data-content-id="quote-label-organization"
+              >Bedrijf/organisatie <span class="label-optional">(optioneel)</span></label
+            >
+            <input type="text" id="organization" name="organization" placeholder="Bedrijfsnaam" />
+          </div>
         </div>
 
         <div class="form-row">
@@ -340,6 +339,30 @@ title: De Zeilkeuken - Vraag een offerte aan
             placeholder="Bijv: specifieke route-wensen, muziek aan boord, activiteiten, dieetwensen, tijdstip aanpassen..."
           ></textarea>
         </div>
+
+        <!-- What Happens Next Timeline -->
+        <div class="next-steps-container">
+          <h2 data-content-id="quote-next-title">Wat gebeurt er nu?</h2>
+
+          <ol class="timeline">
+            <li class="timeline-item">
+              <span class="timeline-number">1</span>
+              <span class="timeline-content" data-content-id="quote-next-step1-title">Je aanvraag komt binnen</span>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-number">2</span>
+              <span class="timeline-content" data-content-id="quote-next-step2-title">Offerte binnen 24 uur</span>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-number">3</span>
+              <span class="timeline-content" data-content-id="quote-next-step3-title">Samen verfijnen</span>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-number">4</span>
+              <span class="timeline-content" data-content-id="quote-next-step4-title">Bevestiging & planning</span>
+            </li>
+          </ol>
+        </div>
       </div>
     </div>
 
@@ -355,9 +378,6 @@ title: De Zeilkeuken - Vraag een offerte aan
       >
         Vrijblijvende offerte ontvangen
       </button>
-      <p class="form-reassurance" style="display: none" data-content-id="quote-reassurance">
-        Vrijblijvend • reactie binnen 24 uur
-      </p>
     </div>
 
     <!-- Price summary footer -->
@@ -378,54 +398,6 @@ title: De Zeilkeuken - Vraag een offerte aan
       </div>
     </div>
   </form>
-
-  <!-- What Happens Next Timeline - Only visible on Step 3 -->
-  <div class="next-steps-container" style="display: none" data-show-on-step="3">
-    <h2 data-content-id="quote-next-title">Wat gebeurt er nu?</h2>
-
-    <div class="timeline">
-      <div class="timeline-item">
-        <span class="timeline-number">1</span>
-        <div class="timeline-content">
-          <h3 data-content-id="quote-next-step1-title">Je aanvraag komt binnen</h3>
-          <p data-content-id="quote-next-step1-text">
-            We bekijken je wensen en controleren de beschikbaarheid voor je gewenste datum.
-          </p>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <span class="timeline-number">2</span>
-        <div class="timeline-content">
-          <h3 data-content-id="quote-next-step2-title">Offerte binnen 24 uur</h3>
-          <p data-content-id="quote-next-step2-text">
-            Je ontvangt een gedetailleerde offerte met prijs, programma en alle details per e-mail.
-          </p>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <span class="timeline-number">3</span>
-        <div class="timeline-content">
-          <h3 data-content-id="quote-next-step3-title">Samen verfijnen</h3>
-          <p data-content-id="quote-next-step3-text">
-            We bellen of mailen om eventuele vragen te bespreken en het programma verder af te
-            stemmen.
-          </p>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <span class="timeline-number">4</span>
-        <div class="timeline-content">
-          <h3 data-content-id="quote-next-step4-title">Bevestiging & planning</h3>
-          <p data-content-id="quote-next-step4-text">
-            Bij akkoord bevestigen we de boeking en sturen we alle praktische informatie.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- FAQ Section -->
