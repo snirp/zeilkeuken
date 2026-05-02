@@ -180,8 +180,14 @@
     // Personal details inputs
     const nameInput = form.querySelector('#name');
     const emailInput = form.querySelector('#email');
-    if (nameInput) nameInput.addEventListener('input', handlePersonalDetailsChange);
-    if (emailInput) emailInput.addEventListener('input', handlePersonalDetailsChange);
+    if (nameInput) {
+      nameInput.addEventListener('input', handlePersonalDetailsChange);
+      nameInput.addEventListener('blur', validateNameOnBlur);
+    }
+    if (emailInput) {
+      emailInput.addEventListener('input', handlePersonalDetailsChange);
+      emailInput.addEventListener('blur', validateEmailOnBlur);
+    }
 
     // Form submission
     form.addEventListener('submit', handleSubmit);
@@ -194,19 +200,19 @@
     state.formData.package = e.target.value;
     // A new package picks new defaults; treat as a fresh start so its defaults apply.
     state.userOverrodeTimes = false;
+    hideError();
     validateDateAgainstPackage();
     updateDateConstraints();
     updateGuestsConstraints();
     updatePackageDefaults();
     updatePriceCalculator();
-    updateNavigationState();
     saveState();
   }
 
   function handleDateChange(e) {
     state.formData.date = e.target.value;
+    hideFieldError(e.target);
     validateDateAgainstPackage();
-    updateNavigationState();
     saveState();
   }
 
@@ -249,7 +255,6 @@
 
     updateGuestsConstraints();
     updatePriceCalculator();
-    updateNavigationState();
     saveState();
   }
 
@@ -348,7 +353,6 @@
 
     updateGuestsConstraints();
     updatePriceCalculator();
-    updateNavigationState();
     updateGuestsStatus();
     saveState();
   }
@@ -384,18 +388,18 @@
   function handleDepartureChange(e) {
     state.formData.departure = e.target.value || null;
     state.userOverrodeTimes = true;
+    hideFieldError(e.target);
     updateTimeStatus();
     updatePriceCalculator();
-    updateNavigationState();
     saveState();
   }
 
   function handleArrivalChange(e) {
     state.formData.arrival = e.target.value || null;
     state.userOverrodeTimes = true;
+    hideFieldError(e.target);
     updateTimeStatus();
     updatePriceCalculator();
-    updateNavigationState();
     saveState();
   }
 
@@ -454,15 +458,37 @@
     saveState();
   }
 
-  function handlePersonalDetailsChange() {
+  function handlePersonalDetailsChange(e) {
     const nameInput = form.querySelector('#name');
     const emailInput = form.querySelector('#email');
     state.formData.personalDetails = {
       name: nameInput ? nameInput.value : '',
       email: emailInput ? emailInput.value : '',
     };
-    updateNavigationState();
+    // Clear per-field errors as the user corrects their input
+    if (e && e.target) hideFieldError(e.target);
     saveState();
+  }
+
+  function validateNameOnBlur(e) {
+    const input = e.target;
+    if (!input.value.trim()) {
+      showFieldError(input, 'Vul je naam in');
+    } else {
+      hideFieldError(input);
+    }
+  }
+
+  function validateEmailOnBlur(e) {
+    const input = e.target;
+    const value = input.value.trim();
+    if (!value) {
+      showFieldError(input, 'Vul een e-mailadres in');
+    } else if (!isValidEmail(value)) {
+      showFieldError(input, 'Vul een geldig e-mailadres in');
+    } else {
+      hideFieldError(input);
+    }
   }
 
   // --- Time Window Helpers ---
@@ -751,131 +777,125 @@
 
   // --- Navigation ---
 
-  function updateNavigationState() {
-    const isValid = validateCurrentStepSilent();
-    if (btnNext) btnNext.disabled = !isValid;
-    if (btnSubmit && state.currentStep === state.totalSteps) btnSubmit.disabled = !isValid;
-  }
+  /**
+   * Collect validation errors for the current step.
+   * Returns an array of { input?, message }; empty array means valid.
+   * Errors without an `input` are global (rendered as the top banner).
+   */
+  function collectStepErrors() {
+    const errors = [];
 
-  function validateCurrentStepSilent() {
     switch (state.currentStep) {
       case 1: {
-        if (!state.formData.package || !state.formData.date) return false;
-        if (!state.formData.departure || !state.formData.arrival) return false;
-
-        const duration = getDuration();
-        if (!duration) return false;
-
-        const config = PACKAGE_CONFIG[state.formData.package];
-        if (config.dateRange) {
-          const selectedDate = new Date(state.formData.date);
-          const startDate = new Date(config.dateRange.start);
-          const endDate = new Date(config.dateRange.end);
-          if (selectedDate < startDate || selectedDate > endDate) return false;
+        if (!state.formData.package) {
+          errors.push({ message: 'Selecteer een arrangement' });
         }
 
-        return true;
+        const dateInput = form.querySelector('#date');
+        if (!state.formData.date) {
+          errors.push({ input: dateInput, message: 'Kies een gewenste datum' });
+        } else if (state.formData.package) {
+          const config = PACKAGE_CONFIG[state.formData.package];
+          if (config && config.dateRange) {
+            const selectedDate = new Date(state.formData.date);
+            const startDate = new Date(config.dateRange.start);
+            const endDate = new Date(config.dateRange.end);
+            if (selectedDate < startDate || selectedDate > endDate) {
+              errors.push({
+                input: dateInput,
+                message: 'Kies een datum binnen het seizoen (april - oktober)',
+              });
+            }
+          }
+        }
+
+        const departureInput = form.querySelector('#departure');
+        const arrivalInput = form.querySelector('#arrival');
+        if (!state.formData.departure) {
+          errors.push({ input: departureInput, message: 'Kies een vertrektijd' });
+        }
+        if (!state.formData.arrival) {
+          errors.push({ input: arrivalInput, message: 'Kies een eindtijd' });
+        }
+        if (state.formData.departure && state.formData.arrival && !getDuration()) {
+          errors.push({ input: arrivalInput, message: 'Eindtijd moet na vertrektijd liggen' });
+        }
+        break;
       }
 
       case 2: {
+        const adultsInput = form.querySelector('#adults');
         const totalPax = getTotalPax();
-        if (!state.formData.adults) return false;
-        if (totalPax > 40) return false;
 
-        const config = PACKAGE_CONFIG[state.formData.package];
-        if (totalPax < config.minGuests || totalPax > config.maxGuests) return false;
-
-        return true;
+        if (!state.formData.adults) {
+          errors.push({ input: adultsInput, message: 'Vul het aantal volwassenen in' });
+        } else if (totalPax > 40) {
+          errors.push({
+            input: adultsInput,
+            message: 'Totaal aantal personen mag niet meer dan 40 zijn',
+          });
+        } else {
+          const config = PACKAGE_CONFIG[state.formData.package];
+          if (config && (totalPax < config.minGuests || totalPax > config.maxGuests)) {
+            errors.push({
+              input: adultsInput,
+              message: `Totaal aantal personen moet tussen ${config.minGuests} en ${config.maxGuests} zijn`,
+            });
+          }
+        }
+        break;
       }
 
       case 3: {
         const nameInput = form.querySelector('#name');
         const emailInput = form.querySelector('#email');
-        if (!nameInput || !emailInput) return false;
-        if (!nameInput.value.trim()) return false;
-        if (!emailInput.value.trim() || !isValidEmail(emailInput.value)) return false;
-        return true;
-      }
 
-      default:
-        return false;
+        if (nameInput && !nameInput.value.trim()) {
+          errors.push({ input: nameInput, message: 'Vul je naam in' });
+        }
+        if (emailInput) {
+          const value = emailInput.value.trim();
+          if (!value) {
+            errors.push({ input: emailInput, message: 'Vul een e-mailadres in' });
+          } else if (!isValidEmail(value)) {
+            errors.push({ input: emailInput, message: 'Vul een geldig e-mailadres in' });
+          }
+        }
+        break;
+      }
     }
+
+    return errors;
   }
 
   function validateCurrentStep() {
-    switch (state.currentStep) {
-      case 1: {
-        if (!state.formData.date) {
-          showError('Kies een gewenste datum');
-          return false;
-        }
-        if (!state.formData.package) {
-          showError('Selecteer een arrangement');
-          return false;
-        }
-        if (!state.formData.departure || !state.formData.arrival) {
-          showError('Kies een vertrek- en eindtijd');
-          return false;
-        }
-        const duration = getDuration();
-        if (!duration) {
-          showError('Eindtijd moet na vertrektijd zijn');
-          return false;
-        }
-
-        const config = PACKAGE_CONFIG[state.formData.package];
-        if (config.dateRange) {
-          const selectedDate = new Date(state.formData.date);
-          const startDate = new Date(config.dateRange.start);
-          const endDate = new Date(config.dateRange.end);
-          if (selectedDate < startDate || selectedDate > endDate) {
-            showError('Kies een datum binnen het seizoen (april - oktober)');
-            return false;
-          }
-        }
-        return true;
-      }
-
-      case 2: {
-        const totalPax = getTotalPax();
-        if (!state.formData.adults) {
-          showError('Vul het aantal volwassenen in');
-          return false;
-        }
-
-        if (totalPax > 40) {
-          showError('Totaal aantal personen mag niet meer dan 40 zijn');
-          return false;
-        }
-
-        const config = PACKAGE_CONFIG[state.formData.package];
-        if (totalPax < config.minGuests || totalPax > config.maxGuests) {
-          showError(
-            `Totaal aantal personen moet tussen ${config.minGuests} en ${config.maxGuests} zijn`
-          );
-          return false;
-        }
-        return true;
-      }
-
-      case 3: {
-        const nameInput = form.querySelector('#name');
-        const emailInput = form.querySelector('#email');
-        if (!nameInput || !emailInput) return false;
-        if (!nameInput.value.trim()) {
-          showError('Vul je naam in');
-          return false;
-        }
-        if (!emailInput.value.trim() || !isValidEmail(emailInput.value)) {
-          showError('Vul een geldig e-mailadres in');
-          return false;
-        }
-        return true;
-      }
-
-      default:
-        return false;
+    const errors = collectStepErrors();
+    if (errors.length === 0) {
+      hideError();
+      return true;
     }
+
+    // Render per-field errors
+    errors.forEach(err => {
+      if (err.input) showFieldError(err.input, err.message);
+    });
+
+    // Show first global (input-less) error in the top banner
+    const globalError = errors.find(e => !e.input);
+    if (globalError) {
+      showError(globalError.message);
+    } else {
+      hideError();
+    }
+
+    // Focus and scroll to the first invalid field
+    const firstFieldError = errors.find(e => e.input);
+    if (firstFieldError && firstFieldError.input) {
+      firstFieldError.input.focus({ preventScroll: true });
+      firstFieldError.input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    return false;
   }
 
   function isValidEmail(email) {
@@ -977,7 +997,6 @@
       section.style.display = showOnStep === state.currentStep ? 'block' : 'none';
     });
 
-    updateNavigationState();
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 

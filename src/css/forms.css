@@ -177,28 +177,29 @@
 .form-error {
   display: none;
   padding: var(--spacing-sm) var(--spacing-md);
-  background-color: #fee;
-  border: 1px solid #fcc;
+  background-color: var(--color-error-bg);
+  border: 1px solid var(--color-error-border);
   border-radius: 4px;
-  color: #c33;
+  color: var(--color-error);
   margin-bottom: var(--spacing-md);
   font-size: var(--font-size-sm);
 }
 
 /* Inline Field Errors */
-.field-error {
-  color: #c33;
+p.field-error {
+  color: var(--color-error);
   font-size: var(--font-size-sm);
+  font-weight: 500;
   margin-top: 4px;
   margin-bottom: 0;
 }
 
 .form-help.is-error {
-  color: #c33;
+  color: var(--color-error);
 }
 
 input.is-invalid {
-  border-color: #c33;
+  border-color: var(--color-error);
 }
 
 /* Form Sections */
@@ -250,6 +251,14 @@ input.is-invalid {
 
 .package-selection-note {
   text-align: right;
+}
+
+#time-status {
+  margin-top: calc(-1 * var(--spacing-sm));
+}
+
+#guests-status {
+  margin-top: calc(-1 * var(--spacing-sm));
 }
 
 .package-option {
@@ -697,6 +706,7 @@ input.is-invalid {
 }
 
 /* Group label (used for radio groups that aren't tied to a single input) */
+.form-section > p.form-group-label,
 .form-group-label {
   display: block;
   font-weight: 600;
