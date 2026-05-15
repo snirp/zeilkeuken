@@ -61,7 +61,6 @@ title: De Zeilkeuken - Vraag een offerte aan
             <label class="package-option-main">
               <input type="radio" name="package" value="dagtocht" required checked />
               <span class="package-name">{{ pkg.content.name }}</span>
-              <span class="package-price">{% if pkg.price %}€{{ pkg.price }} pp{% endif %}</span>
               <p class="package-description">{{ pkg.content.shortDescription }}</p>
             </label>
           </div>
@@ -72,7 +71,6 @@ title: De Zeilkeuken - Vraag een offerte aan
             <label class="package-option-main">
               <input type="radio" name="package" value="langevaart" required />
               <span class="package-name">{{ pkg.content.name }}</span>
-              <span class="package-price">{% if pkg.price %}€{{ pkg.price }} pp{% endif %}</span>
               <p class="package-description">{{ pkg.content.shortDescription }}</p>
             </label>
           </div>
@@ -83,7 +81,6 @@ title: De Zeilkeuken - Vraag een offerte aan
             <label class="package-option-main">
               <input type="radio" name="package" value="dinervaart" required />
               <span class="package-name">{{ pkg.content.name }}</span>
-              <span class="package-price">{% if pkg.price %}€{{ pkg.price }} pp{% endif %}</span>
               <p class="package-description">{{ pkg.content.shortDescription }}</p>
             </label>
           </div>
@@ -94,13 +91,12 @@ title: De Zeilkeuken - Vraag een offerte aan
             <label class="package-option-main">
               <input type="radio" name="package" value="flexibel" required />
               <span class="package-name">{{ pkg.content.name }}</span>
-              <span class="package-price">{% if pkg.price %}€{{ pkg.price }}{% else %}Op maat{% endif %}</span>
               <p class="package-description">{{ pkg.content.shortDescription }}</p>
             </label>
           </div>
           {% endif %} {% endfor %}
         </div>
-        <p class="form-help package-selection-note" data-content-id="quote-packages-note">Prijzen bij benadering</p>
+
 
         <div class="form-row">
           <div class="form-group">
@@ -227,7 +223,7 @@ title: De Zeilkeuken - Vraag een offerte aan
               <input type="radio" name="drinks" value="winePackage" />
               <span class="catering-name">Wijnpakket</span>
               <span class="catering-price" id="drinks-wine-price">€15</span>
-              <p class="catering-description">Premium wijnselectie met bijpassende dranken</p>
+              <p class="catering-description">Nederlandse bar plus passende wijnselectie</p>
             </label>
           </div>
         </fieldset>
@@ -347,19 +343,19 @@ title: De Zeilkeuken - Vraag een offerte aan
           <ol class="timeline">
             <li class="timeline-item">
               <span class="timeline-number">1</span>
-              <span class="timeline-content" data-content-id="quote-next-step1-title">Je aanvraag komt binnen</span>
+              <span class="timeline-content" data-content-id="quote-next-step1-title">Wij sturen een bevestiging van je aanvraag</span>
             </li>
             <li class="timeline-item">
               <span class="timeline-number">2</span>
-              <span class="timeline-content" data-content-id="quote-next-step2-title">Offerte binnen 24 uur</span>
+              <span class="timeline-content" data-content-id="quote-next-step2-title">Binnen 24 uur ontvang je een offerte</span>
             </li>
             <li class="timeline-item">
               <span class="timeline-number">3</span>
-              <span class="timeline-content" data-content-id="quote-next-step3-title">Samen verfijnen</span>
+              <span class="timeline-content" data-content-id="quote-next-step3-title">We verfijnen samen onze aaanbieding</span>
             </li>
             <li class="timeline-item">
               <span class="timeline-number">4</span>
-              <span class="timeline-content" data-content-id="quote-next-step4-title">Bevestiging & planning</span>
+              <span class="timeline-content" data-content-id="quote-next-step4-title">Definitieve bevestiging</span>
             </li>
           </ol>
         </div>
@@ -392,8 +388,12 @@ title: De Zeilkeuken - Vraag een offerte aan
           <span class="price-value" id="catering-price">—</span>
         </div>
         <div class="price-line price-total">
-          <span class="price-label" data-content-id="quote-price-total-label">Totaal (indicatief)</span>
+          <span class="price-label" data-content-id="quote-price-total-label">Totaal</span>
           <span class="price-value" id="total-price">—</span>
+          <span class="price-divider" aria-hidden="true">·</span>
+          <span class="price-label">Per pers.</span>
+          <span class="price-value" id="per-person-price">—</span>
+          <span class="price-note">(indicatief, incl. BTW)</span>
         </div>
       </div>
     </div>

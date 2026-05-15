@@ -295,14 +295,7 @@ input.is-invalid {
   flex: 1;
 }
 
-.package-price {
-  margin-left: auto;
-  font-size: inherit;
-  font-weight: inherit;
-}
-
-.package-option input[type='radio']:checked ~ .package-name,
-.package-option input[type='radio']:checked ~ .package-price {
+.package-option input[type='radio']:checked ~ .package-name {
   color: var(--color-black);
 }
 
@@ -499,6 +492,18 @@ input.is-invalid {
 
 .price-total {
   margin-left: auto;
+  white-space: nowrap;
+}
+
+.price-divider {
+  color: var(--color-gray-400);
+  margin: 0 var(--spacing-xs);
+}
+
+.price-note {
+  color: var(--color-gray-500);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
 }
 
 .price-total .price-label,

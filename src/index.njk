@@ -255,7 +255,7 @@ layout: layouts/base.njk
     <h2 data-content-id="packages-title">Arrangementen</h2>
     <div class="text-content">
       <p data-content-id="packages-intro">
-        We varen van april tot oktober met groepen tot 40 personen vanuit Muiden. Onderstaande arrangementen zijn startpunten—elk arrangement kun je aanpassen aan jouw wensen. Alle prijzen zijn inclusief eten, drinken en de zeilervaring, maar afhankelijk van groepsgrootte, duur en gekozen opties.
+        We varen van april tot oktober met groepen tot 40 personen vanuit Muiden. Onderstaande arrangementen zijn startpunten—elk arrangement kun je aanpassen aan jouw wensen.
       </p>
     </div>
 
@@ -264,7 +264,6 @@ layout: layouts/base.njk
       <a href="/arrangementen/#dagtocht" class="card card-package card-hover package-card-link">
         <div class="package-header">
           <h3>{{ pkg.content.name }}</h3>
-          <span class="package-price">€ {{ pkg.price }} pp</span>
         </div>
         <div class="badge-group">
           {% for badge in pkg.content.badges %}
@@ -278,7 +277,6 @@ layout: layouts/base.njk
       <a href="/arrangementen/#langevaart" class="card card-package card-hover package-card-link">
         <div class="package-header">
           <h3>{{ pkg.content.name }}</h3>
-          <span class="package-price">€ {{ pkg.price }} pp</span>
         </div>
         <div class="badge-group">
           {% for badge in pkg.content.badges %}
@@ -292,7 +290,6 @@ layout: layouts/base.njk
       <a href="/arrangementen/#dinervaart" class="card card-package card-hover package-card-link">
         <div class="package-header">
           <h3>{{ pkg.content.name }}</h3>
-          <span class="package-price">€ {{ pkg.price }} pp</span>
         </div>
         <div class="badge-group">
           {% for badge in pkg.content.badges %}

@@ -673,6 +673,7 @@
     const boatPriceEl = form.querySelector('#boat-price');
     const cateringPriceEl = form.querySelector('#catering-price');
     const totalPriceEl = form.querySelector('#total-price');
+    const perPersonPriceEl = form.querySelector('#per-person-price');
 
     if (!boatPriceEl) return;
 
@@ -693,9 +694,14 @@
     if (totalPriceEl) {
       if (boatPrice === null && cateringTotal === null) {
         totalPriceEl.textContent = '—';
+        if (perPersonPriceEl) perPersonPriceEl.textContent = '—';
       } else {
         const total = (boatPrice || 0) + (cateringTotal || 0);
         totalPriceEl.textContent = formatEuro(total);
+        if (perPersonPriceEl) {
+          const pax = getTotalPax();
+          perPersonPriceEl.textContent = pax ? formatEuro(Math.round(total / pax)) : '—';
+        }
       }
     }
   }

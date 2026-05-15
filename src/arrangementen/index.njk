@@ -17,7 +17,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
         </p>
         <p data-content-id="packages-hero-practical">
           Van april tot oktober varen we met groepen van 25 tot 40 personen vanuit Muiden. Alles is
-          inbegrepen: varen, eten, drinken. Vaste prijs per persoon, geen verrassingen.
+          inbegrepen: varen, eten, drinken.
         </p>
       </div>
       <div>
@@ -38,7 +38,6 @@ title: De Zeilkeuken - Arrangementen en prijzen
           <tr>
             <th>Arrangement</th>
             <th class="th-duration">Duur</th>
-            <th>Prijs pp<sup>*</sup></th>
             <th>Beste voor</th>
             <th></th>
           </tr>
@@ -56,13 +55,6 @@ title: De Zeilkeuken - Arrangementen en prijzen
                 Op maat
               {% endif %}
             </td>
-            <td class="package-price-cell">
-              {% if pkg.price %}
-                €{{ pkg.price }}
-              {% else %}
-                Op aanvraag
-              {% endif %}
-            </td>
             <td class="package-bestfor">{{ pkg.content.bestFor }}</td>
             <td class="package-arrow">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,9 +65,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
           {% endfor %}
         </tbody>
       </table>
-      <p class="table-footnote" data-content-id="packages-table-footnote">
-        *Definitieve prijs is afhankelijk van groepsgrootte en gekozen opties
-      </p>
+
     </div>
 
     <!-- Extras Callout -->
@@ -99,7 +89,6 @@ title: De Zeilkeuken - Arrangementen en prijzen
     <div class="package-hero-overlay">
       <div class="package-hero-header">
         <h2>{{ pkg.content.name }}</h2>
-        <span class="package-price-large">€{{ pkg.price }} pp</span>
       </div>
       <div class="badge-group">
         {% for badge in pkg.content.badges %}

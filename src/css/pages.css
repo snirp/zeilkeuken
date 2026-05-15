@@ -791,12 +791,6 @@
   color: var(--color-primary);
 }
 
-.package-price-cell {
-  font-weight: 600;
-  color: var(--color-primary);
-  white-space: nowrap;
-}
-
 .package-bestfor {
   color: var(--color-gray-600);
   font-size: var(--font-size-sm);
@@ -1068,13 +1062,6 @@
   font-weight: 700;
   color: var(--color-white);
   margin: 0;
-}
-
-.package-price-large {
-  font-size: var(--font-size-2xl);
-  font-weight: 700;
-  color: var(--color-white);
-  white-space: nowrap;
 }
 
 /* Badges in hero */
@@ -1930,13 +1917,6 @@
   margin: 0;
   font-size: var(--font-size-xl);
   font-weight: 700;
-}
-
-.packages-grid .package-price {
-  font-size: var(--font-size-lg);
-  font-weight: 700;
-  color: var(--color-primary);
-  white-space: nowrap;
 }
 
 .packages-grid .package-subtitle {

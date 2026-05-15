@@ -407,13 +407,6 @@
   margin: 0;
 }
 
-.package-price {
-  font-size: var(--font-size-lg);
-  font-weight: 700;
-  color: var(--color-gray-800);
-  white-space: nowrap;
-}
-
 .package-description,
 .destination-description {
   margin-bottom: var(--spacing-md);
