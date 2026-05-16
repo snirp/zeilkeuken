@@ -53,27 +53,24 @@ layout: layouts/base.njk
       <p data-content-id="ship-intro">
         Onze Groninger Tjalk is in 1892 gebouwd en voer op de Zuiderzee. Nu combineert het schip klassieke charme met moderne faciliteiten voor groepen tot 40 personen. Ruim dek, beschutte binnenkajuit, professionele kombuis met barbecue, en alle comfort die je nodig hebt voor een succesvolle dag op het IJsselmeer.
       </p>
-      <a href="/schip/" class="btn btn-md btn-secondary" data-content-id="ship-read-more">Meer over ons schip →</a>
+
     </div>
   </div>
   <div class="ship-gallery">
     <div class="ship-gallery-item ship-gallery-hero">
-      <img src="/images/schip-zeilen.jpg" alt="De Saffier onder zeil op het IJsselmeer" loading="lazy" data-content-id="ship-gallery-1" data-gallery-index="0" />
+      <img src="/images/schip-lijnen.jpg" alt="Touwwerk en lijnen van De Saffier" loading="lazy" data-content-id="ship-gallery-1" data-gallery-index="0" />
     </div>
     <div class="ship-gallery-item">
-      <img src="/images/schip-katrol.jpg" alt="Detail van het zeiltuig" loading="lazy" data-content-id="ship-gallery-2" data-gallery-index="1" />
+      <img src="/images/schip-anker.jpg" alt="Anker van De Saffier" loading="lazy" data-content-id="ship-gallery-2" data-gallery-index="1" />
     </div>
     <div class="ship-gallery-item">
-      <img src="/images/schip-mensen.avif" alt="Gasten aan boord tijdens een zeiltocht" loading="lazy" data-content-id="ship-gallery-3" data-gallery-index="2" />
+      <img src="/images/schip-kompas.jpg" alt="Kompas aan boord" loading="lazy" data-content-id="ship-gallery-3" data-gallery-index="2" />
     </div>
     <div class="ship-gallery-item ship-gallery-desktop">
-      <img src="/images/schip-geheel.jpg" alt="Zijaanzicht van de historische Groninger Tjalk" loading="lazy" data-content-id="ship-gallery-4" data-gallery-index="3" />
+      <img src="/images/schip-roer.jpg" alt="Het roer van De Saffier" loading="lazy" data-content-id="ship-gallery-4" data-gallery-index="3" />
     </div>
     <div class="ship-gallery-item ship-gallery-desktop">
-      <img src="/images/schip-mast.jpg" alt="Mast en tuigage van De Saffier" loading="lazy" data-content-id="ship-gallery-5" data-gallery-index="4" />
-    </div>
-    <div class="ship-gallery-item ship-gallery-hidden">
-      <img src="/images/schip-geheel.jpg" alt="De Saffier op het water" loading="lazy" data-content-id="ship-gallery-6" data-gallery-index="5" />
+      <img src="/images/schip-boeg.jpg" alt="De boeg van De Saffier" loading="lazy" data-content-id="ship-gallery-5" data-gallery-index="4" />
     </div>
   </div>
 </section>
@@ -85,82 +82,9 @@ layout: layouts/base.njk
   <button class="ship-lightbox-nav ship-lightbox-next" aria-label="Volgende foto">&gt;</button>
   <img class="ship-lightbox-image" src="" alt="" />
   <div class="ship-lightbox-counter">
-    <span id="ship-current">1</span> / <span id="ship-total">6</span>
+    <span id="ship-current">1</span> / <span id="ship-total">5</span>
   </div>
 </div>
-
-<script>
-  (function () {
-    const galleryImages = document.querySelectorAll('.ship-gallery img');
-    const lightbox = document.getElementById('ship-lightbox');
-    const lightboxImage = lightbox.querySelector('.ship-lightbox-image');
-    const closeBtn = lightbox.querySelector('.ship-lightbox-close');
-    const prevBtn = lightbox.querySelector('.ship-lightbox-prev');
-    const nextBtn = lightbox.querySelector('.ship-lightbox-next');
-    const currentEl = document.getElementById('ship-current');
-    const totalEl = document.getElementById('ship-total');
-
-    let currentIndex = 0;
-    const totalImages = galleryImages.length;
-
-    totalEl.textContent = totalImages;
-
-    function openLightbox(index) {
-      currentIndex = index;
-      updateLightboxImage();
-      lightbox.classList.add('ship-lightbox-open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-      lightbox.classList.remove('ship-lightbox-open');
-      document.body.style.overflow = '';
-    }
-
-    function updateLightboxImage() {
-      const img = galleryImages[currentIndex];
-      lightboxImage.src = img.src;
-      lightboxImage.alt = img.alt;
-      currentEl.textContent = currentIndex + 1;
-    }
-
-    function showNext() {
-      currentIndex = (currentIndex + 1) % totalImages;
-      updateLightboxImage();
-    }
-
-    function showPrev() {
-      currentIndex = (currentIndex - 1 + totalImages) % totalImages;
-      updateLightboxImage();
-    }
-
-    // Event listeners
-    galleryImages.forEach((img, index) => {
-      img.style.cursor = 'pointer';
-      img.addEventListener('click', () => openLightbox(index));
-    });
-
-    closeBtn.addEventListener('click', closeLightbox);
-    prevBtn.addEventListener('click', showPrev);
-    nextBtn.addEventListener('click', showNext);
-
-    // Close on overlay click
-    lightbox.addEventListener('click', e => {
-      if (e.target === lightbox) {
-        closeLightbox();
-      }
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', e => {
-      if (!lightbox.classList.contains('ship-lightbox-open')) return;
-
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight') showNext();
-      if (e.key === 'ArrowLeft') showPrev();
-    });
-  })();
-</script>
 
 <!-- Destinations -->
 <section id="destinations" class="section section-white destinations">
@@ -174,16 +98,16 @@ layout: layouts/base.njk
 
     <div class="map-container">
       <div class="destination-cards">
-        <a href="/ervaar/#pampus" class="card card-hover card-interactive scroll-reveal" data-content-id="destinations-card-1">
+        <div class="card scroll-reveal" data-content-id="destinations-card-1">
           <h3>Fort Pampus</h3>
           <div class="badge-group">
             <span class="badge">45 min</span>
             <span class="badge">Forteiland</span>
           </div>
           <p class="destination-description">Eens het slot op de stelling van Amsterdam en nu een museum. Verken de historie van het eiland, of neem een verfrissende duik.</p>
-        </a>
+        </div>
 
-        <a href="/ervaar/#volendam" class="card card-hover card-interactive scroll-reveal" data-content-id="destinations-card-2">
+        <div class="card scroll-reveal" data-content-id="destinations-card-2">
           <h3>Volendam</h3>
           <div class="badge-group">
             <span class="badge">1.5 uur</span>
@@ -192,9 +116,9 @@ layout: layouts/base.njk
           <p class="destination-description">
             De geboortegrond van de palingsound. Dit vissersdorp is beroemd om "de" dijk.
           </p>
-        </a>
+        </div>
 
-        <a href="/ervaar/#marken" class="card card-hover card-interactive scroll-reveal" data-content-id="destinations-card-3">
+        <div class="card scroll-reveal" data-content-id="destinations-card-3">
           <h3>Marken</h3>
           <div class="badge-group">
             <span class="badge">1 uur</span>
@@ -203,15 +127,20 @@ layout: layouts/base.njk
           <p class="destination-description">
             Verlies jezelf in de historie van dit voormalige eiland, met haar authentieke houten huisjes.
           </p>
-        </a>
+        </div>
 
-        <a href="/ervaar/" class="card card-hover card-interactive scroll-reveal destination-cta" data-content-id="destinations-cta">
-          <h3>Zeilen op het IJsselmeer</h3>
+        <div class="card scroll-reveal" data-content-id="destinations-card-4">
+          <h3>Muiden</h3>
+          <div class="badge-group">
+            <span class="badge">Thuishaven</span>
+            <span class="badge">Vesting</span>
+          </div>
           <p class="destination-description">
-            Ontdek alle vaarroutes en lees meer over de zeilervaring →
+            Verken de vestingstad Muiden, met haar middeleeuwse kasteel en gezellige haven. De perfecte eindbestemming.
           </p>
-        </a>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -259,7 +188,7 @@ layout: layouts/base.njk
       </p>
     </div>
 
-    <div class="package-cards grid-3">
+    <div class="package-cards grid-2">
       {% for pkg in packages %} {% if pkg.id == "dagtocht" %}
       <a href="/arrangementen/#dagtocht" class="card card-package card-hover package-card-link">
         <div class="package-header">
@@ -301,26 +230,20 @@ layout: layouts/base.njk
       </a>
       {% endif %} {% endfor %}
 
-      <div class="custom-package-cta">
-        <div class="custom-package-header">
-          {% for pkg in packages %} {% if pkg.id == "flexibel" %}
+      {% for pkg in packages %} {% if pkg.id == "flexibel" %}
+      <a href="/arrangementen/#flexibel" class="card card-package card-hover package-card-link">
+        <div class="package-header">
           <h3>{{ pkg.content.name }}</h3>
-          {% endif %} {% endfor %}
-          <a href="/offerte/" class="btn btn-sm">Bereken je prijs</a>
         </div>
-        <div class="custom-package-content">
-          <div class="custom-package-text">
-            {% for pkg in packages %} {% if pkg.id == "flexibel" %}
-            <p>{{ pkg.content.shortDescription }}</p>
-            {% endif %} {% endfor %}
-          </div>
-          <ul class="custom-package-features list-check">
-            <li>Vrije keuze in vaartijd, duur en route</li>
-            <li>Menu volledig op maat en budget</li>
-            <li>Ceremonie, receptie of presentatiemogelijkheden</li>
-          </ul>
+        <div class="badge-group">
+          {% for badge in pkg.content.badges %}
+          <span class="badge">{{ badge }}</span>
+          {% endfor %}
         </div>
-      </div>
+        <p class="package-description">{{ pkg.content.shortDescription }}</p>
+        <span class="link package-cta">Details →</span>
+      </a>
+      {% endif %} {% endfor %}
     </div>
   </div>
 </section>
@@ -407,3 +330,76 @@ layout: layouts/base.njk
     {% include "components/faq-list.njk" %}
   </div>
 </section>
+
+<script>
+  (function () {
+    const galleryImages = document.querySelectorAll('.ship-gallery img');
+    const lightbox = document.getElementById('ship-lightbox');
+    const lightboxImage = lightbox.querySelector('.ship-lightbox-image');
+    const closeBtn = lightbox.querySelector('.ship-lightbox-close');
+    const prevBtn = lightbox.querySelector('.ship-lightbox-prev');
+    const nextBtn = lightbox.querySelector('.ship-lightbox-next');
+    const currentEl = document.getElementById('ship-current');
+    const totalEl = document.getElementById('ship-total');
+
+    let currentIndex = 0;
+    const totalImages = galleryImages.length;
+
+    totalEl.textContent = totalImages;
+
+    function openLightbox(index) {
+      currentIndex = index;
+      updateLightboxImage();
+      lightbox.classList.add('ship-lightbox-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('ship-lightbox-open');
+      document.body.style.overflow = '';
+    }
+
+    function updateLightboxImage() {
+      const img = galleryImages[currentIndex];
+      lightboxImage.src = img.src;
+      lightboxImage.alt = img.alt;
+      currentEl.textContent = currentIndex + 1;
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % totalImages;
+      updateLightboxImage();
+    }
+
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+      updateLightboxImage();
+    }
+
+    // Event listeners
+    galleryImages.forEach((img, index) => {
+      img.style.cursor = 'pointer';
+      img.addEventListener('click', () => openLightbox(index));
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    prevBtn.addEventListener('click', showPrev);
+    nextBtn.addEventListener('click', showNext);
+
+    // Close on overlay click
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('ship-lightbox-open')) return;
+
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'ArrowLeft') showPrev();
+    });
+  })();
+</script>

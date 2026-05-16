@@ -312,7 +312,7 @@ input.is-invalid {
   flex-basis: 100%;
   font-size: var(--font-size-sm);
   color: var(--color-gray-600);
-  margin: 2px 0 0 24px;
+  /* margin: 2px 0 0 24px; */
 }
 
 /* Form Elements */
