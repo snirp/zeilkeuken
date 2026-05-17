@@ -196,7 +196,7 @@
 
 .food-images img {
   width: 100%;
-  height: 350px;
+  height: 500px;
   object-fit: cover;
   display: block;
 }
@@ -206,6 +206,14 @@
   display: none;
 }
 
+.food-image-desktop picture,
+.food-image-desktop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 @media (min-width: 768px) {
   .food-images {
     grid-template-columns: 1fr 1fr;
@@ -213,7 +221,7 @@
   }
 
   .food-images img {
-    height: 400px;
+    height: 560px;
   }
 
   /* Show second image on desktop */
@@ -228,7 +236,7 @@
   }
 
   .food-images img {
-    height: 450px;
+    height: 620px;
   }
 }
 
@@ -495,8 +503,9 @@
 }
 
 .ship-lightbox-image {
+  width: 90%;
   max-width: 90%;
-  max-height: 90%;
+  max-height: 90vh;
   object-fit: contain;
   animation: shipZoomIn 0.3s ease;
 }

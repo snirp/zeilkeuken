@@ -1,3 +1,5 @@
+const Image = require('@11ty/eleventy-img');
+
 module.exports = function (eleventyConfig) {
   // Passthrough copy for assets
   eleventyConfig.addPassthroughCopy('src/css');
@@ -9,6 +11,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('src/favicon-light.svg');
   eleventyConfig.addPassthroughCopy('src/favicon-dark.svg');
   eleventyConfig.addPassthroughCopy('src/apple-touch-icon.png');
+
+  // Object values filter (for iterating keyed data objects in Nunjucks)
+  eleventyConfig.addFilter('values', obj => Object.values(obj));
 
   // Markdown filter
   const markdownIt = require('markdown-it');
@@ -64,6 +69,38 @@ module.exports = function (eleventyConfig) {
         return priorityA - priorityB;
       });
   });
+
+  // Optimized image shortcode using eleventy-img
+  // Usage: {% galleryImage "/images/foo.jpg", "Alt text", "sizes", "w1,w2,w3" %}
+  // Sizes examples: "(min-width: 768px) 40vw, 100vw" | "50vw"
+  // Widths: comma-separated px values, e.g. "480,960,1440"
+  // Falls back to plain <img> for missing/placeholder images during development
+  eleventyConfig.addAsyncShortcode(
+    'galleryImage',
+    async function (src, alt, sizes, widthsStr, loading) {
+      const widths = widthsStr ? widthsStr.split(',').map(Number) : [480, 960];
+      const srcPath = `./src${src}`;
+
+      try {
+        const metadata = await Image(srcPath, {
+          widths,
+          formats: ['webp', 'jpeg'],
+          outputDir: './_site/images/',
+          urlPath: '/images/',
+        });
+
+        return Image.generateHTML(metadata, {
+          alt,
+          sizes: sizes || '100vw',
+          loading: loading || 'lazy',
+          decoding: 'async',
+        });
+      } catch (e) {
+        // Fallback for missing placeholder images in development
+        return `<img src="${src}" alt="${alt}" loading="${loading || 'lazy'}">`;
+      }
+    }
+  );
 
   return {
     dir: {

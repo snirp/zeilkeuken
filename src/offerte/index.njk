@@ -13,7 +13,7 @@ title: De Zeilkeuken - Vraag een offerte aan
     borrel: {{ pricing.borrel | dump | safe }},
     dinner: {{ pricing.dinner | dump | safe }},
     packages: {
-      {% for pkg in packages %}
+      {% for pkg in packages | values %}
       {{ pkg.id }}: {
         name: {{ pkg.content.name | dump | safe }},
         minGuests: {{ pkg.constraints.minGuests }},
@@ -56,7 +56,7 @@ title: De Zeilkeuken - Vraag een offerte aan
         <p class="form-group-label" data-content-id="quote-packages-label">Start met een arrangement <span class="form-help" data-content-id="quote-packages-helper">— en pas aan naar jouw wensen</span></p>
 
         <div class="package-selection">
-          {% for pkg in packages %} {% if pkg.id == "dagtocht" %}
+          {% set pkg = packages.dagtocht %}
           <div class="package-option">
             <label class="package-option-main">
               <input type="radio" name="package" value="dagtocht" required checked />
@@ -64,9 +64,8 @@ title: De Zeilkeuken - Vraag een offerte aan
               <p class="package-description">{{ pkg.content.shortDescription }}</p>
             </label>
           </div>
-          {% endif %} {% endfor %}
 
-          {% for pkg in packages %} {% if pkg.id == "langevaart" %}
+          {% set pkg = packages.langevaart %}
           <div class="package-option">
             <label class="package-option-main">
               <input type="radio" name="package" value="langevaart" required />
@@ -74,9 +73,8 @@ title: De Zeilkeuken - Vraag een offerte aan
               <p class="package-description">{{ pkg.content.shortDescription }}</p>
             </label>
           </div>
-          {% endif %} {% endfor %}
 
-          {% for pkg in packages %} {% if pkg.id == "dinervaart" %}
+          {% set pkg = packages.dinervaart %}
           <div class="package-option">
             <label class="package-option-main">
               <input type="radio" name="package" value="dinervaart" required />
@@ -84,9 +82,8 @@ title: De Zeilkeuken - Vraag een offerte aan
               <p class="package-description">{{ pkg.content.shortDescription }}</p>
             </label>
           </div>
-          {% endif %} {% endfor %}
 
-          {% for pkg in packages %} {% if pkg.id == "flexibel" %}
+          {% set pkg = packages.flexibel %}
           <div class="package-option">
             <label class="package-option-main">
               <input type="radio" name="package" value="flexibel" required />
@@ -94,7 +91,6 @@ title: De Zeilkeuken - Vraag een offerte aan
               <p class="package-description">{{ pkg.content.shortDescription }}</p>
             </label>
           </div>
-          {% endif %} {% endfor %}
         </div>
 
 

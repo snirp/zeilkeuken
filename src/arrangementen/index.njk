@@ -43,7 +43,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
           </tr>
         </thead>
         <tbody>
-          {% for pkg in packages %}
+          {% for pkg in packages | values %}
           <tr class="package-row" onclick="window.location.href='#{{ pkg.slug }}'">
             <td class="package-name">
               <a href="#{{ pkg.slug }}">{{ pkg.content.name }}</a>
@@ -70,7 +70,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
 </section>
 
 <!-- Detailed Package Sections -->
-{% for pkg in packages %}
+{% for pkg in packages | values %}
 <section id="{{ pkg.slug }}" class="section package-detail">
   <div class="package-hero">
     <img

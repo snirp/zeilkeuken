@@ -57,20 +57,20 @@ layout: layouts/base.njk
     </div>
   </div>
   <div class="ship-gallery">
-    <div class="ship-gallery-item ship-gallery-hero">
-      <img src="/images/schip-lijnen.jpg" alt="Touwwerk en lijnen van De Saffier" loading="lazy" data-content-id="ship-gallery-1" data-gallery-index="0" />
+    <div class="ship-gallery-item ship-gallery-hero" data-content-id="ship-gallery-1">
+      {% galleryImage "/images/schip-lijnen.jpg", "Touwwerk en lijnen van De Saffier", "(min-width: 768px) 40vw, 100vw", "480,960,1440" %}
     </div>
-    <div class="ship-gallery-item">
-      <img src="/images/schip-anker.jpg" alt="Anker van De Saffier" loading="lazy" data-content-id="ship-gallery-2" data-gallery-index="1" />
+    <div class="ship-gallery-item" data-content-id="ship-gallery-2">
+      {% galleryImage "/images/schip-anker.jpg", "Anker van De Saffier", "(min-width: 768px) 30vw, 50vw", "360,720" %}
     </div>
-    <div class="ship-gallery-item">
-      <img src="/images/schip-kompas.jpg" alt="Kompas aan boord" loading="lazy" data-content-id="ship-gallery-3" data-gallery-index="2" />
+    <div class="ship-gallery-item" data-content-id="ship-gallery-3">
+      {% galleryImage "/images/schip-kompas.jpg", "Kompas aan boord", "(min-width: 768px) 30vw, 50vw", "360,720" %}
     </div>
-    <div class="ship-gallery-item ship-gallery-desktop">
-      <img src="/images/schip-roer.jpg" alt="Het roer van De Saffier" loading="lazy" data-content-id="ship-gallery-4" data-gallery-index="3" />
+    <div class="ship-gallery-item ship-gallery-desktop" data-content-id="ship-gallery-4">
+      {% galleryImage "/images/schip-roer.jpg", "Het roer van De Saffier", "(min-width: 768px) 30vw, 50vw", "360,720" %}
     </div>
-    <div class="ship-gallery-item ship-gallery-desktop">
-      <img src="/images/schip-boeg.jpg" alt="De boeg van De Saffier" loading="lazy" data-content-id="ship-gallery-5" data-gallery-index="4" />
+    <div class="ship-gallery-item ship-gallery-desktop" data-content-id="ship-gallery-5">
+      {% galleryImage "/images/schip-boeg.jpg", "De boeg van De Saffier", "(min-width: 768px) 30vw, 50vw", "360,720" %}
     </div>
   </div>
 </section>
@@ -162,19 +162,10 @@ layout: layouts/base.njk
     </div>
   </div>
   <div class="food-images">
-    <img
-      src="/images/food-barbecue.jpg"
-      alt="Chef bereidt vers eten op de barbecue aan boord"
-      loading="lazy"
-      data-content-id="food-image-1"
-    />
-    <img
-      src="/images/food-people.jpg"
-      alt="Vers bereide gerechten aan boord"
-      loading="lazy"
-      data-content-id="food-image-2"
-      class="food-image-desktop"
-    />
+    {% galleryImage "/images/keuken-tafel.jpg", "Gedekte tafel aan boord", "(min-width: 768px) 50vw, 100vw", "480,960,1440" %}
+    <div class="food-image-desktop">
+      {% galleryImage "/images/keuken-salade.jpg", "Salade bereid aan boord", "(min-width: 768px) 50vw, 100vw", "480,960,1440" %}
+    </div>
   </div>
 </section>
 
@@ -189,8 +180,8 @@ layout: layouts/base.njk
     </div>
 
     <div class="package-cards grid-2">
-      {% for pkg in packages %} {% if pkg.id == "dagtocht" %}
-      <a href="/arrangementen/#dagtocht" class="card card-package card-hover package-card-link">
+      {% set pkg = packages.dagtocht %}
+      <a href="/arrangementen/#dagtocht" class="card card-package card-hover package-card-link scroll-reveal">
         <div class="package-header">
           <h3>{{ pkg.content.name }}</h3>
         </div>
@@ -202,36 +193,9 @@ layout: layouts/base.njk
         <p class="package-description">{{ pkg.content.shortDescription }}</p>
         <span class="link package-cta">Details →</span>
       </a>
-      {% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "langevaart" %}
-      <a href="/arrangementen/#langevaart" class="card card-package card-hover package-card-link">
-        <div class="package-header">
-          <h3>{{ pkg.content.name }}</h3>
-        </div>
-        <div class="badge-group">
-          {% for badge in pkg.content.badges %}
-          <span class="badge">{{ badge }}</span>
-          {% endfor %}
-        </div>
-        <p class="package-description">{{ pkg.content.shortDescription }}</p>
-        <span class="link package-cta">Details →</span>
-      </a>
-      {% endif %} {% endfor %} {% for pkg in packages %} {% if pkg.id == "dinervaart" %}
-      <a href="/arrangementen/#dinervaart" class="card card-package card-hover package-card-link">
-        <div class="package-header">
-          <h3>{{ pkg.content.name }}</h3>
-        </div>
-        <div class="badge-group">
-          {% for badge in pkg.content.badges %}
-          <span class="badge">{{ badge }}</span>
-          {% endfor %}
-        </div>
-        <p class="package-description">{{ pkg.content.shortDescription }}</p>
-        <span class="link package-cta">Details →</span>
-      </a>
-      {% endif %} {% endfor %}
 
-      {% for pkg in packages %} {% if pkg.id == "flexibel" %}
-      <a href="/arrangementen/#flexibel" class="card card-package card-hover package-card-link">
+      {% set pkg = packages.langevaart %}
+      <a href="/arrangementen/#langevaart" class="card card-package card-hover package-card-link scroll-reveal">
         <div class="package-header">
           <h3>{{ pkg.content.name }}</h3>
         </div>
@@ -243,7 +207,34 @@ layout: layouts/base.njk
         <p class="package-description">{{ pkg.content.shortDescription }}</p>
         <span class="link package-cta">Details →</span>
       </a>
-      {% endif %} {% endfor %}
+
+      {% set pkg = packages.dinervaart %}
+      <a href="/arrangementen/#dinervaart" class="card card-package card-hover package-card-link scroll-reveal">
+        <div class="package-header">
+          <h3>{{ pkg.content.name }}</h3>
+        </div>
+        <div class="badge-group">
+          {% for badge in pkg.content.badges %}
+          <span class="badge">{{ badge }}</span>
+          {% endfor %}
+        </div>
+        <p class="package-description">{{ pkg.content.shortDescription }}</p>
+        <span class="link package-cta">Details →</span>
+      </a>
+
+      {% set pkg = packages.flexibel %}
+      <a href="/arrangementen/#flexibel" class="card card-package card-hover package-card-link scroll-reveal">
+        <div class="package-header">
+          <h3>{{ pkg.content.name }}</h3>
+        </div>
+        <div class="badge-group">
+          {% for badge in pkg.content.badges %}
+          <span class="badge">{{ badge }}</span>
+          {% endfor %}
+        </div>
+        <p class="package-description">{{ pkg.content.shortDescription }}</p>
+        <span class="link package-cta">Details →</span>
+      </a>
     </div>
   </div>
 </section>
@@ -253,12 +244,6 @@ layout: layouts/base.njk
   <div class="section-container">
     <h2 data-content-id="why-us-title">Waarom De Zeilkeuken</h2>
     <div class="why-us-content">
-      <p data-content-id="why-us-intro">
-        De Zeilkeuken biedt meer dan een vaartocht: het is een complete beleving op het water. U vaart
-        met een karaktervol, historisch schip en geniet tegelijk van hoogwaardige, vers bereide
-        gerechten aan boord. Persoonlijke aandacht, flexibiliteit en een ontspannen sfeer staan
-        centraal.
-      </p>
     </div>
     
     <div class="why-us-grid">
@@ -278,11 +263,12 @@ layout: layouts/base.njk
       </div>
       
       <div class="why-us-item" data-content-id="why-us-flexibility">
-        <h3>Flexibiliteit & Service</h3>
+        <h3>Persoonlijke aandacht</h3>
         <p>
-          Of het nu gaat om een zakelijke bijeenkomst, een viering of een dag uit met vrienden: 
-          we passen elk arrangement aan uw wensen aan. Faciliteiten voor presentaties, 
-          transparante prijzen, en persoonlijke begeleiding.
+          Vooraf praat je met iemand die het schip kent en meedenkt over jouw dag: 
+          menu, dagindeling, wat er anders moet. Aan boord staat een bemanning die 
+          weet dat een goede dag niet vanzelf gaat — attent, zonder opdringerig te 
+          zijn. Eerlijke prijzen, en duidelijkheid over wat wél en niet kan.
         </p>
         <ul class="list-check">
           <li>Maatwerk arrangementen</li>
@@ -361,9 +347,18 @@ layout: layouts/base.njk
 
     function updateLightboxImage() {
       const img = galleryImages[currentIndex];
-      lightboxImage.src = img.src;
+      lightboxImage.src = getFullSrc(img);
       lightboxImage.alt = img.alt;
       currentEl.textContent = currentIndex + 1;
+    }
+
+    function getFullSrc(img) {
+      const picture = img.closest('picture');
+      if (!picture) return img.src;
+      const source = picture.querySelector('source[type="image/webp"]') || picture.querySelector('source');
+      if (!source) return img.src;
+      const entries = source.srcset.split(',').map(s => s.trim());
+      return entries[entries.length - 1].split(' ')[0];
     }
 
     function showNext() {
