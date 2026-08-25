@@ -134,7 +134,7 @@ title: De Zeilkeuken - Arrangementen en prijzen
           <strong>Vertrek:</strong> {{ pkg.defaults.departure }}
         </div>
         <div class="practical-item">
-          <strong>Groepsgrootte:</strong> {{ pkg.constraints.minGuests }}-{{ pkg.constraints.maxGuests }} personen
+          <strong>Groepsgrootte:</strong> {% if pkg.constraints.minGuests %}{{ pkg.constraints.minGuests }}-{{ pkg.constraints.maxGuests }}{% else %}tot {{ pkg.constraints.maxGuests }}{% endif %} personen
         </div>
         <div class="practical-item">
           <strong>Locatie:</strong> Muiden

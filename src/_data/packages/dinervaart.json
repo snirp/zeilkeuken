@@ -7,7 +7,6 @@
     "endTime": "21:30"
   },
   "constraints": {
-    "minGuests": 10,
     "maxGuests": 40,
     "seasonStart": "2026-04-01",
     "seasonEnd": "2026-10-31"

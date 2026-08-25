@@ -7,7 +7,6 @@
     "endTime": null
   },
   "constraints": {
-    "minGuests": 10,
     "maxGuests": 40,
     "seasonStart": null,
     "seasonEnd": null
