@@ -16,9 +16,45 @@
     "bestFor": "Complete beleving, echte zeilers, speciale gelegenheden",
     "badges": ["± 10 uur", "lunch", "diner", "ontdek"],
     "heroSubtitle": "Van zonsopkomst tot zonsondergang",
-    "shortDescription": "Beleef een complete zeildag van ontbijt tot diner op het IJsselmeer. We varen een uitgebreide route langs meerdere havenstadjes zoals Volendam en Monnickendam, met alle tijd om te genieten van vers bereide maaltijden. Perfect voor wie een échte zeilervaring wil met culinaire verwennerij de hele dag door.",
+    "shortDescription": "Beleef een complete zeildag inclusief diner op het IJsselmeer. We varen een uitgebreide route langs meerdere havenstadjes zoals Volendam en Monnickendam, met alle tijd om te genieten van vers bereide maaltijden. Perfect voor wie een échte zeilervaring wil met culinaire verwennerij de hele dag door.",
     "longDescription": "Voor echte zeilliefhebbers en culinaire avonturiers. Een volledige dag op het water met alle maaltijden van ontbijt tot diner. We varen een uitgebreide route met meerdere stops in karakteristieke havenstadjes.",
-    "timeline": [],
+    "timeline": [
+      {
+        "time": "10:00",
+        "title": "Vertrek vanuit Muiden",
+        "description": "Ontvangst aan boord met koffie & thee. Kennismaking met de crew en uitleg over de dag."
+      },
+      {
+        "time": "10:30",
+        "title": "Zeilen naar bestemming",
+        "description": "We hijsen de zeilen en varen richting Volendam, Marken, Pampus, of een andere bestemming."
+      },
+      {
+        "time": "12:00",
+        "title": "Lunch aan boord",
+        "description": "Uitgebreide lunch met verse ingrediënten, bereid in onze kombuis. Salades, brood, vis en meer."
+      },
+      {
+        "time": "13:30",
+        "title": "Aanmeren bij bestemming",
+        "description": "Tijd om te wandelen, de omgeving te verkennen of gewoon te genieten van de rust."
+      },
+      {
+        "time": "17:00",
+        "title": "Borrel & terugvaren",
+        "description": "Bier, wijn en borrelhapjes terwijl we terugzeilen naar Muiden."
+      },
+      {
+        "time": "18:00",
+        "title": "Diner",
+        "description": "Diner aan boord bereid met verse ingrediënten."
+      },
+      {
+        "time": "20:00",
+        "title": "Aankomst in Muiden",
+        "description": "Sluit een mooie zeiltocht af met een wandeling door het vestingstadje Muiden."
+      }
+    ],
     "highlights": [
       "Zeiltocht van 10 uur",
       "Ontbijt met vers brood en streekproducten",

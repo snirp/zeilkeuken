@@ -3,8 +3,8 @@
   "slug": "dinervaart",
   "price": 88,
   "defaults": {
-    "departure": "18:00",
-    "endTime": "21:30"
+    "departure": "17:00",
+    "endTime": "21:00"
   },
   "constraints": {
     "maxGuests": 40,
@@ -14,44 +14,39 @@
   "content": {
     "name": "Diner & sunset",
     "bestFor": "Avondevents, jubilea, dinertjes",
-    "badges": ["± 3 uur", "diner", "sunset"],
+    "badges": ["± 4 uur", "diner", "sunset"],
     "heroSubtitle": "Avondzeilen met driegangendiner",
     "shortDescription": "Geniet van een intieme avondtocht tijdens het mooiste moment van de dag. We zeilen richting Pampus terwijl de chef een driegangendiner voor je bereidt. Met de ondergaande zon als decor en een glas wijn in de hand, sluit je de dag stijlvol af op het water.",
     "longDescription": "Geniet van een ontspannen avondtocht waarbij varen en diner samenkomen. Terwijl de zon ondergaat, wordt aan boord een sfeervol diner geserveerd, met uitzicht op het water en ruimte om samen te genieten.",
     "timeline": [
       {
-        "time": "18:00",
+        "time": "17:00",
         "title": "Welkom aan boord",
         "description": "Ontvangst met aperitief en amuses."
       },
       {
-        "time": "18:30",
+        "time": "17:30",
         "title": "Afvaren",
         "description": "We zeilen richting Pampus of een rustige ankerplaats op het IJsselmeer."
       },
       {
         "time": "19:00",
-        "title": "Voorgerecht",
-        "description": "Seizoensgebonden voorgerecht, vers bereid."
-      },
-      {
-        "time": "19:45",
-        "title": "Hoofdgerecht",
-        "description": "Vis of vlees van lokale leveranciers, met bijpassende garnituur."
+        "title": "Diner",
+        "description": "We gaan voor anker en genieten van een seizoensgebonden diner, vers bereid."
       },
       {
         "time": "20:30",
         "title": "Nagerecht & koffie",
-        "description": "Afsluiten met iets zoets en een goede kop koffie."
+        "description": "We varen terug met een goede kop koffie."
       },
       {
-        "time": "21:30",
+        "time": "21:00",
         "title": "Aankomst in Muiden",
         "description": "Terug in de haven, voldaan en met een volle maag."
       }
     ],
     "highlights": [
-      "Avondzeiltocht van 3,5 uur",
+      "Avondzeiltocht van 4 uur",
       "Driegangendiner aan boord",
       "Aperitief met amuses",
       "Wijn- of bierpakket bij het diner",
