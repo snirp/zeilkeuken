@@ -3,6 +3,7 @@ const Image = require('@11ty/eleventy-img');
 module.exports = function (eleventyConfig) {
   // Passthrough copy for assets
   eleventyConfig.addPassthroughCopy('src/css');
+  eleventyConfig.addPassthroughCopy('src/fonts');
   eleventyConfig.addPassthroughCopy('src/images');
   eleventyConfig.addPassthroughCopy('src/js');
   eleventyConfig.addPassthroughCopy('src/videos');
