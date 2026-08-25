@@ -20,8 +20,8 @@
     {
       "id": "price-included",
       "category": "booking",
-      "question": "Wat is inbegrepen in de prijs?",
-      "answer": "Alle prijzen zijn inclusief eten, drinken, zeilervaring met professionele bemanning, en gebruik van alle faciliteiten aan boord. Ook brandstof, havengelden en BTW zijn inbegrepen. Je betaalt exact wat je ziet—geen verborgen kosten.",
+      "question": "Wat is inbegrepen in de scheepshuur?",
+      "answer": "De prijs is inclusief BTW, brandstof, havengelden, schoonmaak, zeilervaring met professionele bemanning, en gebruik van alle faciliteiten aan boord. Je betaalt exact wat je ziet—geen verborgen kosten.",
       "tags": ["home", "general"],
       "priority": {
         "home": 1
@@ -31,7 +31,7 @@
       "id": "booking-process",
       "category": "booking",
       "question": "Hoe boek ik een zeiltocht?",
-      "answer": "Via onze <a href=\"/offerte/\">offertetool</a> kies je je arrangement, groepsgrootte en wensen. Je ontvangt binnen 24 uur een vrijblijvende offerte. Na akkoord betaal je 30% aanbetaling—dan is je boeking definitief.",
+      "answer": "Via onze <a href=\"/offerte/\">offertetool</a> kies je je arrangement, groepsgrootte en wensen. Je ontvangt binnen 24 uur een vrijblijvende offerte, die we kunnen aanpassen op jouw wensen.",
       "tags": ["home", "general"],
       "priority": {
         "home": 2
@@ -41,7 +41,7 @@
       "id": "weather",
       "category": "booking",
       "question": "Wat gebeurt er bij slecht weer?",
-      "answer": "We varen bij vrijwel alle weersomstandigheden. Het schip heeft een verwarmde salon met grote ramen. Bij extreme omstandigheden (harde storm) overleggen we tijdig over alternatieven of verzetten we de datum kosteloos.",
+      "answer": "We varen bij vrijwel alle weersomstandigheden. Het schip heeft een verwarmde salon met grote ramen. Bij extreme omstandigheden (harde wind) overleggen we tijdig over alternatieven of verzetten we de datum kosteloos.",
       "tags": ["home", "packages", "general"],
       "priority": {
         "home": 3,
@@ -52,7 +52,7 @@
       "id": "dietary-requirements",
       "category": "food",
       "question": "Kunnen jullie rekening houden met dieetwensen?",
-      "answer": "Ja, absoluut. We accommoderen vegetarisch, veganistisch, halal, kosjer en allergieën. Geef je wensen door bij de offerte-aanvraag en we stemmen het menu erop af.",
+      "answer": "Ja, absoluut. We accommoderen vegetarisch, veganistisch, en allergieën. Geef je wensen door bij de offerte-aanvraag en we stemmen het menu erop af.",
       "tags": ["home", "packages", "general"],
       "priority": {
         "home": 4,
@@ -63,7 +63,7 @@
       "id": "location",
       "category": "booking",
       "question": "Waar vertrekken we?",
-      "answer": "We vertrekken vanuit de haven van Muiden, 15 minuten vanaf Amsterdam. Gratis parkeren is beschikbaar op loopafstand. Precieze aanwijzingen ontvang je bij je boeking.",
+      "answer": "We vertrekken vanuit de haven van Muiden, 15 minuten vanaf Amsterdam. Gratis parkeren is beschikbaar op loopafstand. Precieze aanwijzingen ontvang je bij je boeking. In overleg is vertrek vanuit andere havens mogelijk.",
       "tags": ["home", "general"],
       "priority": {
         "home": 5
@@ -94,7 +94,7 @@
       "category": "onboard",
       "question": "Zijn kinderen welkom aan boord?",
       "answer": "Ja, kinderen vanaf 6 jaar zijn welkom. We hebben zwemvesten in alle maten en de crew let goed op de veiligheid. Voor het menu kunnen we kinderportie's of aangepaste gerechten serveren.",
-      "tags": ["packages", "general"],
+      "tags": ["home", "packages", "general"],
       "priority": {
         "packages": 5
       }
@@ -154,7 +154,7 @@
       "category": "onboard",
       "question": "Hoeveel ervaring moet je hebben om mee te zeilen?",
       "answer": "<p>Geen enkele! Je mag zo actief meehelpen als je wilt, maar het is geen vereiste. De schipper en crew zorgen voor de veiligheid en navigatie.</p>",
-      "tags": ["quote", "general"],
+      "tags": ["home", "quote", "general"],
       "priority": {
         "quote": 7
       }
@@ -167,16 +167,6 @@
       "tags": ["quote"],
       "priority": {
         "quote": 8
-      }
-    },
-    {
-      "id": "complex-dietary",
-      "category": "food",
-      "question": "Kunnen jullie 40 verschillende dieetwensen aan?",
-      "answer": "Ja. Tot nu toe is ons record 18 verschillende beperkingen in één groep. Het kost extra voorbereiding, maar het kan.",
-      "tags": ["kitchen"],
-      "priority": {
-        "kitchen": 1
       }
     },
     {

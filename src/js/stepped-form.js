@@ -180,6 +180,7 @@
     // Personal details inputs
     const nameInput = form.querySelector('#name');
     const emailInput = form.querySelector('#email');
+    const phoneInput = form.querySelector('#phone');
     if (nameInput) {
       nameInput.addEventListener('input', handlePersonalDetailsChange);
       nameInput.addEventListener('blur', validateNameOnBlur);
@@ -187,6 +188,10 @@
     if (emailInput) {
       emailInput.addEventListener('input', handlePersonalDetailsChange);
       emailInput.addEventListener('blur', validateEmailOnBlur);
+    }
+    if (phoneInput) {
+      phoneInput.addEventListener('input', handlePersonalDetailsChange);
+      phoneInput.addEventListener('blur', validatePhoneOnBlur);
     }
 
     // Form submission
@@ -461,9 +466,11 @@
   function handlePersonalDetailsChange(e) {
     const nameInput = form.querySelector('#name');
     const emailInput = form.querySelector('#email');
+    const phoneInput = form.querySelector('#phone');
     state.formData.personalDetails = {
       name: nameInput ? nameInput.value : '',
       email: emailInput ? emailInput.value : '',
+      phone: phoneInput ? phoneInput.value : '',
     };
     // Clear per-field errors as the user corrects their input
     if (e && e.target) hideFieldError(e.target);
@@ -486,6 +493,18 @@
       showFieldError(input, 'Vul een e-mailadres in');
     } else if (!isValidEmail(value)) {
       showFieldError(input, 'Vul een geldig e-mailadres in');
+    } else {
+      hideFieldError(input);
+    }
+  }
+
+  function validatePhoneOnBlur(e) {
+    const input = e.target;
+    const value = input.value.trim();
+    if (!value) {
+      showFieldError(input, 'Vul een telefoonnummer in');
+    } else if (!isValidPhone(value)) {
+      showFieldError(input, 'Vul een geldig telefoonnummer in');
     } else {
       hideFieldError(input);
     }
@@ -855,6 +874,7 @@
       case 3: {
         const nameInput = form.querySelector('#name');
         const emailInput = form.querySelector('#email');
+        const phoneInput = form.querySelector('#phone');
 
         if (nameInput && !nameInput.value.trim()) {
           errors.push({ input: nameInput, message: 'Vul je naam in' });
@@ -865,6 +885,14 @@
             errors.push({ input: emailInput, message: 'Vul een e-mailadres in' });
           } else if (!isValidEmail(value)) {
             errors.push({ input: emailInput, message: 'Vul een geldig e-mailadres in' });
+          }
+        }
+        if (phoneInput) {
+          const value = phoneInput.value.trim();
+          if (!value) {
+            errors.push({ input: phoneInput, message: 'Vul een telefoonnummer in' });
+          } else if (!isValidPhone(value)) {
+            errors.push({ input: phoneInput, message: 'Vul een geldig telefoonnummer in' });
           }
         }
         break;
@@ -906,6 +934,12 @@
 
   function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function isValidPhone(phone) {
+    // Allow digits, spaces, +, -, parentheses; require at least 8 digits
+    const digits = phone.replace(/\D/g, '');
+    return /^[\d\s+\-()]+$/.test(phone) && digits.length >= 8;
   }
 
   function showError(message) {
