@@ -364,9 +364,29 @@ main {
 /* Card testimonial variant */
 .card-testimonial {
   display: flex;
+  flex-direction: column;
   gap: var(--spacing-sm);
   background-color: var(--color-gray-100);
   box-shadow: 0 0 0 1px var(--color-primary);
+  margin: 0;
+}
+
+.testimonial-quote {
+  margin: 0;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-gray-800);
+}
+
+.testimonial-author {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--color-gray-700);
+  font-size: var(--font-size-sm);
+}
+
+.testimonial-author::before {
+  content: '— ';
 }
 
 /* Badges */
