@@ -73,7 +73,7 @@
       "id": "cancellation-policy",
       "category": "booking",
       "question": "Wat is het annuleringsbeleid?",
-      "answer": "Tot 4 weken voor vertrek: kosteloos annuleren. 2-4 weken van tevoren: 50% van de totaalprijs. Binnen 2 weken: 100%. Bij overmacht (ziekte, overlijden) zoeken we altijd naar een oplossing. Zie onze <a href=\"/voorwaarden/\">algemene voorwaarden</a> voor alle details.",
+      "answer": "Zie onze <a href=\"/voorwaarden/\">algemene voorwaarden</a> voor de annuleringsvoorwaarden.",
       "tags": ["packages", "general"],
       "priority": {
         "packages": 3
