@@ -17,7 +17,7 @@
     "badges": ["± 10 uur", "lunch", "diner", "ontdek"],
     "heroSubtitle": "Van zonsopkomst tot zonsondergang",
     "shortDescription": "Beleef een complete zeildag inclusief diner op het IJsselmeer. We varen een uitgebreide route langs meerdere havenstadjes zoals Volendam en Monnickendam, met alle tijd om te genieten van vers bereide maaltijden. Perfect voor wie een échte zeilervaring wil met culinaire verwennerij de hele dag door.",
-    "longDescription": "Voor echte zeilliefhebbers en culinaire avonturiers. Een volledige dag op het water met alle maaltijden van ontbijt tot diner. We varen een uitgebreide route met meerdere stops in karakteristieke havenstadjes.",
+    "longDescription": "Voor echte zeilliefhebbers en culinaire avonturiers. Een volledige dag op het water met lunch en diner. We varen een uitgebreide route met meerdere stops in karakteristieke havenstadjes.",
     "timeline": [
       {
         "time": "10:00",
@@ -57,13 +57,11 @@
     ],
     "highlights": [
       "Zeiltocht van 10 uur",
-      "Ontbijt met vers brood en streekproducten",
       "Uitgebreide lunch aan boord",
       "Borrelmoment met lokale specialiteiten",
-      "Driegangendiner bij zonsondergang",
-      "Premium bier- en wijnpakket de hele dag",
+      "Vers bereid diner",
       "Meerdere aanlegmogelijkheden",
-      "Ervaren bemanning en live kokkerij"
+      "Ervaren bemanning"
     ]
   }
 }
